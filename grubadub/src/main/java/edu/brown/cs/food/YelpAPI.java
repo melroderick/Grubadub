@@ -57,14 +57,20 @@ public class YelpAPI {
    * See <a href="http://www.yelp.com/developers/documentation/v2/search_api">Yelp Search API V2</a>
    * for more info.
    * 
-   * @param term <tt>String</tt> of the search term to be queried
-   * @param location <tt>String</tt> of the location
+   * @param sw_latitude the south-west latitude of the bounds
+   * @param sw_longitude   the south-west longitude of the bounds
+   * @param ne_latitude  the north-east latitude of the bounds
+   * @param ne_longitude   the north-east longitude of the bounds
    * @return <tt>String</tt> JSON Response
    */
-  public String searchForBusinessesByLocation(String term, String location) {
+  public String searchForRestaurantsByBounds(
+      double sw_latitude, double sw_longitude,
+      double ne_latitude, double ne_longitude) {
     OAuthRequest request = createOAuthRequest(SEARCH_PATH);
-    request.addQuerystringParameter("term", term);
-    request.addQuerystringParameter("location", location);
+    request.addQuerystringParameter("category_filter", "restaurants");
+    request.addQuerystringParameter("bounds",
+        String.format("%s,%s|%s,%s",
+            sw_latitude, sw_longitude, ne_latitude, ne_longitude));
     return sendRequestAndGetResponse(request);
   }
 
@@ -105,38 +111,4 @@ public class YelpAPI {
     Response response = request.send();
     return response.getBody();
   }
-
-  /**
-   * Queries the Search API based on the command line arguments and takes the first result to query
-   * the Business API.
-   * 
-   * @param yelpApi <tt>YelpAPI</tt> service instance
-   * @param yelpApiCli <tt>YelpAPICLI</tt> command line arguments
-   */
-  /*static void queryAPI(YelpAPI yelpApi) {
-    String searchResponseJSON =
-        yelpApi.searchForBusinessesByLocation(yelpApiCli.term, yelpApiCli.location);
-
-    JSONParser parser = new JSONParser();
-    JSONObject response = null;
-    try {
-      response = (JSONObject) parser.parse(searchResponseJSON);
-    } catch (ParseException pe) {
-      System.out.println("Error: could not parse JSON response:");
-      System.out.println(searchResponseJSON);
-      System.exit(1);
-    }
-
-    JSONArray businesses = (JSONArray) response.get("businesses");
-    JSONObject firstBusiness = (JSONObject) businesses.get(0);
-    String firstBusinessID = firstBusiness.get("id").toString();
-    System.out.println(String.format(
-        "%s businesses found, querying business info for the top result \"%s\" ...",
-        businesses.size(), firstBusinessID));
-
-    // Select the first business and display business details
-    String businessResponseJSON = yelpApi.searchByBusinessId(firstBusinessID.toString());
-    System.out.println(String.format("Result for business \"%s\" found:", firstBusinessID));
-    System.out.println(businessResponseJSON);
-  }*/
 }
