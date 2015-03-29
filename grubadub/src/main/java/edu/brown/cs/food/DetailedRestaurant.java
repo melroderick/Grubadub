@@ -1,6 +1,10 @@
 package edu.brown.cs.food;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.google.common.collect.ImmutableList;
 
@@ -19,6 +23,20 @@ public class DetailedRestaurant extends Restaurant {
     this.reviews = ImmutableList.copyOf(reviews);
     this.phoneNumber = phoneNumber;
     this.url = url;
+  }
+  
+  public DetailedRestaurant(JSONObject jsonRestaurant) {
+    super(jsonRestaurant);
+
+    this.phoneNumber = jsonRestaurant.get("display_phone").toString();
+    this.url = jsonRestaurant.get("url").toString();
+    
+    reviews = new ArrayList<Review>();
+    JSONArray jsonReviews = (JSONArray) jsonRestaurant.get("reviews");
+    for (int i = 0; i < jsonReviews.size(); i++) {
+      Review r = new Review((JSONObject) jsonReviews.get(i));
+      reviews.add(r);
+    }
   }
 
   public List<Review> getReviews() {

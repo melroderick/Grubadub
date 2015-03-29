@@ -1,6 +1,10 @@
 package edu.brown.cs.food;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.google.common.collect.ImmutableList;
 
@@ -13,7 +17,7 @@ public class Restaurant {
   private final LatLng latLng;
   private final float rating;
   private final String address;
-  
+
   public Restaurant(String id, String name,
       List<String> categories, LatLng latLng,
       float rating, String address) {
@@ -23,6 +27,27 @@ public class Restaurant {
     this.latLng = latLng;
     this.rating = rating;
     this.address = address;
+  }
+
+  public Restaurant(JSONObject jsonRestaurant) {
+    this.id = jsonRestaurant.get("id").toString();
+    this.name = jsonRestaurant.get("name").toString();
+
+    categories = new ArrayList<String>();
+    JSONArray jsonCategories = (JSONArray) jsonRestaurant.get("categories");
+    for (int i = 0; i < jsonCategories.size(); i++) {
+      JSONArray jsonCategory = (JSONArray) jsonCategories.get(i);
+      categories.add(jsonCategory.get(0).toString());
+    }
+
+    JSONObject jsonLocation = (JSONObject) jsonRestaurant.get("location");
+    JSONObject jsonCoordinate = (JSONObject) jsonLocation.get("coordinate");
+    this.latLng = new LatLng(
+        Double.parseDouble(jsonCoordinate.get("latitude").toString()),
+        Double.parseDouble(jsonCoordinate.get("longitude").toString()));
+    this.address = jsonLocation.get("address").toString();
+
+    this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
   }
 
   public String getId() {
@@ -48,7 +73,7 @@ public class Restaurant {
   public String getAddress() {
     return address;
   }
-  
+
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {
