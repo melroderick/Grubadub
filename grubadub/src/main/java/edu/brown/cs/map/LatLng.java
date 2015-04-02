@@ -31,6 +31,12 @@ public class LatLng {
     return lng;
   }
 
+  public Double eucideanDistance(LatLng point) {
+    return Math.sqrt(
+        Math.pow(point.getLat() - lat, 2)
+        + Math.pow(point.getLng() - lng, 2));
+  }
+
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {
