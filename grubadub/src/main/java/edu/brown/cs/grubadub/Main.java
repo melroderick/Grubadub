@@ -20,6 +20,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import edu.brown.cs.food.DetailedRestaurant;
 import edu.brown.cs.food.Restaurant;
 import edu.brown.cs.food.RestaurantFinder;
 import edu.brown.cs.food.YelpRestaurantFinder;
@@ -72,7 +73,7 @@ public final class Main {
     Spark.get("/", new FrontHandler(), freeMarker);
     Spark.post("/restaurants", new RestaurantHandler());
     Spark.post("/time", new TimeHandler());
-    //Spark.post("/details", new RoadHandler());
+    Spark.post("/details", new DetailHandler());
   }
 
   /** Handles routing and populating the template for the '/map' route.
@@ -95,10 +96,12 @@ public final class Main {
       QueryParamsMap qm = req.queryMap();
       Double lat = Double.parseDouble(qm.value("lat"));
       Double lng = Double.parseDouble(qm.value("lng"));
+      LatLng loc = new LatLng(lat, lng);
+
       String destination = qm.value("destination");
       int time = Integer.parseInt(qm.value("time"));
 
-      LatLng loc = new LatLng(lat, lng);
+
       List<Restaurant> restaurants = middleman.getRestaurants(loc, destination, time);
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
@@ -115,19 +118,38 @@ public final class Main {
       QueryParamsMap qm = req.queryMap();
       Double lat = Double.parseDouble(qm.value("lat"));
       Double lng = Double.parseDouble(qm.value("lng"));
-      String destination = qm.value("destination");
-      int time = Integer.parseInt(qm.value("time"));
-
       LatLng loc = new LatLng(lat, lng);
-      List<Restaurant> restaurants = middleman.getRestaurants(loc, destination, time);
+
+      String waypoint = qm.value("waypoint");
+      String destination = qm.value("destination");
+
+
+      int extraTime = middleman.getExtraTime(loc, waypoint, destination);
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("restaurants", restaurants)
+          .put("time", extraTime)
           .build();
 
       return GSON.toJson(variables);
     }
   }
+
+  private class DetailHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String id = qm.value("id");
+
+      DetailedRestaurant details = middleman.getRestaurantDetails(id);
+
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("restaurant", details)
+          .build();
+
+      return GSON.toJson(variables);
+    }
+  }
+
 
   /** Prints exceptions to the browser when debugging the GUI.
    *

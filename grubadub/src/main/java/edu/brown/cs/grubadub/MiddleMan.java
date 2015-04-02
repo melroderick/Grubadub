@@ -25,11 +25,11 @@ public class MiddleMan {
     return restaurants;
   }
 
-  private DetailedRestaurant getRestaurantDetails(String id) {
-    return null;
+  public DetailedRestaurant getRestaurantDetails(String id) {
+    return food.detailedRestaurantForID(id);
   }
 
-  private int extraTime(LatLng curLoc, String waypoint, String destination) {
-    return -1;
+  public int getExtraTime(LatLng loc, String waypoint, String destination) {
+    return map.extraTime(loc, waypoint, destination);
   }
 }
