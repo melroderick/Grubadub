@@ -1,9 +1,11 @@
 package edu.brown.cs.map;
 
-public class Route {
-  private int routeTime;
+import java.util.List;
 
-  public Route(int routeTime) {
-    this.routeTime = routeTime;
-  }
+public interface Route {
+
+  int routeTime();
+  double distanceFrom(LatLng loc);
+  List<LatLng> pointsAlong(int start, int end, double spacedBy);
+
 }
