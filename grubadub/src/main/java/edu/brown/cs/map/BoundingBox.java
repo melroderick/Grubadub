@@ -16,4 +16,11 @@ public class BoundingBox {
   public LatLng getNE() {
     return ne;
   }
+
+  public boolean contains(LatLng point) {
+    return point.getLat() > sw.getLat()
+        && point.getLat() < ne.getLat()
+        && point.getLng() > sw.getLng()
+        && point.getLng() < ne.getLng();
+  }
 }
