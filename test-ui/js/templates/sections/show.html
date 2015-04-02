@@ -1,0 +1,41 @@
+<article class="section <%= section.get('mine') ? 'mine' : '' %> <%= !section.get('text') ? 'no-text' : '' %>">
+	<div class="group">
+		<% if (guideMine) { %>
+			<div class="approve-box group">
+				<a href="#" original-title="Approve section" class="no-click approve <%= section.get('approved') ? 'selected' : '' %>"><i class="fa fa-thumbs-up"></i></a>
+				<a href="#" original-title="Disapprove section" class="no-click disapprove <%= !section.get('approved') ? 'selected' : '' %>"><i class="fa fa-thumbs-down"></i></a>
+			</div>
+		<% } %>
+		<p class="user-name"><i class="fa fa-user" original-title="<%= section.get('user').email %>"></i> <%= section.get('mine') ? 'Me' : section.get('user').fullName %></p>
+
+		<% if ((!hideText && !guideMine) || section.get('mine')) { %>
+			<div class="approved-status">
+				<% if (section.get('approved')) { %>
+					<i class="fa fa-check-circle-o approved" original-title="Approved by owner"></i>
+				<% } else { %>
+					<i class="fa fa-times-circle-o disapproved" original-title="Not yet approved"></i>
+				<%} %>
+			</div>
+		<% } %>
+
+		<h3><%= section.get('name') %> <span class="edited-date">last edited <%= timeAgo %></span></h3>
+	</div>
+
+	<div class="section-text">
+		<% if (guideMine || !hideText || section.get('mine')) { %>
+			<% if (section.get('text') || section.get('mine')) { %>
+				<%= section.get('text') %>
+			<% } else { %>
+				<p class="empty-message"><%= section.get('user').fullName %> has not written anything in this section yet.</p>
+			<% } %>
+		<% } else { %>
+			<div class="hidden-section-message">
+				<p>You'll gain access to the rest of the study guide once the owner approves your section.<p>
+			</div>
+			<div class="blurred-text">
+				<p>If you're looking at this in the console, good idea! But you'll have to do better than that. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse! Lorem ipsum dolor sit amet.</p>
+				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse. Exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse!</p>
+			</div>
+		<% } %>
+	</div>
+</article>

@@ -1,0 +1,27 @@
+<div class="body-wrapper group">
+	<div id="main">
+		<h2 class="list-title"><span>My Guides:</span></h2>
+		<% if (mine.length > 0) { %>
+			<ul class="guide-list owned">
+				<% _.each(mine, function(guide) { %>
+					<li><a href="/guides/<%= guide.get('id') %>" class="group"><strong><%= guide.get('name') %></strong></a></li>
+				<% }); %>
+			</ul>
+		<% } else { %>
+			<p class="empty-message">No study guides created yet. <a href="#" class="first-guide no-click">Make your first now.</a></p>
+		<% } %>
+
+		<h2 class="list-title"><span>Shared With Me:</span></h2>
+		<% if (shared.length > 0) { %>
+			<ul class="guide-list">
+				<% _.each(shared, function(guide) { %>
+					<li class="<%= guide.get('sectionApproved') ? 'approved' : '' %>"><a href="/guides/<%= guide.get('id') %>" class="group"><strong><%= guide.get('name') %></strong> <span class="owner-name"><%= guide.get('owner').fullName %></span></a></li>
+				<% }); %>
+			</ul>
+		<% } else { %>
+			<p class="empty-message">No study guides shared with you yet.</p>
+		<% } %>
+	</div>
+	<aside id="creation-wrapper">
+	</aside>
+</div>

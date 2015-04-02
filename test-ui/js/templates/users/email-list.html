@@ -1,0 +1,6 @@
+<% users.forEach(function(user) { %>
+	<% var email = user.get('email') %>
+	<li>
+		<a href="#" class="no-click"><i class="fa fa-user"></i> <strong><%= query %></strong><%= email.substring(query.length, email.length) %></a>
+	</li>
+<% }) %>
