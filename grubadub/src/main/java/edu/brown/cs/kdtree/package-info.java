@@ -6,4 +6,4 @@
  * @author samdunietz
  *
  */
-package edu.brown.cs.maps.kdtree;
+package edu.brown.cs.kdtree;

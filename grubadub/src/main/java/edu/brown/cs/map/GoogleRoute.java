@@ -9,7 +9,7 @@ import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.DirectionsStep;
 
-import edu.brown.cs.maps.kdtree.KDTree;
+import edu.brown.cs.kdtree.KDTree;
 
 public class GoogleRoute implements Route {
 

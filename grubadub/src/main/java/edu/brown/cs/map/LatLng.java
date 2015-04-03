@@ -1,6 +1,7 @@
 package edu.brown.cs.map;
 
-import edu.brown.cs.maps.kdtree.KDData;
+import edu.brown.cs.kdtree.KDData;
+
 
 public class LatLng implements KDData {
 

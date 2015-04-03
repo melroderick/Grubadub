@@ -1,4 +1,4 @@
-package edu.brown.cs.maps.kdtree;
+package edu.brown.cs.kdtree;
 
 public interface KDData {
 	default double euclidianDist(KDData other) {

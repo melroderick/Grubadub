@@ -69,12 +69,10 @@ public class GoogleRouteFinder implements RouteFinder {
     DirectionsLeg l1 = detour.legs[0];
     DirectionsLeg l2 = detour.legs[1];
 
-    int detourTime =
-        (int) (l1.duration.inSeconds + l2.duration.inSeconds) / 60;
-    int directTime =
-        (int) (direct.legs[0].duration.inSeconds) / 60;
+    long detourTime = l1.duration.inSeconds + l2.duration.inSeconds;
+    long directTime = direct.legs[0].duration.inSeconds;
 
-    return detourTime - directTime;
+    return (int) (detourTime - directTime) / 60;
   }
 
 

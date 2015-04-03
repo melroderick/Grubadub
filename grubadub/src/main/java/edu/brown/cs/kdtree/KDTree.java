@@ -1,4 +1,4 @@
-package edu.brown.cs.maps.kdtree;
+package edu.brown.cs.kdtree;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package edu.brown.cs.maps.kdtree;
+package edu.brown.cs.kdtree;
 
 import java.util.Comparator;
 
@@ -29,7 +29,7 @@ public class KDDataComparator implements Comparator<KDData> {
 
     /**
      * Increments currDim by 1. If currDim = numDim - 1, currDim goes to 0
-     * 
+     *
      */
     public void incrementDim() {
         currDim = (currDim + 1) % numDim;
