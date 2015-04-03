@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 
 import edu.brown.cs.map.LatLng;
 
-public class Restaurant {
+public class Restaurant implements Comparable  {
   private final String id;
   private final String name;
   private final List<String> categories;
@@ -93,5 +93,11 @@ public class Restaurant {
   @Override
   public int hashCode() {
     return id.hashCode();
+  }
+
+  @Override
+  public int compareTo(Object obj) {
+    Restaurant r = (Restaurant) obj;
+    return id.compareTo(r.id);
   }
 }
