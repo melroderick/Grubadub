@@ -9,6 +9,7 @@ import org.junit.Test;
 import edu.brown.cs.map.GoogleRoute;
 import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
+import edu.brown.cs.map.Route;
 
 public class GoogleRouteFinderTest {
 
@@ -22,12 +23,13 @@ public class GoogleRouteFinderTest {
   @Test
   public void testGetRoute() {
     LatLng providence = new LatLng(41.8236, -71.4222);
-    GoogleRoute r = grf.getRoute(providence, "Boston, MA");
+    Route r = grf.getRoute(providence, "Boston, MA");
     assertTrue(r != null);
     assertTrue(r.distanceFrom(providence) > 0);
-    /*assertTrue(r.locIn(10) != null);
-    assertTrue(r.pointsAlong(1, 10) != null);
-    assertTrue(r.routeTime() > 30 && r.routeTime() < 90);*/
+    /*
+     * assertTrue(r.locIn(10) != null); assertTrue(r.pointsAlong(1, 10) !=
+     * null); assertTrue(r.routeTime() > 30 && r.routeTime() < 90);
+     */
   }
 
   @Test
@@ -36,28 +38,21 @@ public class GoogleRouteFinderTest {
     int gMapsSea2Port = 161;
     int gMapsSea2Bellevue2Port = 186;
     LatLng seattle = new LatLng(47.6097, -122.3331);
-    assertEquals(
-        gMapsSea2Bellevue2Port - gMapsSea2Port,
-        grf.extraTime(seattle, "Bellevue, WA", "Portland, OR"),
-        5);
+    assertEquals(gMapsSea2Bellevue2Port - gMapsSea2Port,
+        grf.extraTime(seattle, "Bellevue, WA", "Portland, OR"), 5);
 
     LatLng brown = new LatLng(41.828169, -71.400593);
     int gMapsBrown2Harvard = 57;
     int gMapsBrown2MIT2Hardvard = 62;
 
-    int extraTime = grf.extraTime(
-        brown,
+    int extraTime = grf.extraTime(brown,
         "Massachusetts Institute of Technology, "
-        + "77 Massachusetts Avenue, Cambridge, MA 02139",
+            + "77 Massachusetts Avenue, Cambridge, MA 02139",
         "Harvard University, Cambridge, MA 02138");
 
     System.out.println(extraTime);
 
-    assertEquals(
-        gMapsBrown2MIT2Hardvard - gMapsBrown2Harvard,
-        extraTime,
-        5);
-
+    assertEquals(gMapsBrown2MIT2Hardvard - gMapsBrown2Harvard, extraTime, 5);
 
   }
 
