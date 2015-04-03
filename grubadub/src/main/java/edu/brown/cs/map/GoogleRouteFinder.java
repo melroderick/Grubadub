@@ -7,24 +7,23 @@ import com.google.maps.model.DirectionsRoute;
 
 public class GoogleRouteFinder implements RouteFinder {
 
-  private static final String apiKey =
-      "AIzaSyCeMcDjaJsg2gDGfXGOn3GRFv1ippD6Pqw";
+  private static final String apiKey = "AIzaSyCeMcDjaJsg2gDGfXGOn3GRFv1ippD6Pqw";
 
   private static final GeoApiContext context = new GeoApiContext()
-  .setApiKey(apiKey);
+      .setApiKey(apiKey);
 
+  // Note to sam: I made this return Route because there's no reason it should
+  // be returning a GoogleRoute, considering GoogleRoute just adheres to the
+  // Route interface without any more public methods.
   @Override
-  public GoogleRoute getRoute(LatLng start, String address) {
-    com.google.maps.model.LatLng gLoc =
-        new com.google.maps.model.LatLng(start.getLat(), start.getLng());
+  public Route getRoute(LatLng start, String address) {
+    com.google.maps.model.LatLng gLoc = new com.google.maps.model.LatLng(
+        start.getLat(), start.getLng());
 
     DirectionsRoute[] routes = null;
     try {
-      routes =
-          DirectionsApi.newRequest(context)
-          .origin(gLoc)
-          .destination(address)
-          .await();
+      routes = DirectionsApi.newRequest(context).origin(gLoc)
+          .destination(address).await();
     } catch (Exception e) {
       return null;
     }
@@ -34,17 +33,13 @@ public class GoogleRouteFinder implements RouteFinder {
 
   @Override
   public int extraTime(LatLng start, String waypoint, String destination) {
-    com.google.maps.model.LatLng gLoc =
-        new com.google.maps.model.LatLng(start.getLat(), start.getLng());
+    com.google.maps.model.LatLng gLoc = new com.google.maps.model.LatLng(
+        start.getLat(), start.getLng());
 
     DirectionsRoute detour = null;
     try {
-      DirectionsRoute[] detourArray =
-          DirectionsApi.newRequest(context)
-          .origin(gLoc)
-          .waypoints(waypoint)
-          .destination(destination)
-          .await();
+      DirectionsRoute[] detourArray = DirectionsApi.newRequest(context)
+          .origin(gLoc).waypoints(waypoint).destination(destination).await();
       detour = detourArray[0];
     } catch (Exception e) {
       System.out.println("detour error");
@@ -53,11 +48,8 @@ public class GoogleRouteFinder implements RouteFinder {
 
     DirectionsRoute direct = null;
     try {
-      DirectionsRoute[] directArray =
-          DirectionsApi.newRequest(context)
-          .origin(gLoc)
-          .destination(destination)
-          .await();
+      DirectionsRoute[] directArray = DirectionsApi.newRequest(context)
+          .origin(gLoc).destination(destination).await();
       direct = directArray[0];
     } catch (Exception e) {
       System.out.println("direct error");
@@ -74,7 +66,6 @@ public class GoogleRouteFinder implements RouteFinder {
 
     return (int) (detourTime - directTime) / 60;
   }
-
 
   @Override
   public int timeToLoc(LatLng start, LatLng end) {
