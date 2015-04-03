@@ -1,6 +1,10 @@
 package edu.brown.cs.map;
 
-public class LatLng {
+import edu.brown.cs.maps.kdtree.KDData;
+
+public class LatLng implements KDData {
+
+  public static final double EARTH_RADIUS_IN_MILES = 3959.0;
 
   private final Double lat;
   private final Double lng;
@@ -13,6 +17,11 @@ public class LatLng {
   public LatLng(Double lat, Double lng) {
     this.lat = lat;
     this.lng = lng;
+  }
+
+  protected LatLng(com.google.maps.model.LatLng gLoc) {
+    this.lat = gLoc.lat;
+    this.lng = gLoc.lng;
   }
 
   /**
@@ -31,10 +40,25 @@ public class LatLng {
     return lng;
   }
 
-  public Double eucideanDistance(LatLng point) {
+  public double distanceFrom(LatLng o) {
+    if (equals(o)) {
+      return 0;
+    }
+
+    double lat1 = Math.toRadians(getLat());
+    double lng1 = Math.toRadians(getLng());
+    double lat2 = Math.toRadians(o.getLat());
+    double lng2 = Math.toRadians(o.getLng());
+
+    return EARTH_RADIUS_IN_MILES * Math.acos(
+        Math.sin(lat1) * Math.sin(lat2)
+        + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lng2 - lng1));
+  }
+
+  public Double euclideanDistance(LatLng o) {
     return Math.sqrt(
-        Math.pow(point.getLat() - lat, 2)
-        + Math.pow(point.getLng() - lng, 2));
+        Math.pow(o.getLat() - lat, 2)
+        + Math.pow(o.getLng() - lng, 2));
   }
 
   @Override
@@ -53,5 +77,15 @@ public class LatLng {
   @Override
   public String toString() {
     return lat + ":" + lng;
+  }
+
+  @Override
+  public double[] getLocData() {
+    return new double[]{lat, lng};
+  }
+
+  @Override
+  public int getDims() {
+    return 2;
   }
 }
