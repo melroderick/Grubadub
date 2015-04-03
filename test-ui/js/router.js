@@ -54,7 +54,7 @@ app.router.on('route:list-restaurants', function() {
 		},
 		{
 			name: "Paragon",
-			rating: 4.0,
+			rating: 2.3,
 			address: "215 Thayer Street, Providence RI",
 			latLng: {
 				lat: 41.8294,

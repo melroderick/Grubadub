@@ -1,7 +1,27 @@
-<ol>
+<ol class="restaurant-list">
 <% _.each(restaurants, function(restaurant) { %>
-	<li>
-		<%= restaurant.get('name') %>
+	<li class="group">
+		<div class="right">
+			<p class="stars">
+			<% 	var halfStars = Math.round(restaurant.get('rating')*2)/2;
+				var totalStars = Math.ceil(restaurant.get('rating'));
+				for (var s = 1; s <= totalStars; s++) {
+					if (s <= halfStars) { %>
+						<i class="fa fa-star"></i>
+					<% } else { %>
+						<i class="fa fa-star-half-o"></i>
+					<% }
+				}
+
+				for (var s = totalStars + 1; s <= 5; s++) { %>
+					<i class="fa fa-star-o"></i>
+				<% } %>
+			</p>
+		</div>
+		<div>
+			<p class="name"><%= restaurant.get('name') %></p>
+			<address><%= restaurant.get('address') %></address>
+		</div>
 	</li>
 <% }); %>
 </ol>
