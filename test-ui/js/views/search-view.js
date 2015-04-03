@@ -1,8 +1,8 @@
 var app = app || {};
 
-app.LoginView = Backbone.View.extend({
+app.SearchView = Backbone.View.extend({
 	render: function(callback) {
-		app.getTemplate("pages/login", function(file) {
+		app.getTemplate("pages/search", function(file) {
 			var template = _.template(file, {  });
 			$(this.el).html(template);
 			
