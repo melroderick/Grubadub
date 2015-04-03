@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.brown.cs.map.GoogleRoute;
 import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
 import edu.brown.cs.map.Route;

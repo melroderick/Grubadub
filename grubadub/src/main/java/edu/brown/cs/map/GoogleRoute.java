@@ -11,7 +11,7 @@ import com.google.maps.model.DirectionsStep;
 
 import edu.brown.cs.kdtree.KDTree;
 
-public class GoogleRoute implements Route {
+class GoogleRoute implements Route {
 
   private DirectionsRoute gRoute;
   private DirectionsLeg gLeg;
@@ -32,21 +32,17 @@ public class GoogleRoute implements Route {
 
       routeTime = (int) gLeg.duration.inSeconds / 60;
 
-      polylinePoints =
-          gRoute.overviewPolyline.decodePath().stream()
-          .map(p -> new LatLng(p))
-          .collect(Collectors.toList());
+      polylinePoints = gRoute.overviewPolyline.decodePath().stream()
+          .map(p -> new LatLng(p)).collect(Collectors.toList());
 
       gSteps = Lists.newArrayList(gLeg.steps);
 
       detailedPolylinePoints = new ArrayList<>();
       for (DirectionsStep step : gSteps) {
-        List<com.google.maps.model.LatLng> gStepPoints =
-            step.polyline.decodePath();
+        List<com.google.maps.model.LatLng> gStepPoints = step.polyline
+            .decodePath();
 
-        List<LatLng> stepPoints =
-            gStepPoints.stream()
-            .map(p -> new LatLng(p))
+        List<LatLng> stepPoints = gStepPoints.stream().map(p -> new LatLng(p))
             .collect(Collectors.toList());
 
         detailedPolylinePoints.addAll(stepPoints);
@@ -67,7 +63,7 @@ public class GoogleRoute implements Route {
     double dist;
     int numNewPoints;
     List<LatLng> newList = new ArrayList<>();
-    for (int i = 0 ; i < points.size() - 1; i++) {
+    for (int i = 0; i < points.size() - 1; i++) {
       p1 = points.get(i);
       p2 = points.get(i + 1);
       newList.add(p1);
@@ -75,14 +71,12 @@ public class GoogleRoute implements Route {
       dist = p1.distanceFrom(p2);
       numNewPoints = (int) (dist / maxDist);
 
-
       for (int j = 1; j <= numNewPoints; j++) {
         dLat = (p2.getLat() - p1.getLat()) / (numNewPoints + 1);
         dLng = (p2.getLng() - p1.getLng()) / (numNewPoints + 1);
 
-        LatLng newPoint = new LatLng(
-            p1.getLat() + j * dLat,
-            p1.getLng() + j * dLng);
+        LatLng newPoint = new LatLng(p1.getLat() + j * dLat, p1.getLng() + j
+            * dLng);
         newList.add(newPoint);
       }
     }
@@ -92,6 +86,7 @@ public class GoogleRoute implements Route {
 
     return newList;
   }
+
   @Override
   public int routeTime() {
     // TODO: Update for traffic?
@@ -104,11 +99,11 @@ public class GoogleRoute implements Route {
 
   @Override
   public double distanceFrom(LatLng loc) {
-    /*List<Double> distances = pointsAlong.stream()
-        .map(p -> p.distanceFrom(loc))
-        .collect(Collectors.toList());
-    double naive = Collections.min(distances);
-    return naive;*/
+    /*
+     * List<Double> distances = pointsAlong.stream() .map(p ->
+     * p.distanceFrom(loc)) .collect(Collectors.toList()); double naive =
+     * Collections.min(distances); return naive;
+     */
 
     LatLng nn = kdt.nearestNeighbor(loc);
     return nn.distanceFrom(loc);
