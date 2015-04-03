@@ -129,6 +129,10 @@ a.input-btn {
 	border: 1px solid #bdc3c7;
 }
 
+a#find-curr-location.loc-found {
+	background: white;
+}
+
 input[type=text] {
 	border: 0;
 	outline: 0;
@@ -178,6 +182,11 @@ a.time-btn {
 /* ---------------------------------------------------------------------------------------
    Misc.
    --------------------------------------------------------------------------------------- */
+
+a.unclickable {
+   pointer-events: none;
+   cursor: default;
+}
 
 span.caret {
 	display: inline-block;;

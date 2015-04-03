@@ -3,7 +3,7 @@ var app = app || {};
 var Router = Backbone.Router.extend({
 	routes: {
 		"": "search",
-		"results": "list-restaurants"
+		"list": "list-restaurants"
 	},
 
 	showView: function(selector, view) {
@@ -23,6 +23,7 @@ app.router = new Router();
 app.router.on('route:search', function() {
 	document.title = 'Grubadub';
 	
+	app.currentLoc = null;
 	app.foundRestaurants = null;
 
 	var searchView = new app.SearchView();
@@ -30,18 +31,44 @@ app.router.on('route:search', function() {
 });
 
 app.router.on('route:list-restaurants', function() {
-	alert("eyo");
+	document.title = "Restaurants";
 
-	var guideview = new app.GuideView();
-	guideview.guide = new app.Guide({id: id});
+	var test = [
+		{
+			name: "Chipotle",
+			rating: 4.5,
+			address: "215 Thayer Street, Providence RI",
+			latLng: {
+				lat: 41.8298,
+				lng: -71.4014
+			}
+		},
+		{
+			name: "Baja's",
+			rating: 5.0,
+			address: "215 Thayer Street, Providence RI",
+			latLng: {
+				lat: 41.8298,
+				lng: -71.4016
+			}
+		},
+		{
+			name: "Paragon",
+			rating: 4.0,
+			address: "215 Thayer Street, Providence RI",
+			latLng: {
+				lat: 41.8294,
+				lng: -71.4012
+			}
+		}
+	];
 
-	guideview.guide.fetch({success: function() {
-		guideview.guide.sections = new app.Sections(guideview.guide.get('sections'));
+	app.foundRestaurants = new app.Restaurants(test);
 
-		document.title = guideview.guide.get('name');
+	var listView = new app.ListView();
+	listView.restaurants = app.foundRestaurants;
 
-		app.router.showView("#main-wrapper", guideview);
-	}});
+	app.router.showView("#main-wrapper", listView);
 });
 
 app.router.on('route:error', function() {
