@@ -23,7 +23,7 @@ public class YelpRestaurantFinder implements RestaurantFinder {
         YELP_API.searchForRestaurantsByBounds(
             bb.getSW().getLat(), bb.getSW().getLng(),
             bb.getNE().getLat(), bb.getNE().getLng());
-    System.out.println(searchResponseJSON);
+    //System.out.println(searchResponseJSON);
 
     JSONParser parser = new JSONParser();
     JSONObject responseObject = null;
@@ -47,7 +47,7 @@ public class YelpRestaurantFinder implements RestaurantFinder {
   @Override
   public DetailedRestaurant detailedRestaurantForID(String id) {
     String searchResponseJSON = YELP_API.searchByBusinessId(id);
-    System.out.println(searchResponseJSON);
+    //System.out.println(searchResponseJSON);
 
     JSONParser parser = new JSONParser();
     JSONObject restaurantObject = null;

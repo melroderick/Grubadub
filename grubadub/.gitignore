@@ -1,3 +1,4 @@
-/target/
-/.classpath
-/.mvn-classpath
+target/
+.classpath
+.mvn-classpath
+bin/
