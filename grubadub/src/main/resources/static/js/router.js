@@ -3,7 +3,8 @@ var app = app || {};
 var Router = Backbone.Router.extend({
 	routes: {
 		"": "search",
-		"list": "list-restaurants"
+		"results": "list-restaurants",
+		"restaurants/:id": "show-restaurant"
 	},
 
 	showView: function(selector, view) {
@@ -33,42 +34,27 @@ app.router.on('route:search', function() {
 app.router.on('route:list-restaurants', function() {
 	document.title = "Restaurants";
 
-	var test = [
-		{
-			name: "Chipotle",
-			rating: 4.5,
-			address: "215 Thayer Street, Providence RI",
-			latLng: {
-				lat: 41.8298,
-				lng: -71.4014
-			}
-		},
-		{
-			name: "Baja's",
-			rating: 5.0,
-			address: "215 Thayer Street, Providence RI",
-			latLng: {
-				lat: 41.8298,
-				lng: -71.4016
-			}
-		},
-		{
-			name: "Paragon",
-			rating: 2.3,
-			address: "215 Thayer Street, Providence RI",
-			latLng: {
-				lat: 41.8294,
-				lng: -71.4012
-			}
-		}
-	];
+	if (app.foundRestaurants == null) {
+		app.router.navigate("", { trigger: true });
+	} else {
+		var listView = new app.ListView();
+		listView.restaurants = app.foundRestaurants;
 
-	app.foundRestaurants = new app.Restaurants(test);
+		app.router.showView("#main-wrapper", listView);
+	}
+});
 
-	var listView = new app.ListView();
-	listView.restaurants = app.foundRestaurants;
+app.router.on('route:show-restaurant', function(id) {
+	var restaurant = new app.Restaurant({id: id});
 
-	app.router.showView("#main-wrapper", listView);
+	restaurant.fetch({success: function() {
+		var detailView = new app.DetailView();
+		detailView.restaurant = restaurant;
+
+		document.title = restaurant.get('name');
+
+		app.router.showView("#main-wrapper", detailView);
+	}});
 });
 
 app.router.on('route:error', function() {

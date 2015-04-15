@@ -38,6 +38,7 @@ app.SearchView = Backbone.View.extend({
 		if (app.currentLoc) {
 			var test = [
 				{
+					id: "golden-lotus-vegetarian-restaurant-oakland",
 					name: "Chipotle",
 					rating: 4.5,
 					address: "215 Thayer Street, Providence RI",
@@ -47,6 +48,7 @@ app.SearchView = Backbone.View.extend({
 					}
 				},
 				{
+					id: "bajas",
 					name: "Baja's",
 					rating: 5.0,
 					address: "215 Thayer Street, Providence RI",
@@ -56,6 +58,7 @@ app.SearchView = Backbone.View.extend({
 					}
 				},
 				{
+					id: "some-bs",
 					name: "Paragon",
 					rating: 4.0,
 					address: "215 Thayer Street, Providence RI",
@@ -68,7 +71,14 @@ app.SearchView = Backbone.View.extend({
 
 			app.foundRestaurants = new app.Restaurants(test);
 
-			app.router.navigate("list", { trigger: true });
+			// app.foundRestaurants = new app.Restaurants();
+			// app.foundRestaurants.lat = app.currentLoc.lat;
+			// app.foundRestaurants.lng = app.currentLoc.lng;
+			// app.foundRestaurants.destination = $("input[name=destination]").val();
+			// app.foundRestaurants.time = parseInt($(e.currentTarget).attr('data-time'))
+			// app.foundRestaurants.fetch();
+
+			app.router.navigate("results", { trigger: true });
 		}
 	}
 
