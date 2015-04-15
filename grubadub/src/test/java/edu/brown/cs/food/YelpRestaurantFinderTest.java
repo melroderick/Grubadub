@@ -37,19 +37,19 @@ public class YelpRestaurantFinderTest {
         new LatLng(41.7, -71.3),
         new LatLng(41.9, -71.5));
     List<Restaurant> restaurants = yelp.findRestaurants(bb, 0);
-    assertTrue(restaurants.size() == 20);
+    assertTrue(restaurants.size() == 100);
     for (Restaurant r : restaurants) {
       wellFormedRestaurant(r);
     }
 
-    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 20);
-    assertTrue(restaurants2.size() == 20);
+    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 100);
+    assertTrue(restaurants2.size() == 100);
     for (Restaurant r : restaurants2) {
       wellFormedRestaurant(r);
     }
 
-    List<Restaurant> restaurants3 = yelp.findRestaurants(bb, 40);
-    assertTrue(restaurants3.size() == 20);
+    List<Restaurant> restaurants3 = yelp.findRestaurants(bb, 200);
+    assertTrue(restaurants3.size() == 100);
     for (Restaurant r : restaurants3) {
       wellFormedRestaurant(r);
     }
