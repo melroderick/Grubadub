@@ -17,20 +17,20 @@ public class DetailedRestaurant extends Restaurant {
   private final String url;
 
   public DetailedRestaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, String address,
-      List<Review> reviews, String phoneNumber, String url) {
+      LatLng latLng, float rating, String address, List<Review> reviews,
+      String phoneNumber, String url) {
     super(id, name, categories, latLng, rating, address);
     this.reviews = ImmutableList.copyOf(reviews);
     this.phoneNumber = phoneNumber;
     this.url = url;
   }
-  
+
   public DetailedRestaurant(JSONObject jsonRestaurant) {
     super(jsonRestaurant);
 
     this.phoneNumber = jsonRestaurant.get("display_phone").toString();
     this.url = jsonRestaurant.get("url").toString();
-    
+
     reviews = new ArrayList<Review>();
     JSONArray jsonReviews = (JSONArray) jsonRestaurant.get("reviews");
     for (int i = 0; i < jsonReviews.size(); i++) {
@@ -50,4 +50,5 @@ public class DetailedRestaurant extends Restaurant {
   public String getUrl() {
     return url;
   }
+
 }

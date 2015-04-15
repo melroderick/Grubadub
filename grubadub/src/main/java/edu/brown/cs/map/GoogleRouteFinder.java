@@ -12,9 +12,6 @@ public class GoogleRouteFinder implements RouteFinder {
   private static final GeoApiContext context = new GeoApiContext()
       .setApiKey(apiKey);
 
-  // Note to sam: I made this return Route because there's no reason it should
-  // be returning a GoogleRoute, considering GoogleRoute just adheres to the
-  // Route interface without any more public methods.
   @Override
   public Route getRoute(LatLng start, String address) {
     com.google.maps.model.LatLng gLoc = new com.google.maps.model.LatLng(
