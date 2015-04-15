@@ -28,7 +28,6 @@ public class Restaurant implements Comparable<Restaurant> {
     this.address = address;
   }
 
-  @SuppressWarnings("unchecked")
   public Restaurant(JSONObject jsonRestaurant) {
     this.id = jsonRestaurant.get("id").toString();
     this.name = jsonRestaurant.get("name").toString();
@@ -46,7 +45,13 @@ public class Restaurant implements Comparable<Restaurant> {
         .toString()), Double.parseDouble(jsonCoordinate.get("longitude")
         .toString()));
 
-    this.address = ((List<String>) jsonLocation.get("address")).get(0) + ", "
+    String streetAddress = "";
+    @SuppressWarnings("unchecked")
+    List<String> addresses = (List<String>) jsonLocation.get("address");
+    if (addresses.size() > 0) {
+      streetAddress = addresses.get(0);
+    }
+    this.address = streetAddress
         + jsonLocation.get("city").toString() + " "
         + jsonLocation.get("state_code").toString() + " "
         + jsonLocation.get("postal_code").toString();

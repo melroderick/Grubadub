@@ -17,7 +17,7 @@ public class YelpRestaurantFinderTest {
     BoundingBox bb = new BoundingBox(
         new LatLng(37.803, -122.271),
         new LatLng(37.804, -122.270));
-    List<Restaurant> restaurants = yelp.findRestaurants(bb);
+    List<Restaurant> restaurants = yelp.findRestaurants(bb, 0);
     boolean containsGoldenLotus = false;
     for (Restaurant r : restaurants) {
       wellFormedRestaurant(r);
@@ -26,6 +26,33 @@ public class YelpRestaurantFinderTest {
       }
     }
     assertTrue(containsGoldenLotus);
+
+    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 20);
+    assertTrue(restaurants2.size() == 0);
+  }
+
+  @Test
+  public void testFindRestaurantsWithOffset() {
+    BoundingBox bb = new BoundingBox(
+        new LatLng(41.7, -71.3),
+        new LatLng(41.9, -71.5));
+    List<Restaurant> restaurants = yelp.findRestaurants(bb, 0);
+    assertTrue(restaurants.size() == 20);
+    for (Restaurant r : restaurants) {
+      wellFormedRestaurant(r);
+    }
+
+    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 20);
+    assertTrue(restaurants2.size() == 20);
+    for (Restaurant r : restaurants2) {
+      wellFormedRestaurant(r);
+    }
+
+    List<Restaurant> restaurants3 = yelp.findRestaurants(bb, 40);
+    assertTrue(restaurants3.size() == 20);
+    for (Restaurant r : restaurants3) {
+      wellFormedRestaurant(r);
+    }
   }
 
   @Test
@@ -36,7 +63,7 @@ public class YelpRestaurantFinderTest {
     assertTrue(dRest.getReviews().size() > 0);
     wellFormedRestaurant(dRest);
   }
-  
+
   @Test
   public void testDetailedRestaurantForID2() {
     DetailedRestaurant dRest = yelp.detailedRestaurantForID(
@@ -45,7 +72,7 @@ public class YelpRestaurantFinderTest {
     assertTrue(dRest.getReviews().size() > 0);
     wellFormedRestaurant(dRest);
   }
-  
+
   @Test
   public void testDetailedRestaurantForID3() {
     DetailedRestaurant dRest = yelp.detailedRestaurantForID(
@@ -54,7 +81,7 @@ public class YelpRestaurantFinderTest {
     assertTrue(dRest.getReviews().size() > 0);
     wellFormedRestaurant(dRest);
   }
-  
+
   static void wellFormedRestaurant(Restaurant r) {
     assertTrue(r.getId() != null && r.getId().length() > 0);
     assertTrue(r.getName() != null && r.getName().length() > 0);
@@ -65,7 +92,7 @@ public class YelpRestaurantFinderTest {
     assertTrue(r.getRating() >= 0 && r.getRating() <= 5);
     assertTrue(r.getAddress() != null && r.getAddress().length() > 0);
   }
-  
+
   static void wellFormedDetailedRestaurant(DetailedRestaurant dr) {
     wellFormedRestaurant(dr);
     assertTrue(dr.getUrl() != null && dr.getUrl().length() > 0);
@@ -75,7 +102,7 @@ public class YelpRestaurantFinderTest {
       wellFormedReview(rev);
     }
   }
-  
+
   static void wellFormedReview(Review rev) {
     assertTrue(rev.getId() != null && rev.getId().length() > 0);
     assertTrue(rev.getRating() >= 0 && rev.getRating() <= 5);

@@ -65,12 +65,14 @@ public class YelpAPI {
    */
   public String searchForRestaurantsByBounds(
       double sw_latitude, double sw_longitude,
-      double ne_latitude, double ne_longitude) {
+      double ne_latitude, double ne_longitude,
+      int offset) {
     OAuthRequest request = createOAuthRequest(SEARCH_PATH);
     request.addQuerystringParameter("category_filter", "restaurants");
     request.addQuerystringParameter("bounds",
         String.format("%s,%s|%s,%s",
             sw_latitude, sw_longitude, ne_latitude, ne_longitude));
+    request.addQuerystringParameter("offset", Integer.toString(offset));
     return sendRequestAndGetResponse(request);
   }
 

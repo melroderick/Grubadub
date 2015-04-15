@@ -18,20 +18,22 @@ public class YelpRestaurantFinder implements RestaurantFinder {
   }
 
   @Override
-  public List<Restaurant> findRestaurants(BoundingBox bb) {
+  public List<Restaurant> findRestaurants(BoundingBox bb, int offset) {
     String searchResponseJSON =
         YELP_API.searchForRestaurantsByBounds(
             bb.getSW().getLat(), bb.getSW().getLng(),
-            bb.getNE().getLat(), bb.getNE().getLng());
-    //System.out.println(searchResponseJSON);
+            bb.getNE().getLat(), bb.getNE().getLng(),
+            offset);
 
     JSONParser parser = new JSONParser();
     JSONObject responseObject = null;
     try {
       responseObject = (JSONObject) parser.parse(searchResponseJSON);
     } catch (ParseException pe) {
-      // TODO: ERROR response
-      pe.printStackTrace();
+      System.out.println("Error parsing Yelp json result: " +
+          searchResponseJSON);
+      System.out.println("for restaurants in BoundingBox: " +
+          bb);
       return null;
     }
 
@@ -47,15 +49,16 @@ public class YelpRestaurantFinder implements RestaurantFinder {
   @Override
   public DetailedRestaurant detailedRestaurantForID(String id) {
     String searchResponseJSON = YELP_API.searchByBusinessId(id);
-    //System.out.println(searchResponseJSON);
 
     JSONParser parser = new JSONParser();
     JSONObject restaurantObject = null;
     try {
       restaurantObject = (JSONObject) parser.parse(searchResponseJSON);
     } catch (ParseException pe) {
-      // TODO: ERROR response
-      pe.printStackTrace();
+      System.out.println("Error parsing Yelp json result: " +
+          searchResponseJSON);
+      System.out.println("for DetailedRestaurant of id = " +
+          id);
       return null;
     }
 

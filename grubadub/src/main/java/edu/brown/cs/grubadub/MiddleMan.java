@@ -34,7 +34,8 @@ public class MiddleMan {
   }
 
   protected List<Restaurant> findRestaurants(BoundingBox bb) {
-    return food.findRestaurants(bb);
+    // TODO: update to allow server to request with offset
+    return food.findRestaurants(bb, 0);
   }
 
   public DetailedRestaurant getRestaurantDetails(String id) {
