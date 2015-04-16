@@ -15,7 +15,7 @@ public class GoogleRouteTest {
   private Route portland2Providence;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     LatLng seattle = new LatLng(47.6097, -122.3331);
     LatLng portland = new LatLng(45.52, -122.6819);
     portland2Seatttle = (new GoogleRouteFinder()).getRoute(portland,

@@ -22,11 +22,14 @@ public interface RouteFinder {
    */
   int extraTime(LatLng start, String waypoint, String destination);
 
+<<<<<<< HEAD
   /** The time of the route between two locations.
    * @param start The start location.
    * @param end The end location.
    * @return The time of the route between start and end.
    */
+=======
+>>>>>>> f738c44d68849cad816cdfb213e0c77231fc4b30
   int timeToLoc(LatLng start, LatLng end);
 
 }

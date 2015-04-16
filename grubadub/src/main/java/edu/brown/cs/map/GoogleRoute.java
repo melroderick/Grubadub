@@ -121,4 +121,10 @@ class GoogleRoute implements Route {
     return null;
   }
 
+  @Override
+  public BoundingBox getBoundingBox(int start, int end) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }
