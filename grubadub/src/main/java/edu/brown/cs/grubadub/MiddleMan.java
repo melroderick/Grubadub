@@ -25,9 +25,12 @@ public class MiddleMan {
 
 
   public List<Restaurant> getRestaurants(LatLng curLoc, String destination, int minutes) {
-    Route route = getRoute(curLoc, destination);
 
-    BoundingBox bb = null;
+    // Get the route from the current location to the destination
+    Route route = getRoute(curLoc, destination);
+    // Get the Bounding box from the route where the user will be in 'minutes'
+    BoundingBox bb = route.getBoundingBox(minutes, minutes + 10);
+    // Find all restaurants within the bounding box
     List<Restaurant> restaurants = findRestaurants(bb);
 
     return restaurants;
