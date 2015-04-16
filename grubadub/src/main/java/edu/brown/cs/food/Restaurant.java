@@ -49,10 +49,9 @@ public class Restaurant implements Comparable<Restaurant> {
     @SuppressWarnings("unchecked")
     List<String> addresses = (List<String>) jsonLocation.get("address");
     if (addresses.size() > 0) {
-      streetAddress = addresses.get(0);
+      streetAddress = addresses.get(0) + ", ";
     }
-    this.address = streetAddress
-        + jsonLocation.get("city").toString() + " "
+    this.address = streetAddress + jsonLocation.get("city").toString() + " "
         + jsonLocation.get("state_code").toString() + " "
         + jsonLocation.get("postal_code").toString();
 
