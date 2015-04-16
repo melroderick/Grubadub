@@ -77,10 +77,4 @@ public class GoogleRouteFinder implements RouteFinder {
     return 0;
   }
 
-  @Override
-  public BoundingBox getBoundingBox(int start, int end) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
 }

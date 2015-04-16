@@ -4,7 +4,7 @@ public interface RouteFinder {
 
   /**
    * Gets a route between a start location and an end andress
-   * 
+   *
    * @param start
    *          The start location of the route.
    * @param address
@@ -28,6 +28,4 @@ public interface RouteFinder {
    * @return The time of the route between start and end.
    */
   int timeToLoc(LatLng start, LatLng end);
-
-  BoundingBox getBoundingBox(int start, int end);
 }
