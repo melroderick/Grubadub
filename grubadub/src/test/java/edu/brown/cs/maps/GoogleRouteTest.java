@@ -34,6 +34,19 @@ public class GoogleRouteTest {
         kelso.distanceFrom(guessGMapsPoint), .05);
   }
 
+  @Test
+  public void testGetBoundingBox() {
+
+    // BoundingBox bb1 = portland2Seatttle.getBoundingBox(40, 60);
+    // BoundingBox bb2 = portland2Providence.getBoundingBox(400, 500);
+  }
+
+  @Test
+  public void testGetLocIn() {
+    // System.out.println(portland2Providence.locIn(100));
+    // System.out.println(portland2Providence.locIn(500));
+  }
+
   /*
    * @Test public void testDistanceFromTime() { Long t1 = System.nanoTime();
    * LatLng kelso = new LatLng(46.161537, -122.892357);
