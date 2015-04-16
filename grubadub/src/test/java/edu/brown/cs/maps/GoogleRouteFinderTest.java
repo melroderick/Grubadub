@@ -51,8 +51,6 @@ public class GoogleRouteFinderTest {
         + "77 Massachusetts Avenue, Cambridge, MA 02139",
         "Harvard University, Cambridge, MA 02138");
 
-    System.out.println(extraTime);
-
     assertEquals(
         gMapsBrown2MIT2Hardvard - gMapsBrown2Harvard,
         extraTime,
