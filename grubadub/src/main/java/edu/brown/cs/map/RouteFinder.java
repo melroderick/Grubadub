@@ -29,4 +29,5 @@ public interface RouteFinder {
    */
   int timeToLoc(LatLng start, LatLng end);
 
+  BoundingBox getBoundingBox(int start, int end);
 }
