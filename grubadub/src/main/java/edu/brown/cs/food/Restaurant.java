@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 
 import edu.brown.cs.map.LatLng;
 
-public class Restaurant implements Comparable  {
+public class Restaurant implements Comparable<Restaurant> {
   private final String id;
   private final String name;
   private final List<String> categories;
@@ -18,9 +18,8 @@ public class Restaurant implements Comparable  {
   private final float rating;
   private final String address;
 
-  public Restaurant(String id, String name,
-      List<String> categories, LatLng latLng,
-      float rating, String address) {
+  public Restaurant(String id, String name, List<String> categories,
+      LatLng latLng, float rating, String address) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
@@ -42,10 +41,20 @@ public class Restaurant implements Comparable  {
 
     JSONObject jsonLocation = (JSONObject) jsonRestaurant.get("location");
     JSONObject jsonCoordinate = (JSONObject) jsonLocation.get("coordinate");
-    this.latLng = new LatLng(
-        Double.parseDouble(jsonCoordinate.get("latitude").toString()),
-        Double.parseDouble(jsonCoordinate.get("longitude").toString()));
-    this.address = jsonLocation.get("address").toString();
+    this.latLng = new LatLng(Double.parseDouble(jsonCoordinate.get("latitude")
+        .toString()), Double.parseDouble(jsonCoordinate.get("longitude")
+        .toString()));
+
+    String streetAddress = "";
+    @SuppressWarnings("unchecked")
+    List<String> addresses = (List<String>) jsonLocation.get("address");
+    if (addresses.size() > 0) {
+      streetAddress = addresses.get(0);
+    }
+    this.address = streetAddress
+        + jsonLocation.get("city").toString() + " "
+        + jsonLocation.get("state_code").toString() + " "
+        + jsonLocation.get("postal_code").toString();
 
     this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
   }
@@ -96,8 +105,8 @@ public class Restaurant implements Comparable  {
   }
 
   @Override
-  public int compareTo(Object obj) {
-    Restaurant r = (Restaurant) obj;
+  public int compareTo(Restaurant r) {
     return id.compareTo(r.id);
   }
+
 }
