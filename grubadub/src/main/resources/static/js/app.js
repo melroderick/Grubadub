@@ -54,10 +54,10 @@ function _distanceBetweenLatLngs(l1, l2) {
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 	var d = R * c; // Distance in km
 	
-	if (d < 1) {
-		return "< 1";
+	if (d == 0) {
+		return "< 0.1";
 	} else {
-		return Math.round(d*2)/2;
+		return Math.round(d*10)/10;
 	}
 }
 
