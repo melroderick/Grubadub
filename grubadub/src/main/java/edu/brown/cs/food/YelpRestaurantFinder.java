@@ -12,7 +12,6 @@ import edu.brown.cs.map.BoundingBox;
 
 public class YelpRestaurantFinder implements RestaurantFinder {
   final static int RESULTS_PER_PAGE = 20;
-  final static int NUMBER_OF_RESULTS = 100;
 
   private static YelpAPI YELP_API = new YelpAPI();
 
@@ -21,11 +20,12 @@ public class YelpRestaurantFinder implements RestaurantFinder {
   }
 
   @Override
-  public List<Restaurant> findRestaurants(BoundingBox bb, int offset) {
+  public List<Restaurant> findRestaurants(
+      BoundingBox bb, int numberOfResults, int offset) {
     List<List<Restaurant>> restaurantsLists = new ArrayList<List<Restaurant>>();
     List<FindRestaurantThread> threads = new ArrayList<FindRestaurantThread>();
     for (int o = offset;
-        o < NUMBER_OF_RESULTS + offset;
+        o < numberOfResults + offset;
         o += RESULTS_PER_PAGE) {
       List<Restaurant> restaurants = new ArrayList<Restaurant>();
       FindRestaurantThread thread =

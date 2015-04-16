@@ -2,7 +2,10 @@ package edu.brown.cs.food;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -17,7 +20,7 @@ public class YelpRestaurantFinderTest {
     BoundingBox bb = new BoundingBox(
         new LatLng(37.803, -122.271),
         new LatLng(37.804, -122.270));
-    List<Restaurant> restaurants = yelp.findRestaurants(bb, 0);
+    List<Restaurant> restaurants = yelp.findRestaurants(bb, 20, 0);
     boolean containsGoldenLotus = false;
     for (Restaurant r : restaurants) {
       wellFormedRestaurant(r);
@@ -27,7 +30,7 @@ public class YelpRestaurantFinderTest {
     }
     assertTrue(containsGoldenLotus);
 
-    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 20);
+    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 20, 20);
     assertTrue(restaurants2.size() == 0);
   }
 
@@ -36,21 +39,40 @@ public class YelpRestaurantFinderTest {
     BoundingBox bb = new BoundingBox(
         new LatLng(41.7, -71.3),
         new LatLng(41.9, -71.5));
-    List<Restaurant> restaurants = yelp.findRestaurants(bb, 0);
-    assertTrue(restaurants.size() == 100);
+    List<Restaurant> restaurants = yelp.findRestaurants(bb, 100, 0);
+    assert(restaurants.size() > 95);
+    testUniqueRestaurants(restaurants);
     for (Restaurant r : restaurants) {
       wellFormedRestaurant(r);
     }
 
-    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 100);
-    assertTrue(restaurants2.size() == 100);
+    List<Restaurant> restaurants2 = yelp.findRestaurants(bb, 100, 100);
+    assertTrue(restaurants2.size() > 95);
     for (Restaurant r : restaurants2) {
       wellFormedRestaurant(r);
     }
 
-    List<Restaurant> restaurants3 = yelp.findRestaurants(bb, 200);
-    assertTrue(restaurants3.size() == 100);
+    List<Restaurant> restaurants3 = yelp.findRestaurants(bb, 100, 200);
+    assertTrue(restaurants3.size() > 95);
     for (Restaurant r : restaurants3) {
+      wellFormedRestaurant(r);
+    }
+
+    List<Restaurant> allRestaurants = new ArrayList<Restaurant>(restaurants);
+    allRestaurants.addAll(restaurants2);
+    allRestaurants.addAll(restaurants3);
+    testUniqueRestaurants(allRestaurants);
+  }
+
+  @Test
+  public void testFindManyRestaurants() {
+    BoundingBox bb = new BoundingBox(
+        new LatLng(41.7, -71.3),
+        new LatLng(41.9, -71.5));
+    List<Restaurant> restaurants = yelp.findRestaurants(bb, 1000, 0);
+    assert(restaurants.size() > 995);
+    testUniqueRestaurants(restaurants);
+    for (Restaurant r : restaurants) {
       wellFormedRestaurant(r);
     }
   }
@@ -88,7 +110,8 @@ public class YelpRestaurantFinderTest {
     assertTrue(r.getCategories() != null
         && r.getCategories().size() > 0
         && r.getCategories().get(0).length() > 1);
-    assertTrue(r.getLatLng() != null);
+    // TODO: remove check??
+    //    assertTrue(r.getLatLng() != null);
     assertTrue(r.getRating() >= 0 && r.getRating() <= 5);
     assertTrue(r.getAddress() != null && r.getAddress().length() > 0);
   }
@@ -108,5 +131,13 @@ public class YelpRestaurantFinderTest {
     assertTrue(rev.getRating() >= 0 && rev.getRating() <= 5);
     assertTrue(rev.getUserName() != null && rev.getUserName().length() > 0);
     assertTrue(rev.getExcerpt() != null && rev.getExcerpt().length() > 0);
+  }
+
+  static void testUniqueRestaurants(List<Restaurant> restaurants) {
+    Set<String> ids = new HashSet<String>();
+    for (Restaurant r : restaurants) {
+      assert(!ids.contains(r.getId()));
+      ids.add(r.getId());
+    }
   }
 }

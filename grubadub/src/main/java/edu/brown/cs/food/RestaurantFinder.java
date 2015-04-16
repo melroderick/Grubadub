@@ -18,7 +18,10 @@ public interface RestaurantFinder {
    * @return a {@code List} of {@code Restaurant}s contained in
    * a specified bounding box.
    */
-  List<Restaurant> findRestaurants(BoundingBox bb, int offset);
+  List<Restaurant> findRestaurants(
+      BoundingBox bb,
+      int numberOfResults,
+      int offset);
   
   /**
    * Returns a {@code DetailedRestaurant}s with a specified

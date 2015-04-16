@@ -20,7 +20,8 @@ public class TestRestaurantFinder implements RestaurantFinder {
   }
 
   @Override
-  public List<Restaurant> findRestaurants(BoundingBox bb, int offset) {
+  public List<Restaurant> findRestaurants(
+      BoundingBox bb, int numberOfResults, int offset) {
     List<Restaurant> found = new ArrayList<>();
 
     for (Restaurant r : restaurants) {
