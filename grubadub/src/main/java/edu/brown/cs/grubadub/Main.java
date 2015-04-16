@@ -69,11 +69,8 @@ public final class Main {
       List<Restaurant> restaurants = middleman.getRestaurants(loc, destination,
           time);
 
-      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("restaurants", restaurants).build();
-
       res.type("text/json");
-      return GSON.toJson(variables);
+      return GSON.toJson(restaurants);
     }
   }
 
