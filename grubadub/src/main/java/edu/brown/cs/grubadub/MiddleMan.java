@@ -1,5 +1,6 @@
 package edu.brown.cs.grubadub;
 
+import java.util.Collections;
 import java.util.List;
 
 import edu.brown.cs.food.DetailedRestaurant;
@@ -32,6 +33,10 @@ public class MiddleMan {
     BoundingBox bb = route.getBoundingBox(minutes, minutes + 10);
     // Find all restaurants within the bounding box
     List<Restaurant> restaurants = findRestaurants(bb);
+
+    Collections.sort(restaurants, (r1, r2) -> Double.compare(
+        curLoc.distanceFrom(r1.getLatLng()),
+        curLoc.distanceFrom(r2.getLatLng())));
 
     return restaurants;
   }
