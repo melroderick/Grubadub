@@ -37,4 +37,5 @@ public interface Route {
    */
   List<LatLng> pointsAlong(int start, int end);
 
+  BoundingBox getBoundingBox(int start, int end);
 }
