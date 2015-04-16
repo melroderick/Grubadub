@@ -198,8 +198,8 @@ class GoogleRoute implements Route {
     double minLng = Collections.min(lngs);
     double maxLng = Collections.max(lngs);
 
-    LatLng sw = new LatLng(minLat, maxLng);
-    LatLng ne = new LatLng(maxLat, minLng);
+    LatLng sw = new LatLng(minLat, minLng);
+    LatLng ne = new LatLng(maxLat, maxLng);
 
     return new BoundingBox(sw, ne);
   }
