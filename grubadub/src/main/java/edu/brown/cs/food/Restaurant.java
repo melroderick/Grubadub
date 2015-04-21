@@ -51,12 +51,17 @@ public class Restaurant implements Comparable<Restaurant> {
 
     @SuppressWarnings("unchecked")
     List<String> addresses = (List<String>) jsonLocation.get("address");
-    if (addresses.size() > 0) {
-      streetAddress = addresses.get(0) + ", ";
-    }
-    this.address = streetAddress + jsonLocation.get("city").toString() + " "
-        + jsonLocation.get("state_code").toString() + " "
-        + jsonLocation.get("postal_code").toString();
+    String streetAddress = (addresses.size() > 0) ? addresses.get(0) : "";
+    Object jsonCity = jsonLocation.get("city");
+    String city = (jsonCity != null) ? jsonCity.toString() : "";
+    Object jsonPostal_code = jsonLocation.get("city");
+    String postal_code = (jsonPostal_code != null) ? jsonPostal_code.toString() : "";
+    Object jsonState_code = jsonLocation.get("city");
+    String state_code = (jsonState_code != null) ? jsonState_code.toString() : "";
+    this.address = streetAddress
+        + city + " "
+        + postal_code + " "
+        + state_code;
 
     this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
   }

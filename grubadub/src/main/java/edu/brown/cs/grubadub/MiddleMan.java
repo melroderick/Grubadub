@@ -41,10 +41,11 @@ public class MiddleMan {
     return restaurants;
   }
 
+  final static int NUMBER_OF_YELP_RESULTS = 1000;
   protected List<Restaurant> findRestaurants(BoundingBox bb) {
     // TODO: update to allow GUI to request
     // with number of results and/or with offset
-    return food.findRestaurants(bb, 100, 0);
+    return food.findRestaurants(bb, NUMBER_OF_YELP_RESULTS, 0);
   }
 
   public DetailedRestaurant getRestaurantDetails(String id) {
