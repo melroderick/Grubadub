@@ -20,6 +20,7 @@ public class LatLng implements KDData {
     this.lng = lng;
   }
 
+  // Convert from Google LatLng to ours.
   protected LatLng(com.google.maps.model.LatLng gLoc) {
     this.lat = gLoc.lat;
     this.lng = gLoc.lng;
@@ -75,9 +76,13 @@ public class LatLng implements KDData {
     }
   }
 
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString() {
-    return lat + ":" + lng;
+    return "LatLng [lat=" + lat + ", lng=" + lng + "]";
   }
 
   @Override

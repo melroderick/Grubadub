@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.brown.cs.map.BoundingBox;
 import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
 import edu.brown.cs.map.Route;
@@ -32,6 +33,21 @@ public class GoogleRouteTest {
     assertEquals(portland2Seatttle.distanceFrom(kelso), .5, .05);
     assertEquals(portland2Seatttle.distanceFrom(kelso),
         kelso.distanceFrom(guessGMapsPoint), .05);
+  }
+
+  @Test
+  public void testGetBoundingBox() {
+
+    BoundingBox bb1 = portland2Seatttle.getBoundingBox(40, 60);
+    BoundingBox bb2 = portland2Providence.getBoundingBox(400, 500);
+    System.out.println(bb1.getNE());
+    System.out.println(bb1.getSW());
+  }
+
+  @Test
+  public void testGetLocIn() {
+    // System.out.println(portland2Providence.locIn(100));
+    // System.out.println(portland2Providence.locIn(500));
   }
 
   /*

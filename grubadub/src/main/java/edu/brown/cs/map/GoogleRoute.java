@@ -1,6 +1,7 @@
 package edu.brown.cs.map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +21,11 @@ class GoogleRoute implements Route {
   private int routeTime;
 
   private List<LatLng> polylinePoints;
-  private List<LatLng> detailedPolylinePoints;
-  private List<LatLng> pointsAlong;
-  private KDTree<LatLng> kdt;
+
+  private List<TimePlace> detailedTimePlaces;
+  private List<TimePlace> filledInDetailedTimePlaces;
+
+  private KDTree<TimePlace> kdt;
 
   public GoogleRoute(DirectionsRoute[] routes) {
     if (routes.length >= 1) {
@@ -33,58 +36,97 @@ class GoogleRoute implements Route {
       routeTime = (int) gLeg.duration.inSeconds / 60;
 
       polylinePoints = gRoute.overviewPolyline.decodePath().stream()
-          .map(p -> new LatLng(p)).collect(Collectors.toList());
+          .map(p -> new LatLng(p))
+          .collect(Collectors.toList());
 
       gSteps = Lists.newArrayList(gLeg.steps);
 
-      detailedPolylinePoints = new ArrayList<>();
+      detailedTimePlaces = new ArrayList<>();
+
+      int currTime = 0;
       for (DirectionsStep step : gSteps) {
         List<com.google.maps.model.LatLng> gStepPoints = step.polyline
             .decodePath();
 
-        List<LatLng> stepPoints = gStepPoints.stream().map(p -> new LatLng(p))
+        List<LatLng> stepPoints = gStepPoints.stream()
+            .map(p -> new LatLng(p))
             .collect(Collectors.toList());
 
-        detailedPolylinePoints.addAll(stepPoints);
+        int stepTime = (int) step.duration.inSeconds;
+        detailedTimePlaces.addAll(
+            buildTimePlaces(currTime, stepTime, stepPoints));
+
+        currTime += stepTime;
       }
 
-      pointsAlong = fillIn(detailedPolylinePoints, .1);
-      kdt = new KDTree<>(pointsAlong);
+      List<Integer> times = detailedTimePlaces.stream().map(tp -> tp.timeInSeconds()).collect(Collectors.toList());
+      // System.out.println("Detailed time places good: " + Ordering.natural().isOrdered(times));
+
+      filledInDetailedTimePlaces = fillIn(detailedTimePlaces, .1);
+
+      times = filledInDetailedTimePlaces.stream().map(tp -> tp.timeInSeconds()).collect(Collectors.toList());
+      // System.out.println("Filled in detailed time places good: " + Ordering.natural().isOrdered(times));
+      kdt = new KDTree<>(filledInDetailedTimePlaces);
     }
   }
 
-  private List<LatLng> fillIn(List<LatLng> points, double maxDist) {
+  private List<TimePlace> buildTimePlaces(int startTime, int pathTime,
+      List<LatLng> path) {
+    double pathDist = pathDistance(path);
 
-    // Because of spherical/LatLng issues, not super precise for filling
-    // big gaps between points.
+    List<TimePlace> timePlaces = new ArrayList<>();
+    timePlaces.add(new TimePlace(startTime, path.get(0)));
 
-    LatLng p1, p2;
-    double dLat, dLng;
-    double dist;
-    int numNewPoints;
-    List<LatLng> newList = new ArrayList<>();
-    for (int i = 0; i < points.size() - 1; i++) {
-      p1 = points.get(i);
-      p2 = points.get(i + 1);
-      newList.add(p1);
+    double distSoFar = 0.0;
+    for (int i = 0; i < path.size() - 1; i++) {
+      distSoFar += path.get(i).distanceFrom(path.get(i + 1));
+      double percentDone = distSoFar / pathDist;
 
-      dist = p1.distanceFrom(p2);
-      numNewPoints = (int) (dist / maxDist);
+      timePlaces.add(new TimePlace(
+          startTime + (int) (percentDone * pathTime),
+          path.get(i + 1)));
+    }
+
+    return timePlaces;
+  }
+
+  private double pathDistance(List<LatLng> pathPoints) {
+    double dist = 0.0;
+    for (int i = 0; i < pathPoints.size() - 1; i++) {
+      dist += pathPoints.get(i).distanceFrom(pathPoints.get(i + 1));
+    }
+
+    return dist;
+  }
+
+  private List<TimePlace> fillIn(List<TimePlace> timePlaces, double maxDist) {
+    List<TimePlace> newList = new ArrayList<>();
+    for (int i = 0; i < timePlaces.size() - 1; i++) {
+      TimePlace tp1 = timePlaces.get(i);
+      TimePlace tp2 = timePlaces.get(i + 1);
+      newList.add(tp1);
+
+      double dist = tp1.distanceFrom(tp2);
+      int numNewPoints = (int) (dist / maxDist);
 
       for (int j = 1; j <= numNewPoints; j++) {
-        dLat = (p2.getLat() - p1.getLat()) / (numNewPoints + 1);
-        dLng = (p2.getLng() - p1.getLng()) / (numNewPoints + 1);
+        double dLat = (tp2.getLoc().getLat() - tp1.getLoc().getLat())
+            / (numNewPoints + 1);
+        double dLng = (tp2.getLoc().getLng() - tp1.getLoc().getLng())
+            / (numNewPoints + 1);
+        double dTime = tp2.timeInSeconds() - tp1.timeInSeconds()
+            / (numNewPoints + 1);
 
-        LatLng newPoint = new LatLng(p1.getLat() + j * dLat, p1.getLng() + j
-            * dLng);
-        newList.add(newPoint);
+        LatLng newLoc = new LatLng(
+            tp1.getLoc().getLat() + j * dLat,
+            tp1.getLoc().getLng() + j * dLng);
+        int newTime = (int) (tp1.timeInSeconds() + j * dTime);
+        newList.add(new TimePlace(newTime, newLoc));
       }
     }
 
-    LatLng lastPoint = points.get(points.size() - 1);
-    newList.add(lastPoint);
-
     return newList;
+
   }
 
   @Override
@@ -99,32 +141,67 @@ class GoogleRoute implements Route {
 
   @Override
   public double distanceFrom(LatLng loc) {
-    /*
-     * List<Double> distances = pointsAlong.stream() .map(p ->
-     * p.distanceFrom(loc)) .collect(Collectors.toList()); double naive =
-     * Collections.min(distances); return naive;
+    /* Naive implementation
+     * List<Double> distances = pointsAlong.stream()
+     * .map(p -> p.distanceFrom(loc))
+     * .collect(Collectors.toList());
+     * double naive = Collections.min(distances);
+     * return naive;
      */
 
-    LatLng nn = kdt.nearestNeighbor(loc);
+    TimePlace dummy = new TimePlace(-1, loc);
+
+    LatLng nn = kdt.nearestNeighbor(dummy).getLoc();
     return nn.distanceFrom(loc);
   }
 
   @Override
   public LatLng locIn(int minutes) {
-    // TODO Auto-generated method stub
-    return null;
+    for (TimePlace tp : detailedTimePlaces) {
+      if (tp.timeInMinutes() >= minutes) {
+        return tp.getLoc();
+      }
+    }
+
+    return detailedTimePlaces.get(detailedTimePlaces.size() - 1).getLoc();
   }
 
   @Override
   public List<LatLng> pointsAlong(int start, int end) {
-    // TODO Auto-generated method stub
-    return null;
+    int startSeconds = start * 60;
+    int endSeconds = end * 60;
+
+    List<LatLng> pointsAlong = detailedTimePlaces.stream()
+        .filter(tp -> {
+          int time = tp.timeInSeconds();
+          return time >= startSeconds && time <= endSeconds;})
+
+        .map(tp -> tp.getLoc())
+        .collect(Collectors.toList());
+
+    return pointsAlong;
   }
 
   @Override
   public BoundingBox getBoundingBox(int start, int end) {
-    // TODO Auto-generated method stub
-    return null;
+    List<LatLng> points = pointsAlong(start, end);
+
+    List<Double> lats = points.stream()
+        .map(p -> p.getLat())
+        .collect(Collectors.toList());
+    double minLat = Collections.min(lats);
+    double maxLat = Collections.max(lats);
+
+    List<Double> lngs = points.stream()
+        .map(p -> p.getLng())
+        .collect(Collectors.toList());
+    double minLng = Collections.min(lngs);
+    double maxLng = Collections.max(lngs);
+
+    LatLng sw = new LatLng(minLat, minLng);
+    LatLng ne = new LatLng(maxLat, maxLng);
+
+    return new BoundingBox(sw, ne);
   }
 
 }
