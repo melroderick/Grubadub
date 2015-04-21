@@ -28,6 +28,9 @@ app.SearchView = Backbone.View.extend({
 			};
 
 			$("#find-curr-location").addClass("loc-found");
+			$("#time-options.disabled").removeClass("disabled");
+
+			// TODO: do better to reverse geocode coordinates into human readable format
 			$("#find-curr-location").html(p.coords.latitude + ", " + p.coords.longitude);
 		})
 	},
