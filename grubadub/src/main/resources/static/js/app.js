@@ -61,6 +61,22 @@ function _distanceBetweenLatLngs(l1, l2) {
 	}
 }
 
+function _filterSortedRestaurants(restaurants) {
+	if (true) { // filtering all restaurants lower than 3 stars
+		var filterPredicate = function (r) {
+			return r.attributes.rating >= 3;
+		}
+	}
+
+	if (true) { // sorting by stars
+		var sortScorer = function (r) {
+			return -r.attributes.rating;
+		}
+	}
+
+	return new app.Restaurants(_.sortBy(restaurants.filter(filterPredicate), sortScorer));
+}
+
 function toRadians(deg) {
 	return deg * (Math.PI/180);
 }
