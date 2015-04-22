@@ -100,6 +100,7 @@ public class YelpRestaurantFinder implements RestaurantFinder {
             searchResponseJSON);
         System.out.println("for restaurants in BoundingBox: " +
             bb);
+        return;
       }
 
       JSONArray jsonRestaurants = (JSONArray) responseObject.get("businesses");

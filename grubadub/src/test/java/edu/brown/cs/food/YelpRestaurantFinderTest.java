@@ -107,11 +107,12 @@ public class YelpRestaurantFinderTest {
   static void wellFormedRestaurant(Restaurant r) {
     assertTrue(r.getId() != null && r.getId().length() > 0);
     assertTrue(r.getName() != null && r.getName().length() > 0);
+    if (r.getImage_url() != null) {
+      assertTrue(r.getImage_url().length() > 0);
+    }
     assertTrue(r.getCategories() != null
         && r.getCategories().size() > 0
         && r.getCategories().get(0).length() > 1);
-    // TODO: remove check??
-    //    assertTrue(r.getLatLng() != null);
     assertTrue(r.getRating() >= 0 && r.getRating() <= 5);
     assertTrue(r.getAddress() != null && r.getAddress().length() > 0);
   }

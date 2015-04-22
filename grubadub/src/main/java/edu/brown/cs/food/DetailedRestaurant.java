@@ -17,9 +17,9 @@ public class DetailedRestaurant extends Restaurant {
   private final String url;
 
   public DetailedRestaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, String address, List<Review> reviews,
-      String phoneNumber, String url) {
-    super(id, name, categories, latLng, rating, address);
+      LatLng latLng, float rating, String address, String image_url,
+      List<Review> reviews, String phoneNumber, String url) {
+    super(id, name, categories, latLng, rating, address, image_url);
     this.reviews = ImmutableList.copyOf(reviews);
     this.phoneNumber = phoneNumber;
     this.url = url;

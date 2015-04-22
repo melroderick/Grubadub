@@ -17,26 +17,33 @@ public class Restaurant implements Comparable<Restaurant> {
   private final LatLng latLng;
   private final float rating;
   private final String address;
+  private final String image_url;
 
   public Restaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, String address) {
+      LatLng latLng, float rating, String address, String image_url) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
     this.latLng = latLng;
     this.rating = rating;
     this.address = address;
+    this.image_url = image_url;
   }
 
   public Restaurant(JSONObject jsonRestaurant) {
     this.id = jsonRestaurant.get("id").toString();
     this.name = jsonRestaurant.get("name").toString();
 
+    Object jsonImageURL = jsonRestaurant.get("image_url");
+    this.image_url = jsonImageURL != null ? jsonImageURL.toString() : null;
+
     categories = new ArrayList<String>();
     JSONArray jsonCategories = (JSONArray) jsonRestaurant.get("categories");
-    for (int i = 0; i < jsonCategories.size(); i++) {
-      JSONArray jsonCategory = (JSONArray) jsonCategories.get(i);
-      categories.add(jsonCategory.get(0).toString());
+    if (jsonCategories != null) {
+      for (int i = 0; i < jsonCategories.size(); i++) {
+        JSONArray jsonCategory = (JSONArray) jsonCategories.get(i);
+        categories.add(jsonCategory.get(0).toString());
+      }
     }
 
     JSONObject jsonLocation = (JSONObject) jsonRestaurant.get("location");
@@ -44,7 +51,7 @@ public class Restaurant implements Comparable<Restaurant> {
     if (jsonCoordinate != null) {
       this.latLng = new LatLng(Double.parseDouble(jsonCoordinate.get("latitude")
           .toString()), Double.parseDouble(jsonCoordinate.get("longitude")
-          .toString()));
+              .toString()));
     } else {
       this.latLng = null;
     }
@@ -114,6 +121,10 @@ public class Restaurant implements Comparable<Restaurant> {
   @Override
   public int compareTo(Restaurant r) {
     return id.compareTo(r.id);
+  }
+
+  public String getImage_url() {
+    return image_url;
   }
 
 }
