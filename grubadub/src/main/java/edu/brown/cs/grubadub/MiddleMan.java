@@ -1,5 +1,6 @@
 package edu.brown.cs.grubadub;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import edu.brown.cs.food.Restaurant;
 import edu.brown.cs.food.RestaurantFinder;
 import edu.brown.cs.map.BoundingBox;
 import edu.brown.cs.map.LatLng;
+import edu.brown.cs.map.RestaurantOnRoute;
 import edu.brown.cs.map.Route;
 import edu.brown.cs.map.RouteFinder;
 
@@ -25,7 +27,7 @@ public class MiddleMan {
   }
 
 
-  public List<Restaurant> getRestaurants(LatLng curLoc, String destination, int minutes) {
+  public List<RestaurantOnRoute> getRestaurants(LatLng curLoc, String destination, int minutes) {
 
     // Get the route from the current location to the destination
     Route route = getRoute(curLoc, destination);
@@ -34,11 +36,14 @@ public class MiddleMan {
     // Find all restaurants within the bounding box
     List<Restaurant> restaurants = findRestaurants(bb);
 
-    Collections.sort(restaurants, (r1, r2) -> Double.compare(
-        curLoc.distanceFrom(r1.getLatLng()),
-        curLoc.distanceFrom(r2.getLatLng())));
+    List<RestaurantOnRoute> restaurantsOnRoute =
+        new ArrayList<RestaurantOnRoute>(restaurants.size());
+    for (Restaurant r : restaurants) {
+      RestaurantOnRoute restaurantOnRoute = new RestaurantOnRoute(r, route);
+      restaurantsOnRoute.add(restaurantOnRoute);
+    }
 
-    return restaurants;
+    return restaurantsOnRoute;
   }
 
   final static int NUMBER_OF_YELP_RESULTS = 1000;
