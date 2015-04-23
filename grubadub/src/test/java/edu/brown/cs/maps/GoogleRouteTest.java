@@ -40,8 +40,6 @@ public class GoogleRouteTest {
 
     BoundingBox bb1 = portland2Seatttle.getBoundingBox(40, 60);
     BoundingBox bb2 = portland2Providence.getBoundingBox(400, 500);
-    System.out.println(bb1.getNE());
-    System.out.println(bb1.getSW());
   }
 
   @Test
