@@ -4,7 +4,7 @@ import edu.brown.cs.food.Restaurant;
 
 public class RestaurantOnRoute {
 
-  private final Restaurant r;
+  private final Restaurant restaurant;
   private final int timeToRestaurant;
   private final double distFromRoute;
 
@@ -19,14 +19,14 @@ public class RestaurantOnRoute {
   }
 
   private RestaurantOnRoute(Restaurant rest, TimePlace tp) {
-    this.r = rest;
+    this.restaurant = rest;
 
     timeToRestaurant = tp.timeInMinutes();
     distFromRoute = tp.distanceFrom(rest.getLatLng());
   }
 
   public Restaurant getRestaurant() {
-    return r; // This is cool because Restaurant is immutable
+    return restaurant; // This is cool because Restaurant is immutable
   }
 
   /** Gets the time in minutes to the location on the route
