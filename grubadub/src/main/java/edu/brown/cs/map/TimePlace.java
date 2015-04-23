@@ -2,7 +2,7 @@ package edu.brown.cs.map;
 
 import edu.brown.cs.kdtree.KDData;
 
-class TimePlace implements KDData {
+public class TimePlace implements KDData {
 
   private LatLng loc;
   private int timeInSeconds;

@@ -6,6 +6,7 @@ import java.util.List;
 import edu.brown.cs.map.BoundingBox;
 import edu.brown.cs.map.LatLng;
 import edu.brown.cs.map.Route;
+import edu.brown.cs.map.TimePlace;
 
 public class TestRoute implements Route {
 
@@ -48,5 +49,15 @@ public class TestRoute implements Route {
     LatLng sw = new LatLng(point.getLat() - 1.5, point.getLng() - 1.5);
     LatLng ne = new LatLng(point.getLat() + 1.5, point.getLng() + 1.5);
     return new BoundingBox(sw, ne);
+  }
+  @Override
+  public TimePlace nearestTimePlace(LatLng loc) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public BoundingBox getBoundingBox(int start, int end, double radius) {
+    // TODO Auto-generated method stub
+    return null;
   }
 }
