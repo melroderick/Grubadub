@@ -44,24 +44,6 @@ Backbone.View.prototype.close = function() {
 	this.unbind();
 }
 
-// function _distanceBetweenLatLngs(l1, l2) {
-// 	console.log(l1);
-// 	console.log(l2);
-
-//     var lat1 = toRadians(l1.lat);
-//     var lat2 = toRadians(l2.lat);
-
-//     var dLat = toRadians(l2.lat - l1.lat);
-//     var dLng = toRadians(l2.lng - l1.lng);
-
-//     var a = Math.pow(Math.sin(dLat / 2.0), 2.0)
-//         + (Math.cos(lat1) * Math.cos(lat2))
-//         + Math.pow(Math.sin(dLng / 2.0), 2.0);
-//     var c = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
-
-//     return 3958.76 * c;
-// }
-
 function _distanceBetweenLatLngs(l1, l2) {
 	var R = 3958.76; // Radius of the earth in miles
 	var dLat = toRadians(l2.lat-l1.lat);  // deg2rad below
@@ -72,11 +54,27 @@ function _distanceBetweenLatLngs(l1, l2) {
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 	var d = R * c; // Distance in km
 	
-	if (d < 1) {
-		return "< 1";
+	if (d == 0) {
+		return "< 0.1";
 	} else {
-		return Math.round(d*2)/2;
+		return Math.round(d*10)/10;
 	}
+}
+
+function _filterSortedRestaurants(restaurants) {
+	if (true) { // filtering all restaurants lower than 3 stars
+		var filterPredicate = function (r) {
+			return r.attributes.rating >= 3;
+		}
+	}
+
+	if (true) { // sorting by stars
+		var sortScorer = function (r) {
+			return -r.attributes.rating;
+		}
+	}
+
+	return new app.Restaurants(_.sortBy(restaurants.filter(filterPredicate), sortScorer));
 }
 
 function toRadians(deg) {

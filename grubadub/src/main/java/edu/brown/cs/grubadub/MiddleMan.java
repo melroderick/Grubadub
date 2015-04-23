@@ -1,5 +1,6 @@
 package edu.brown.cs.grubadub;
 
+import java.util.Collections;
 import java.util.List;
 
 import edu.brown.cs.food.DetailedRestaurant;
@@ -33,12 +34,18 @@ public class MiddleMan {
     // Find all restaurants within the bounding box
     List<Restaurant> restaurants = findRestaurants(bb);
 
+    Collections.sort(restaurants, (r1, r2) -> Double.compare(
+        curLoc.distanceFrom(r1.getLatLng()),
+        curLoc.distanceFrom(r2.getLatLng())));
+
     return restaurants;
   }
 
+  final static int NUMBER_OF_YELP_RESULTS = 1000;
   protected List<Restaurant> findRestaurants(BoundingBox bb) {
-    // TODO: update to allow server to request with offset
-    return food.findRestaurants(bb, 0);
+    // TODO: update to allow GUI to request
+    // with number of results and/or with offset
+    return food.findRestaurants(bb, NUMBER_OF_YELP_RESULTS, 0);
   }
 
   public DetailedRestaurant getRestaurantDetails(String id) {

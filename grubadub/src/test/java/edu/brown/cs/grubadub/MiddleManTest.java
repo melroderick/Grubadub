@@ -13,6 +13,7 @@ import edu.brown.cs.food.Restaurant;
 import edu.brown.cs.food.RestaurantFinder;
 import edu.brown.cs.map.BoundingBox;
 import edu.brown.cs.map.LatLng;
+import edu.brown.cs.map.Route;
 import edu.brown.cs.map.RouteFinder;
 
 public class MiddleManTest {
@@ -28,10 +29,10 @@ public class MiddleManTest {
     List<String> c = new ArrayList<>();
     c.add("Fast Casual");
 
-    chipotle = new Restaurant("0", "Chipotle", c, new LatLng(0.1, 0.1), 5, "A");
-    fiveGuys = new Restaurant("1", "Five Guys", c, new LatLng(5.0, 5.0), 4, "B");
-    subway = new Restaurant("2", "Subway", c, new LatLng(3.2, 2.7), 3, "C");
-    soban = new Restaurant("3", "Soban", c, new LatLng(1.2, 4.3), 4.3f, "D");
+    chipotle = new Restaurant("0", "Chipotle", c, new LatLng(0.1, 0.1), 5, "A", "");
+    fiveGuys = new Restaurant("1", "Five Guys", c, new LatLng(5.0, 5.0), 4, "B", "");
+    subway = new Restaurant("2", "Subway", c, new LatLng(3.2, 2.7), 3, "C", "");
+    soban = new Restaurant("3", "Soban", c, new LatLng(1.2, 4.3), 4.3f, "D", "");
     Restaurant[] restaurants = new Restaurant[] {chipotle, fiveGuys, subway, soban};
 
 
@@ -86,7 +87,28 @@ public class MiddleManTest {
     assertTrue(Arrays.equals(expected, actual));
   }
 
-  public void detailRestaurantTest() {
+  // Map tests
 
+  @Test
+  public void fullTestFromA() {
+    List<Restaurant> result = middleman.getRestaurants(new LatLng(0.0, 0.0), "a", 1);
+    Restaurant[] actual =  result.toArray(new Restaurant[result.size()]);
+    Restaurant[] expected = new Restaurant[] {subway};
+    assertTrue(Arrays.equals(expected, actual));
+  }
+  @Test
+  public void fullTestFromB() {
+    List<Restaurant> result = middleman.getRestaurants(new LatLng(0.0, 0.0), "b", 2);
+    Restaurant[] actual =  result.toArray(new Restaurant[result.size()]);
+    Restaurant[] expected = new Restaurant[] {subway, fiveGuys};
+    assertTrue(Arrays.equals(expected, actual));
+  }
+
+  @Test
+  public void fullTestFromC() {
+    List<Restaurant> result = middleman.getRestaurants(new LatLng(0.0, 0.0), "c", 3);
+    Restaurant[] actual =  result.toArray(new Restaurant[result.size()]);
+    Restaurant[] expected = new Restaurant[] {soban};
+    assertTrue(Arrays.equals(expected, actual));
   }
 }

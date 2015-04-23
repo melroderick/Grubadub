@@ -28,6 +28,9 @@ app.SearchView = Backbone.View.extend({
 			};
 
 			$("#find-curr-location").addClass("loc-found");
+			$("#time-options.disabled").removeClass("disabled");
+
+			// TODO: do better to reverse geocode coordinates into human readable format
 			$("#find-curr-location").html(p.coords.latitude + ", " + p.coords.longitude);
 		})
 	},
@@ -36,49 +39,14 @@ app.SearchView = Backbone.View.extend({
 		e.preventDefault();
 
 		if (app.currentLoc) {
-			var test = [
-				{
-					id: "golden-lotus-vegetarian-restaurant-oakland",
-					name: "Chipotle",
-					rating: 4.5,
-					address: "215 Thayer Street, Providence RI",
-					latLng: {
-						lat: 41.8298,
-						lng: -71.4014
-					}
-				},
-				{
-					id: "bajas",
-					name: "Baja's",
-					rating: 5.0,
-					address: "215 Thayer Street, Providence RI",
-					latLng: {
-						lat: 41.8298,
-						lng: -71.4016
-					}
-				},
-				{
-					id: "some-bs",
-					name: "Paragon",
-					rating: 4.0,
-					address: "215 Thayer Street, Providence RI",
-					latLng: {
-						lat: 41.8294,
-						lng: -71.4012
-					}
-				}
-			];
-
-			app.foundRestaurants = new app.Restaurants(test);
-
-			// app.foundRestaurants = new app.Restaurants();
-			// app.foundRestaurants.lat = app.currentLoc.lat;
-			// app.foundRestaurants.lng = app.currentLoc.lng;
-			// app.foundRestaurants.destination = $("input[name=destination]").val();
-			// app.foundRestaurants.time = parseInt($(e.currentTarget).attr('data-time'))
-			// app.foundRestaurants.fetch();
-
-			app.router.navigate("results", { trigger: true });
+			app.foundRestaurants = new app.Restaurants();
+			app.foundRestaurants.lat = app.currentLoc.lat;
+			app.foundRestaurants.lng = app.currentLoc.lng;
+			app.foundRestaurants.destination = $("input[name=destination]").val();
+			app.foundRestaurants.time = parseInt($(e.currentTarget).attr('data-time'))
+			app.foundRestaurants.fetch({success: function() {
+				app.router.navigate("results", { trigger: true });
+			}});
 		}
 	}
 

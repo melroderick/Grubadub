@@ -17,33 +17,26 @@ public class Restaurant implements Comparable<Restaurant> {
   private final LatLng latLng;
   private final float rating;
   private final String address;
-  private final String image_url;
 
   public Restaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, String address, String image_url) {
+      LatLng latLng, float rating, String address) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
     this.latLng = latLng;
     this.rating = rating;
     this.address = address;
-    this.image_url = image_url;
   }
 
   public Restaurant(JSONObject jsonRestaurant) {
     this.id = jsonRestaurant.get("id").toString();
     this.name = jsonRestaurant.get("name").toString();
 
-    Object jsonImageURL = jsonRestaurant.get("image_url");
-    this.image_url = jsonImageURL != null ? jsonImageURL.toString() : null;
-
     categories = new ArrayList<String>();
     JSONArray jsonCategories = (JSONArray) jsonRestaurant.get("categories");
-    if (jsonCategories != null) {
-      for (int i = 0; i < jsonCategories.size(); i++) {
-        JSONArray jsonCategory = (JSONArray) jsonCategories.get(i);
-        categories.add(jsonCategory.get(0).toString());
-      }
+    for (int i = 0; i < jsonCategories.size(); i++) {
+      JSONArray jsonCategory = (JSONArray) jsonCategories.get(i);
+      categories.add(jsonCategory.get(0).toString());
     }
 
     JSONObject jsonLocation = (JSONObject) jsonRestaurant.get("location");
@@ -51,13 +44,14 @@ public class Restaurant implements Comparable<Restaurant> {
     if (jsonCoordinate != null) {
       this.latLng = new LatLng(Double.parseDouble(jsonCoordinate.get("latitude")
           .toString()), Double.parseDouble(jsonCoordinate.get("longitude")
-              .toString()));
+          .toString()));
     } else {
       this.latLng = null;
     }
 
     @SuppressWarnings("unchecked")
     List<String> addresses = (List<String>) jsonLocation.get("address");
+<<<<<<< HEAD
     String streetAddress = (addresses.size() > 0) ? addresses.get(0) : "";
     Object jsonCity = jsonLocation.get("city");
     String city = (jsonCity != null) ? jsonCity.toString() : "";
@@ -69,6 +63,14 @@ public class Restaurant implements Comparable<Restaurant> {
         + city + " "
         + postal_code + " "
         + state_code;
+=======
+    if (addresses.size() > 0) {
+      streetAddress = addresses.get(0) + ", ";
+    }
+    this.address = streetAddress + jsonLocation.get("city").toString() + " "
+        + jsonLocation.get("state_code").toString() + " "
+        + jsonLocation.get("postal_code").toString();
+>>>>>>> da5596db338912a175c7dd19ebb7dddb0c055446
 
     this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
   }
@@ -121,10 +123,6 @@ public class Restaurant implements Comparable<Restaurant> {
   @Override
   public int compareTo(Restaurant r) {
     return id.compareTo(r.id);
-  }
-
-  public String getImage_url() {
-    return image_url;
   }
 
 }
