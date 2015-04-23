@@ -37,6 +37,7 @@ public class DetailedRestaurant extends Restaurant {
       Review r = new Review((JSONObject) jsonReviews.get(i));
       reviews.add(r);
     }
+    System.out.println(reviews.size());
   }
 
   public List<Review> getReviews() {

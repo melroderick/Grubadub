@@ -21,6 +21,7 @@ import edu.brown.cs.food.RestaurantFinder;
 import edu.brown.cs.food.YelpRestaurantFinder;
 import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
+import edu.brown.cs.map.RestaurantOnRoute;
 import edu.brown.cs.map.RouteFinder;
 
 public final class Main {
@@ -66,7 +67,7 @@ public final class Main {
       String destination = qm.value("destination");
       int time = Integer.parseInt(qm.value("time"));
 
-      List<Restaurant> restaurants = middleman.getRestaurants(loc, destination,
+      List<RestaurantOnRoute> restaurants = middleman.getRestaurants(loc, destination,
           time);
 
       res.type("text/json");
