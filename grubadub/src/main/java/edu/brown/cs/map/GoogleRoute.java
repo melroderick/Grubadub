@@ -204,11 +204,11 @@ class GoogleRoute implements Route {
     return new BoundingBox(sw, ne);
   }
 
-  public BoundingBox getBoundingBox(int start, int end, int radius) {
+  public BoundingBox getBoundingBox(int start, int end, double radius) {
     BoundingBox bb = getBoundingBox(start, end);
 
-    LatLng expandedSW = bb.getSW().moveSouth(5.0).moveWest(5.0);
-    LatLng expandedNE = bb.getNE().moveNorth(5.0).moveEast(5.0);
+    LatLng expandedSW = bb.getSW().moveSouth(radius).moveWest(radius);
+    LatLng expandedNE = bb.getNE().moveNorth(radius).moveEast(radius);
 
     return new BoundingBox(expandedSW, expandedNE);
   }
