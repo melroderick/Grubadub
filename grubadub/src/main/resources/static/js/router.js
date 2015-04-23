@@ -38,9 +38,7 @@ app.router.on('route:list-restaurants', function() {
 		app.router.navigate("", { trigger: true });
 	} else {
 		var listView = new app.ListView();
-
-		var filteredRestaurants = _filterSortedRestaurants(app.foundRestaurants);
-		listView.restaurants = filteredRestaurants;
+		listView.restaurants = app.foundRestaurants;
 
 		app.router.showView("#main-wrapper", listView);
 	}

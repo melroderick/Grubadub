@@ -46,10 +46,10 @@ Backbone.View.prototype.close = function() {
 
 function _distanceBetweenLatLngs(l1, l2) {
 	var R = 3958.76; // Radius of the earth in miles
-	var dLat = toRadians(l2.lat-l1.lat);  // deg2rad below
-	var dLon = toRadians(l2.lng-l1.lng); 
+	var dLat = _toRadians(l2.lat-l1.lat);  // deg2rad below
+	var dLon = _toRadians(l2.lng-l1.lng); 
 	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-			Math.cos(toRadians(l1.lat)) * Math.cos(toRadians(l2.lat)) * 
+			Math.cos(_toRadians(l1.lat)) * Math.cos(_toRadians(l2.lat)) * 
 			Math.sin(dLon/2) * Math.sin(dLon/2);
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 	var d = R * c; // Distance in km
@@ -61,23 +61,7 @@ function _distanceBetweenLatLngs(l1, l2) {
 	}
 }
 
-function _filterSortedRestaurants(restaurants) {
-	if (true) { // filtering all restaurants lower than 3 stars
-		var filterPredicate = function (r) {
-			return r.attributes.rating >= 3;
-		}
-	}
-
-	if (true) { // sorting by stars
-		var sortScorer = function (r) {
-			return -r.attributes.rating;
-		}
-	}
-
-	return new app.Restaurants(_.sortBy(restaurants.filter(filterPredicate), sortScorer));
-}
-
-function toRadians(deg) {
+function _toRadians(deg) {
 	return deg * (Math.PI/180);
 }
 
