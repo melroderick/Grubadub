@@ -8,6 +8,7 @@ public class BoundingBox {
     if (sw.getLat() > ne.getLat() || sw.getLng() > ne.getLng()) {
       throw new IllegalArgumentException("First argument isn't SW of second");
     }
+
     this.sw = sw;
     this.ne = ne;
   }

@@ -42,6 +42,27 @@ public class LatLng implements KDData {
     return lng;
   }
 
+  public LatLng moveNorth(double miles) {
+    double dLat = Math.toDegrees(miles / EARTH_RADIUS_IN_MILES);
+    return new LatLng(lat + dLat, lng);
+  }
+
+  public LatLng moveSouth(double miles) {
+    return moveNorth(-1.0 * miles);
+  }
+
+  public LatLng moveWest(double miles) {
+    // Find radius of circle around Earth at current latitude.
+    double currRadius = EARTH_RADIUS_IN_MILES * Math.cos(Math.toRadians(lat));
+    double dLng = Math.toDegrees(miles / currRadius);
+
+    return new LatLng(lat, lng + dLng);
+  }
+
+  public LatLng moveEast(double miles) {
+    return moveWest(-1.0 * miles);
+  }
+
   public double distanceFrom(LatLng o) {
     if (equals(o)) {
       return 0;

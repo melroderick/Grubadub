@@ -204,4 +204,13 @@ class GoogleRoute implements Route {
     return new BoundingBox(sw, ne);
   }
 
+  public BoundingBox getBoundingBox(int start, int end, int radius) {
+    BoundingBox bb = getBoundingBox(start, end);
+
+    LatLng expandedSW = bb.getSW().moveSouth(5.0).moveWest(5.0);
+    LatLng expandedNE = bb.getNE().moveNorth(5.0).moveEast(5.0);
+
+    return new BoundingBox(expandedSW, expandedNE);
+  }
+
 }

@@ -19,8 +19,10 @@ public class GoogleRouteFinder implements RouteFinder {
 
     DirectionsRoute[] routes = null;
     try {
-      routes = DirectionsApi.newRequest(context).origin(gLoc)
-          .destination(address).await();
+      routes = DirectionsApi.newRequest(context)
+          .origin(gLoc)
+          .destination(address)
+          .await();
     } catch (Exception e) {
       return null;
     }
@@ -36,7 +38,10 @@ public class GoogleRouteFinder implements RouteFinder {
     DirectionsRoute detour = null;
     try {
       DirectionsRoute[] detourArray = DirectionsApi.newRequest(context)
-          .origin(gLoc).waypoints(waypoint).destination(destination).await();
+          .origin(gLoc)
+          .waypoints(waypoint)
+          .destination(destination)
+          .await();
       detour = detourArray[0];
     } catch (Exception e) {
       System.out.println("detour error");

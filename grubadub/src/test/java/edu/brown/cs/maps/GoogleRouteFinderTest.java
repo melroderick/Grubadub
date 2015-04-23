@@ -25,6 +25,10 @@ public class GoogleRouteFinderTest {
     Route r = grf.getRoute(providence, "Boston, MA");
     assertTrue(r != null);
     assertTrue(r.distanceFrom(providence) > 0);
+
+    LatLng bad = new LatLng(0.0, 0.0);
+
+
     /*
      * assertTrue(r.locIn(10) != null); assertTrue(r.pointsAlong(1, 10) !=
      * null); assertTrue(r.routeTime() > 30 && r.routeTime() < 90);
