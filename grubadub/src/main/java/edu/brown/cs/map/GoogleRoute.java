@@ -204,6 +204,7 @@ class GoogleRoute implements Route {
     return new BoundingBox(sw, ne);
   }
 
+  @Override
   public BoundingBox getBoundingBox(int start, int end, double radius) {
     BoundingBox bb = getBoundingBox(start, end);
 
@@ -211,6 +212,13 @@ class GoogleRoute implements Route {
     LatLng expandedNE = bb.getNE().moveNorth(radius).moveEast(radius);
 
     return new BoundingBox(expandedSW, expandedNE);
+  }
+
+  @Override
+  public TimePlace nearestTimePlace(LatLng loc) {
+    TimePlace dummy = new TimePlace(-1, loc);
+
+    return kdt.nearestNeighbor(dummy);
   }
 
 }

@@ -46,4 +46,8 @@ class TimePlace implements KDData {
     return 2;
   }
 
+  public double distanceFrom(LatLng o) {
+    return loc.distanceFrom(o);
+  }
+
 }

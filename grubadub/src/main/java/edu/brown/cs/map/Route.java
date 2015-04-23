@@ -15,6 +15,8 @@ public interface Route {
    */
   double distanceFrom(LatLng loc);
 
+  TimePlace nearestTimePlace(LatLng loc);
+
   /** The expected location in the specified time in the future.
    * @param minutes The number of minutes in the future to find
    * the location for.
@@ -37,5 +39,8 @@ public interface Route {
    */
   List<LatLng> pointsAlong(int start, int end);
 
+
+
   BoundingBox getBoundingBox(int start, int end);
+  BoundingBox getBoundingBox(int start, int end, double radius);
 }
