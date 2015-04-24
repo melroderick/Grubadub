@@ -65,6 +65,7 @@ public class Restaurant implements Comparable<Restaurant> {
     String postal_code = (jsonPostal_code != null) ? jsonPostal_code.toString() : "";
     Object jsonState_code = jsonLocation.get("city");
     String state_code = (jsonState_code != null) ? jsonState_code.toString() : "";
+    
     this.address = streetAddress
         + city + " "
         + postal_code + " "
