@@ -19,6 +19,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import edu.brown.cs.food.DetailedRestaurant;
 import edu.brown.cs.food.Restaurant;
@@ -33,11 +34,16 @@ import freemarker.template.Configuration;
 public final class Main {
 
   public static void main(String[] args) {
+    GsonBuilder builder = new GsonBuilder();
+    builder.registerTypeAdapter(RestaurantOnRoute.class,
+        new RestaurantOnRoute.RoRSerializer());
+    GSON = builder.create();
+
     new Main(args).run();
   }
 
   private String[] args;
-  private static final Gson GSON = new Gson();
+  private static Gson GSON;
   private MiddleMan middleman;
 
   private Main(String[] args) {
@@ -96,8 +102,8 @@ public final class Main {
       String destination = qm.value("destination");
       int time = Integer.parseInt(qm.value("time"));
 
-      List<RestaurantOnRoute> restaurants = middleman.getRestaurants(loc, destination,
-          time);
+      List<RestaurantOnRoute> restaurants = middleman.getRestaurants(loc,
+          destination, time);
 
       res.type("text/json");
       return GSON.toJson(restaurants);
