@@ -75,8 +75,6 @@ public class Restaurant implements Comparable<Restaurant> {
     String postal_code = (jsonPostal_code != null) ? jsonPostal_code.toString()
         : "";
 
-    System.out.println(jsonLocation);
-
     this.address = streetAddress + city + " " + state_code + " " + postal_code;
 
     this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());

@@ -239,6 +239,15 @@ ol.restaurant-list .stars {
    Details View
    --------------------------------------------------------------------------------------- */
 
+.details img.restaurant-img {
+	width: 83px;
+	height: 83px;
+	margin-left: 5px;
+	border-radius: 3px;
+	/*border: 1px solid #2c3e50;*/
+	float: right;
+}
+
 .details h2 {
 	line-height: 1.3em;
 	margin-bottom: 5px;
