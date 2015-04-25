@@ -21,8 +21,8 @@ public class Restaurant implements Comparable<Restaurant> {
   private final String image_url;
 
   public Restaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, int review_count,
-      String address, String image_url) {
+      LatLng latLng, float rating, int review_count, String address,
+      String image_url) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
@@ -52,32 +52,36 @@ public class Restaurant implements Comparable<Restaurant> {
     JSONObject jsonLocation = (JSONObject) jsonRestaurant.get("location");
     JSONObject jsonCoordinate = (JSONObject) jsonLocation.get("coordinate");
     if (jsonCoordinate != null) {
-      this.latLng = new LatLng(Double.parseDouble(jsonCoordinate.get("latitude")
-          .toString()), Double.parseDouble(jsonCoordinate.get("longitude")
-              .toString()));
+      this.latLng = new LatLng(Double.parseDouble(jsonCoordinate
+          .get("latitude").toString()), Double.parseDouble(jsonCoordinate.get(
+          "longitude").toString()));
     } else {
       this.latLng = null;
     }
 
     @SuppressWarnings("unchecked")
     List<String> addresses = (List<String>) jsonLocation.get("address");
-    String streetAddress = (addresses.size() > 0) ? addresses.get(0) : "";
+    String streetAddress = (addresses.size() > 0) ? addresses.get(0) + ", "
+        : "";
+
     Object jsonCity = jsonLocation.get("city");
     String city = (jsonCity != null) ? jsonCity.toString() : "";
-    Object jsonPostal_code = jsonLocation.get("city");
-    String postal_code = (jsonPostal_code != null) ? jsonPostal_code.toString() : "";
-    Object jsonState_code = jsonLocation.get("city");
-    String state_code = (jsonState_code != null) ? jsonState_code.toString() : "";
-    
-    this.address = streetAddress
-        + city + " "
-        + postal_code + " "
-        + state_code;
 
-    this.rating =
-        Float.parseFloat(jsonRestaurant.get("rating").toString());
-    this.review_count =
-        Integer.parseInt(jsonRestaurant.get("review_count").toString());
+    Object jsonState_code = jsonLocation.get("state_code");
+    String state_code = (jsonState_code != null) ? jsonState_code.toString()
+        : "";
+
+    Object jsonPostal_code = jsonLocation.get("postal_code");
+    String postal_code = (jsonPostal_code != null) ? jsonPostal_code.toString()
+        : "";
+
+    System.out.println(jsonLocation);
+
+    this.address = streetAddress + city + " " + state_code + " " + postal_code;
+
+    this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
+    this.review_count = Integer.parseInt(jsonRestaurant.get("review_count")
+        .toString());
   }
 
   public String getId() {
