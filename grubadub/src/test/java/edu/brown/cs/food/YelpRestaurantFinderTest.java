@@ -114,6 +114,7 @@ public class YelpRestaurantFinderTest {
         && r.getCategories().size() > 0
         && r.getCategories().get(0).length() > 1);
     assertTrue(r.getRating() >= 0 && r.getRating() <= 5);
+    assertTrue(r.getReview_count() >= 0);
     assertTrue(r.getAddress() != null && r.getAddress().length() > 0);
   }
 

@@ -16,16 +16,19 @@ public class Restaurant implements Comparable<Restaurant> {
   private final List<String> categories;
   private final LatLng latLng;
   private final float rating;
+  private final int review_count;
   private final String address;
   private final String image_url;
 
   public Restaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, String address, String image_url) {
+      LatLng latLng, float rating, int review_count,
+      String address, String image_url) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
     this.latLng = latLng;
     this.rating = rating;
+    this.review_count = review_count;
     this.address = address;
     this.image_url = image_url;
   }
@@ -71,7 +74,10 @@ public class Restaurant implements Comparable<Restaurant> {
         + postal_code + " "
         + state_code;
 
-    this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
+    this.rating =
+        Float.parseFloat(jsonRestaurant.get("rating").toString());
+    this.review_count =
+        Integer.parseInt(jsonRestaurant.get("review_count").toString());
   }
 
   public String getId() {
@@ -126,6 +132,10 @@ public class Restaurant implements Comparable<Restaurant> {
 
   public String getImage_url() {
     return image_url;
+  }
+
+  public int getReview_count() {
+    return review_count;
   }
 
 }

@@ -17,9 +17,10 @@ public class DetailedRestaurant extends Restaurant {
   private final String url;
 
   public DetailedRestaurant(String id, String name, List<String> categories,
-      LatLng latLng, float rating, String address, String image_url,
+      LatLng latLng, float rating, int review_count,
+      String address, String image_url,
       List<Review> reviews, String phoneNumber, String url) {
-    super(id, name, categories, latLng, rating, address, image_url);
+    super(id, name, categories, latLng, rating, review_count, address, image_url);
     this.reviews = ImmutableList.copyOf(reviews);
     this.phoneNumber = phoneNumber;
     this.url = url;
@@ -37,7 +38,6 @@ public class DetailedRestaurant extends Restaurant {
       Review r = new Review((JSONObject) jsonReviews.get(i));
       reviews.add(r);
     }
-    System.out.println(reviews.size());
   }
 
   public List<Review> getReviews() {
