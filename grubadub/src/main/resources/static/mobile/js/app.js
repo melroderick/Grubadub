@@ -6,7 +6,7 @@ app.getTemplate = function(file, handler) {
 		handler(cachedFiles[file]);
 	} else {
 		$.ajax({
-			url: "/js/templates/" + file + ".html",
+			url: "./js/templates/" + file + ".html",
 			method: "GET",
 			ignorePrefilter: true,
 		}).done(function(data) {
