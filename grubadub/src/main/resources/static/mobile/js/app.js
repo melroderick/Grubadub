@@ -52,19 +52,41 @@ function _distanceBetweenLatLngs(l1, l2) {
 			Math.cos(_toRadians(l1.lat)) * Math.cos(_toRadians(l2.lat)) * 
 			Math.sin(dLon/2) * Math.sin(dLon/2);
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-	var d = R * c; // Distance in km
+	var d = R * c; // Distance in miles
 	
-	if (d == 0) {
-		return "< 0.1";
-	} else {
-		return Math.round(d*10)/10;
-	}
+	return _roundNumber(d);
 }
 
 function _toRadians(deg) {
 	return deg * (Math.PI/180);
 }
 
-$(function() {
+function _roundNumber(num) {
+	if (num < 0.1) {
+		return "< 0.1";
+	} else {
+		return Math.round(num*10)/10;
+	}
+}
 
+function _formatTime(time) {
+	var toReturn = "";
+
+	var mins = time % 60;
+	time -= mins;
+
+	if (time > 0) {
+		var hours = time / 60;
+		toReturn += hours;
+		toReturn += "h";
+	}
+
+	toReturn += mins;
+	toReturn += "m";
+
+	return toReturn;
+}
+
+$(function() {
+	app.geocoder = new google.maps.Geocoder();
 });

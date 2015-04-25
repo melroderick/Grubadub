@@ -114,19 +114,23 @@ em.distance {
 
 a.input-btn {
 	display: inline-block;
-	width: 100%;
 	text-align: center;
 	background: #e67e22;
 	color: white;
-	padding: 10px 0;
+	line-height: 1.35em;
+	padding: 9px;
 	font-size: 16px;
 	border: 1px solid #d35400;
 	border-radius: 5px;
 	font-weight: bold;
+
+	width: -moz-calc(100% - 18px);
+    width: -webkit-calc(100% - 18px);
+    width: calc(100% - 18px);
 }
 
 a#find-curr-location.loc-found {
-	background: white;
+	background: rgba(0,0,0,0.05);
 	border-radius: 0;
 	border-color: #bdc3c7;
 	color: #7f8c8d;

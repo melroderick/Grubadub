@@ -21,18 +21,32 @@ app.SearchView = Backbone.View.extend({
 		$("#find-curr-location").html('<i class="fa fa-spinner fa-spin"></i>');
 		$("#find-curr-location").addClass("unclickable");
 
+		this.refreshLoc();
+		this.refreshInterval = window.setInterval(this.refreshLoc, 5000);
+	},
+
+	refreshLoc: function() {
 		navigator.geolocation.getCurrentPosition(function(p) {
-			app.currentLoc = {
+			var loc = {
 				lat: p.coords.latitude,
 				lng: p.coords.longitude
 			};
+			app.currentLoc = loc;
 
-			$("#find-curr-location").addClass("loc-found");
-			$("#time-options.disabled").removeClass("disabled");
+			var latLng = new google.maps.LatLng(loc.lat, loc.lng);
+			app.geocoder.geocode({'latLng': latLng}, function(results, status) {
+				$("#find-curr-location").addClass("loc-found");
+				$("#time-options.disabled").removeClass("disabled");
 
-			// TODO: do better to reverse geocode coordinates into human readable format
-			$("#find-curr-location").html(p.coords.latitude + ", " + p.coords.longitude);
-		})
+				var msg;
+				if (status == google.maps.GeocoderStatus.OK && results[1]) {
+					msg = "Near: " + results[1].formatted_address;
+				} else {
+					msg = p.coords.latitude + ", " + p.coords.longitude
+				}
+				$("#find-curr-location").html(msg);
+			});
+		});
 	},
 
 	getResults: function(e) {
@@ -48,6 +62,10 @@ app.SearchView = Backbone.View.extend({
 				app.router.navigate("results", { trigger: true });
 			}});
 		}
-	}
+	},
 
+	beforeClose: function() {
+		console.log("stopping interval");
+		window.clearInterval(this.refreshInterval);
+	}
 });

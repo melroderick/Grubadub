@@ -3,7 +3,7 @@
 	<a href="#restaurants/<%= restaurant.get('id') %>">
 		<li class="group">
 			<div class="right">
-				<em class="distance"><%= _distanceBetweenLatLngs(currentLoc, restaurant.get('latLng')) %> mi</em>
+				<em class="distance"><%= _formatTime(restaurant.get('timeToRestaurant')) %></em>
 			</div>
 			<div>
 				<p class="name"><%= restaurant.get('name') %></p>
