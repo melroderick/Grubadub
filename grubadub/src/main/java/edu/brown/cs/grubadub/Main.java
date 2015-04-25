@@ -77,7 +77,7 @@ public final class Main {
 
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
-    Spark.get("/", new DesktopHandler(), freeMarker);
+    Spark.get("/desktop", new DesktopHandler(), freeMarker);
     Spark.get("/restaurants", new RestaurantHandler());
     Spark.get("/time", new TimeHandler());
     Spark.get("/details", new DetailHandler());
@@ -86,11 +86,11 @@ public final class Main {
   private static class DesktopHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables =
-          ImmutableMap.of("title", "Maps");
+      Map<String, Object> variables = ImmutableMap.of("title", "Maps");
       return new ModelAndView(variables, "query.ftl");
     }
   }
+
   private class RestaurantHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
