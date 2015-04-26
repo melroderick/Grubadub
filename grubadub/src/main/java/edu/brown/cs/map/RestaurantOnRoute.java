@@ -78,6 +78,7 @@ public class RestaurantOnRoute {
       obj.addProperty("review_count", ror.getRestaurant().getReview_count());
       obj.addProperty("address", ror.getRestaurant().getAddress());
       obj.addProperty("image_url", ror.getRestaurant().getImage_url());
+      obj.addProperty("phone", ror.getRestaurant().getPhone());
       obj.addProperty("timeToRestaurant", ror.getTimeToRestaurant());
       obj.addProperty("distFromRoute", ror.getDistFromRoute());
 

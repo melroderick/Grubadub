@@ -77,7 +77,7 @@ public final class Main {
 
     FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
-    Spark.get("/desktop", new DesktopHandler(), freeMarker);
+//    Spark.get("/desktop", new DesktopHandler(), freeMarker);
     Spark.get("/restaurants", new RestaurantHandler());
     Spark.get("/time", new TimeHandler());
     Spark.get("/details", new DetailHandler());
