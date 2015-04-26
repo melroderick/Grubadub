@@ -36,5 +36,7 @@
 		</div>
 	<% } %>
 
-	<p class="directions-container"><a class="directions-btn" href="<%= restaurant.googleMapsUrl() %>"><i class="fa fa-map-marker"></i> Get Directions</a></p>
+	<p class="btn-container"><a class="link-btn" href="<%= restaurant.googleMapsUrl() %>"><i class="fa fa-map-marker"></i> Get Directions</a></p>
+
+	<p class="btn-container"><a class="link-btn call-btn" href="tel:<%= restaurant.get('phone') %>"><i class="fa fa-phone"></i> Call Now</a></p>
 </article>
