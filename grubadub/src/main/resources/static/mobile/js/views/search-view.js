@@ -53,6 +53,8 @@ app.SearchView = Backbone.View.extend({
 		e.preventDefault();
 
 		if (app.currentLoc) {
+			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
+
 			app.foundRestaurants = new app.Restaurants();
 			app.foundRestaurants.lat = app.currentLoc.lat;
 			app.foundRestaurants.lng = app.currentLoc.lng;
