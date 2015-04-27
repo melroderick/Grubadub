@@ -66,7 +66,8 @@ class GoogleRoute implements Route {
 
       times = filledInDetailedTimePlaces.stream().map(tp -> tp.timeInSeconds()).collect(Collectors.toList());
       // System.out.println("Filled in detailed time places good: " + Ordering.natural().isOrdered(times));
-      kdt = new KDTree<>(filledInDetailedTimePlaces);
+      // kdt = new KDTree<>(filledInDetailedTimePlaces);
+      kdt = new KDTree<>(detailedTimePlaces);
     }
   }
 
@@ -99,7 +100,7 @@ class GoogleRoute implements Route {
     return dist;
   }
 
-  private List<TimePlace> fillIn(List<TimePlace> timePlaces, double maxDist) {
+  public List<TimePlace> fillIn(List<TimePlace> timePlaces, double maxDist) {
     List<TimePlace> newList = new ArrayList<>();
     for (int i = 0; i < timePlaces.size() - 1; i++) {
       TimePlace tp1 = timePlaces.get(i);
@@ -167,7 +168,24 @@ class GoogleRoute implements Route {
   }
 
   @Override
+  public BoundingBox getBoundingBox(int minutes, double radius) {
+    LatLng loc = locIn(minutes);
+
+    LatLng sw = loc.moveSouth(radius).moveWest(radius);
+    LatLng ne = loc.moveNorth(radius).moveEast(radius);
+
+    return new BoundingBox(sw, ne);
+  }
+
+  @Override
   public List<LatLng> pointsAlong(int start, int end) {
+    if (start < 0) {
+      throw new IllegalArgumentException("Start time is less than 0");
+    }
+    if (start >= end) {
+      throw new IllegalArgumentException("Start time must be less than end time");
+    }
+
     int startSeconds = start * 60;
     int endSeconds = end * 60;
 
