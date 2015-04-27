@@ -19,10 +19,11 @@ public class Restaurant implements Comparable<Restaurant> {
   private final int review_count;
   private final String address;
   private final String image_url;
+  private final String phone;
 
   public Restaurant(String id, String name, List<String> categories,
       LatLng latLng, float rating, int review_count, String address,
-      String image_url) {
+      String image_url, String phone) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
@@ -31,6 +32,7 @@ public class Restaurant implements Comparable<Restaurant> {
     this.review_count = review_count;
     this.address = address;
     this.image_url = image_url;
+    this.phone = phone;
   }
 
   public Restaurant(JSONObject jsonRestaurant) {
@@ -39,6 +41,8 @@ public class Restaurant implements Comparable<Restaurant> {
 
     Object jsonImageURL = jsonRestaurant.get("image_url");
     this.image_url = jsonImageURL != null ? jsonImageURL.toString() : null;
+    Object jsonPhone = jsonRestaurant.get("display_phone");
+    this.phone = jsonPhone != null ? jsonPhone.toString() : null;
 
     categories = new ArrayList<String>();
     JSONArray jsonCategories = (JSONArray) jsonRestaurant.get("categories");
@@ -138,6 +142,10 @@ public class Restaurant implements Comparable<Restaurant> {
 
   public int getReview_count() {
     return review_count;
+  }
+
+  public String getPhone() {
+    return phone;
   }
 
 }

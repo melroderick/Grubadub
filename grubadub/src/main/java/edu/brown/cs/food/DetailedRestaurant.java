@@ -13,23 +13,20 @@ import edu.brown.cs.map.LatLng;
 public class DetailedRestaurant extends Restaurant {
 
   private final List<Review> reviews;
-  private final String phoneNumber;
   private final String url;
 
   public DetailedRestaurant(String id, String name, List<String> categories,
       LatLng latLng, float rating, int review_count,
       String address, String image_url,
-      List<Review> reviews, String phoneNumber, String url) {
-    super(id, name, categories, latLng, rating, review_count, address, image_url);
+      List<Review> reviews, String phoneNumber, String url, String phone) {
+    super(id, name, categories, latLng, rating, review_count, address, image_url, phone);
     this.reviews = ImmutableList.copyOf(reviews);
-    this.phoneNumber = phoneNumber;
     this.url = url;
   }
 
   public DetailedRestaurant(JSONObject jsonRestaurant) {
     super(jsonRestaurant);
 
-    this.phoneNumber = jsonRestaurant.get("display_phone").toString();
     this.url = jsonRestaurant.get("url").toString();
 
     reviews = new ArrayList<Review>();
@@ -44,12 +41,7 @@ public class DetailedRestaurant extends Restaurant {
     return reviews;
   }
 
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
   public String getUrl() {
     return url;
   }
-
 }

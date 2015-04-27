@@ -110,6 +110,9 @@ public class YelpRestaurantFinderTest {
     if (r.getImage_url() != null) {
       assertTrue(r.getImage_url().length() > 0);
     }
+    if (r.getPhone() != null) {
+      assertTrue(r.getPhone().length() > 0);
+    }
     assertTrue(r.getCategories() != null
         && r.getCategories().size() > 0
         && r.getCategories().get(0).length() > 1);
@@ -121,7 +124,6 @@ public class YelpRestaurantFinderTest {
   static void wellFormedDetailedRestaurant(DetailedRestaurant dr) {
     wellFormedRestaurant(dr);
     assertTrue(dr.getUrl() != null && dr.getUrl().length() > 0);
-    assertTrue(dr.getPhoneNumber() != null && dr.getPhoneNumber().length() > 0);
     assertTrue(dr.getReviews() != null);
     for (Review rev : dr.getReviews()) {
       wellFormedReview(rev);
