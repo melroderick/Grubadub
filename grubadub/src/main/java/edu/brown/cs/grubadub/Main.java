@@ -1,35 +1,28 @@
 package edu.brown.cs.grubadub;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
 import spark.ExceptionHandler;
-import spark.ModelAndView;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
-import spark.TemplateViewRoute;
-import spark.template.freemarker.FreeMarkerEngine;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.brown.cs.food.DetailedRestaurant;
-import edu.brown.cs.food.Restaurant;
 import edu.brown.cs.food.RestaurantFinder;
 import edu.brown.cs.food.YelpRestaurantFinder;
 import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
 import edu.brown.cs.map.RestaurantOnRoute;
 import edu.brown.cs.map.RouteFinder;
-import freemarker.template.Configuration;
 
 public final class Main {
 
@@ -58,37 +51,14 @@ public final class Main {
     runSparkServer();
   }
 
-  private static FreeMarkerEngine createEngine() {
-    Configuration config = new Configuration();
-    File templates = new File("src/main/resources/spark/template/freemarker");
-    try {
-      config.setDirectoryForTemplateLoading(templates);
-    } catch (IOException ioe) {
-      System.out.printf("ERROR: Unable use %s for template loading.%n",
-          templates);
-      System.exit(1);
-    }
-    return new FreeMarkerEngine(config);
-  }
-
   private void runSparkServer() {
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
-    FreeMarkerEngine freeMarker = createEngine();
     // Setup Spark Routes
-    Spark.get("/desktop", new DesktopHandler(), freeMarker);
     Spark.get("/restaurants", new RestaurantHandler());
     Spark.get("/time", new TimeHandler());
     Spark.get("/details", new DetailHandler());
-  }
-
-  private static class DesktopHandler implements TemplateViewRoute {
-    @Override
-    public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables = ImmutableMap.of("title", "Maps");
-      return new ModelAndView(variables, "query.ftl");
-    }
   }
 
   private class RestaurantHandler implements Route {
