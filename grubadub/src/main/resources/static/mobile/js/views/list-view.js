@@ -10,7 +10,7 @@ app.ListView = Backbone.View.extend({
 
 		var rating_gain = -1;
 		var off_route_gain = 5;
-		var time_gain = -0.1;
+		var time_gain = 0.1;
 		var review_count_gain = -0.01;
 		if (true) { // sorting by grubadub ranking
 			var sortScorer = function (r) {
@@ -25,7 +25,7 @@ app.ListView = Backbone.View.extend({
 			}
 		} else if (true) { // sorting by time
 			var sortScorer = function (r) {
-				return -r.get('timeToRestaurant');
+				return r.get('timeToRestaurant');
 			}
 		}
 
