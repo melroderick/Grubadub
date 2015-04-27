@@ -53,16 +53,16 @@ app.SearchView = Backbone.View.extend({
 		e.preventDefault();
 
 		if (app.currentLoc) {
-			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
-
 			app.foundRestaurants = new app.Restaurants();
 			app.foundRestaurants.lat = app.currentLoc.lat;
 			app.foundRestaurants.lng = app.currentLoc.lng;
-			app.foundRestaurants.destination = $("input[name=destination]").val();
+			app.foundRestaurants.destination = $("#destination-field").val();
 			app.foundRestaurants.time = parseInt($(e.currentTarget).attr('data-time'))
 			app.foundRestaurants.fetch({success: function() {
 				app.router.navigate("results", { trigger: true });
 			}});
+
+			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
 		}
 	},
 
