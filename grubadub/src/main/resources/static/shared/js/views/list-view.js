@@ -15,7 +15,7 @@ app.ListView = Backbone.View.extend({
 
 		var rating_gain = -1;
 		var off_route_gain = 5;
-		var time_gain = 0.1;
+		var time_gain = 0;
 		var review_count_gain = -0.01;
 
 		var sortScorer;
