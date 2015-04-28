@@ -28,7 +28,6 @@ public class GoogleRouteFinderTest {
 
     LatLng bad = new LatLng(0.0, 0.0);
 
-
     /*
      * assertTrue(r.locIn(10) != null); assertTrue(r.pointsAlong(1, 10) !=
      * null); assertTrue(r.routeTime() > 30 && r.routeTime() < 90);
@@ -57,7 +56,5 @@ public class GoogleRouteFinderTest {
         gMapsBrown2MIT2Hardvard - gMapsBrown2Harvard,
         extraTime,
         5);
-
   }
-
 }

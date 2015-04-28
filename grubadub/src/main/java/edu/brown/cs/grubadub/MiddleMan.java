@@ -73,6 +73,7 @@ public class MiddleMan {
     List<Restaurant> restaurants = findRestaurants(bb);
 
     Set<RestaurantOnRoute> restaurantsOnRoute = restaurants.stream()
+         // Sometimes yelp doesn't know location.
         .filter(r -> r.getLatLng() != null)
         .map(r -> new RestaurantOnRoute(r, route))
         .filter(r -> r.getDistFromRoute() < SEARCH_RADIUS)
@@ -82,7 +83,7 @@ public class MiddleMan {
   }
 
   private int getMinuteRadius(int minutes) {
-    int minimumRadius = 15;
+    int minimumRadius = 10;
     return Math.max(minimumRadius, (int) (Math.sqrt(minutes) * 2.5));
   }
 
