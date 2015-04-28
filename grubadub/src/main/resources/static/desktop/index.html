@@ -11,27 +11,30 @@
     <link rel="stylesheet" media="screen" href="/shared/css/bootstrap.min.css">
     <link rel="stylesheet" media="screen" href="/shared/css/screen.css" />
     <link rel="stylesheet" media="screen" href="/shared/css/font-awesome.min.css" />
+    <link rel="stylesheet" media="screen" href="/desktop/css/desktop.css" />
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-4">
+    <div class="container-fluid full-height">
+      <div class="row full-height">
+        <div class="col-sm-4 full-height">
           <div class="row">
-            <header>
-              <div class="group">
-                <a href="#" id="back-btn" class="btn btn-default"><i class="fa fa-chevron-left fa-lg"></i></a>
-                <h1>
-                  <a href="#"><i class="fa fa-cutlery"></i> Grubadub</a>
-                </h1>
-                <div class="user-control">
+            <div class="col-sm-12">
+              <header>
+                <div class="group">
+                  <a href="#" id="back-btn" class="btn btn-default"><i class="fa fa-chevron-left fa-lg"></i></a>
+                  <h1>
+                    <a href="#"><i class="fa fa-cutlery"></i> Grubadub</a>
+                  </h1>
+                  <div class="user-control">
+                  </div>
                 </div>
-              </div>
-            </header>
+              </header>
+            </div>
           </div>
 
           <div class="group" id="main-wrapper"></div>
         </div>
-        <div id="map-canvas" class="col-sm-8" style="height:865px;"></div>
+        <div id="map-canvas" class="col-sm-8 full-height"></div>
       </div>
     </div>
     <!-- Again, we're serving up the unminified source for clarity. -->
