@@ -21,11 +21,12 @@
 					<i class="fa fa-star-o"></i>
 				<% } %>
 			</p>
-				<% if (ror) { %>
+			<% if (ror) { %>
+				<p>
 					<strong><%= _formatTime(ror.get('timeToRestaurant')) %></strong> away.<br />
 					<strong><%= _roundNumber(ror.get('distFromRoute')) %></strong> miles off route.
-				<% } %>
-			<p>
+				</p>
+			<% } %>
 		</div>
 	</div>
 
