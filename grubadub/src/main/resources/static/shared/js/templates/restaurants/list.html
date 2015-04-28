@@ -9,9 +9,8 @@
 
 <ol class="restaurant-list">
 <% _.each(restaurants, function(restaurant) { %>
-	<hr />
-
 	<li class="clearfix">
+		<hr />
 		<a href="#restaurants/<%= restaurant.get('id') %>" class="list-link">
 			<div class="right">
 				<em class="distance"><%= _formatTime(restaurant.get('timeToRestaurant')) %></em>

@@ -2,6 +2,7 @@ var app = app || {};
 
 app.ListView = Backbone.View.extend({
 	events: {
+		"click ol.restaurant-list > li": "selectRestaurantRoute",
 		"change #sort-box > select": "sortResults"
 	},
 
@@ -53,8 +54,12 @@ app.ListView = Backbone.View.extend({
 
 		this.render(function() {
 			$("#sort-box > select").val(this.sortType);
-			// $("#sort-box > select").val();
 		}.bind(this));
+	},
+
+	selectRestaurantRoute: function(e) {
+		var index = $(e.currentTarget).index();
+		app.restaurantOnRoute = this.sortedRestaurants[index];
 	},
 
 	render: function(callback) {
@@ -69,9 +74,9 @@ app.ListView = Backbone.View.extend({
 		app.getTemplate("restaurants/list", function(file) {
 			var template = _.template(file);
 
-			var restaurants = this.filterSortRestaurants(this.shouldFilter, this.sortType).models;
+			this.sortedRestaurants = this.filterSortRestaurants(this.shouldFilter, this.sortType).models;
 
-			var html = template({ restaurants: restaurants, currentLoc: app.currentLoc });
+			var html = template({ restaurants: this.sortedRestaurants, currentLoc: app.currentLoc });
 
 			$(this.el).html(html);
 			callback(this);

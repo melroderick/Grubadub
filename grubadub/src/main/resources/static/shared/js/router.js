@@ -97,6 +97,10 @@ app.router.on('route:show-restaurant', function(id) {
 		var detailView = new app.DetailView();
 		detailView.restaurant = restaurant;
 
+		if (app.restaurantOnRoute) {
+			detailView.restaurantOnRoute = app.restaurantOnRoute;
+		}
+
 		document.title = restaurant.get('name');
 
 		app.router.showView("#main-wrapper", detailView);
