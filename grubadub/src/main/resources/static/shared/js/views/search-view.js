@@ -83,7 +83,7 @@ app.SearchView = Backbone.View.extend({
 			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
 
 			if (desktop) {
-				var start = new google.maps.LatLng(app.currentLoc.lat,  app.currentLoc.lng);
+				var start = new google.maps.LatLng(app.currentLoc.lat, app.currentLoc.lng);
 				var request = {
 					origin: start,
 					destination: app.foundRestaurants.destination,
@@ -91,6 +91,7 @@ app.SearchView = Backbone.View.extend({
 				};
 				app.directionsService.route(request, function(res, status) {
 					if (status == google.maps.DirectionsStatus.OK) {
+						app.directionsDisplay.setMap(app.map);
 						app.directionsDisplay.setDirections(res);
 					}
 				});
@@ -101,7 +102,6 @@ app.SearchView = Backbone.View.extend({
 			app.geocoder.geocode({'address': $("#curr-location").val()}, function(result, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					var res = result[0].geometry.location;
-
 					app.currentLoc = {
 						lat: res.lat(),
 						lng: res.lng()

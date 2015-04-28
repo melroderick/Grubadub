@@ -95,8 +95,8 @@ $(function() {
 		app.map = new google.maps.Map(document.getElementById("map-canvas"),
 			{
 				zoom: 14,
-				// Center on Philadelphia
-				center: new google.maps.LatLng(39.9500, -75.1667)
+				// Center on Brown's Campus
+				center: new google.maps.LatLng(41.8262, -71.4032)
 			}
 		);
 		app.directionsService = new google.maps.DirectionsService();

@@ -90,11 +90,18 @@ app.ListView = Backbone.View.extend({
 				this.markers = [];
 				var infowindow = new google.maps.InfoWindow();
 			  var marker;
+			  /*var icon = {
+			  	url: "/shared/img/marker.png",
+			  	size: new google.maps.Size(162, 249),
+			  	scaledSize: new google.maps.Size(20, 32),
+			  	anchor: new google.maps.Point(10, 32)
+			  }*/
 			  this.sortedRestaurants.forEach(function (r) {
 			  	marker = new google.maps.Marker({
 			  		position: new google.maps.LatLng(r.get('latLng').lat,
 			  																		 r.get('latLng').lng),
-		        map: app.map
+		        map: app.map,
+		        //icon: icon
 		      });
 		      this.markers.push(marker);
 		      google.maps.event.addListener(marker, 'click', (function(marker, r) {
@@ -143,7 +150,8 @@ app.ListView = Backbone.View.extend({
 
 	beforeClose: function(nextView) {
 		if (nextView.shouldClearMap) {
-			console.log("lmao");
+			app.directionsDisplay.setMap(null);
+			this.drawMarkers(null);
 		}
 	}
 });
