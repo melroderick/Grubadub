@@ -42,10 +42,10 @@ app.ListView = Backbone.View.extend({
 				break;
 		}
 
-		var newRestaurants = new app.Restaurants(this.restaurants.filter(filterPredicate));
-		newRestaurants.comparator = sortScorer;
-		newRestaurants.sort();
-
+		// filter, sort, and return first 50
+		var filteredList = this.restaurants.filter(filterPredicate);
+		var sortedList = _.sortBy(filteredList, sortScorer);
+		var newRestaurants = new app.Restaurants(_.first(sortedList, 50));
 		return newRestaurants;
 	},
 
