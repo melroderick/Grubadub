@@ -16,12 +16,36 @@ var Router = Backbone.Router.extend({
 		view.render(function(v) {
 			$(selector).html(v.el);
 		});
+	},
+
+	// Code taken from: http://stackoverflow.com/questions/14860461/selective-history-back-using-backbone-js
+	initialize: function() {
+		this.routesHit = 0;
+		//keep count of number of routes handled by your application
+		Backbone.history.on('route', function() {
+			this.routesHit++;
+			$("#back-btn").show();
+		}, this);
+	},
+
+	back: function() {
+		if (this.routesHit > 1) {
+			//more than one route hit -> user did not land to current page directly
+			window.history.back();
+			this.routesHit--;
+		} else {
+			//otherwise go to the home page. Use replaceState if available so
+			//the navigation doesn't create an extra history entry
+			this.navigate('', { trigger:true, replace:true });
+		}
 	}
 });
 
 app.router = new Router();
 
 app.router.on('route:search', function() {
+	app.router.routesHit = 0;
+
 	document.title = 'Grubadub';
 	
 	app.currentLoc = null;

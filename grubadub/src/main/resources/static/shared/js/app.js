@@ -89,4 +89,11 @@ function _formatTime(time) {
 
 $(function() {
 	app.geocoder = new google.maps.Geocoder();
+
+	$("#back-btn").hide();
+	$("#back-btn").click(function(e) {
+		e.preventDefault();
+
+		app.router.back();
+	});
 });
