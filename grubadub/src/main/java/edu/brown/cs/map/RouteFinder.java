@@ -10,6 +10,7 @@ public interface RouteFinder {
    * @param address
    *          The human-readable address of the route.
    * @return A Route object giving the route between start and address.
+   * Returns null if no route can be found.
    */
   Route getRoute(LatLng start, String address);
 
@@ -28,4 +29,12 @@ public interface RouteFinder {
    * @return The time of the route between start and end.
    */
   int timeToLoc(LatLng start, LatLng end);
+
+  /** Gets a route between a start address and an end address.
+   * @param startAddress The start address of the route.
+   * @param destinationAddress The end address of the route.
+   * @return A Route object giving the route between startAddress
+   * and endAddress. Returns null if no route can be found.
+   */
+  Route getRoute(String startAddress, String destinationAddress);
 }

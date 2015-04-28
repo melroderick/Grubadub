@@ -43,4 +43,6 @@ public interface Route {
 
   BoundingBox getBoundingBox(int start, int end);
   BoundingBox getBoundingBox(int start, int end, double radius);
+
+  BoundingBox getBoundingBox(int minutes, double radius);
 }
