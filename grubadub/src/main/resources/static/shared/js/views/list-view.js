@@ -63,8 +63,8 @@ app.ListView = Backbone.View.extend({
 	},
 
 	drawMarkers: function(map) {
-		for(var i = 0; i < this.markers.length; i++) {
-			this.markers[i].setMap(map);
+		for(var i = 0; i < app.markers.length; i++) {
+			app.markers[i].setMap(map);
 		}
 	},
 
@@ -84,10 +84,10 @@ app.ListView = Backbone.View.extend({
 
 			// Show restaurant pins on map
 			if (desktop) {
-				if (typeof this.markers !== 'undefined') {
+				if (typeof app.markers !== 'undefined') {
 					this.drawMarkers(null);
 				}
-				this.markers = [];
+				app.markers = [];
 				var infowindow = new google.maps.InfoWindow();
 			  var marker;
 			  /*var icon = {
@@ -103,7 +103,7 @@ app.ListView = Backbone.View.extend({
 		        map: app.map,
 		        //icon: icon
 		      });
-		      this.markers.push(marker);
+		      app.markers.push(marker);
 		      google.maps.event.addListener(marker, 'click', (function(marker, r) {
 		        return function() {
 		          infowindow.setContent(r.get('name'));
