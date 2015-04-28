@@ -80,6 +80,8 @@ app.router.on('route:list-restaurants', function() {
 	        return function() {
 	          infowindow.setContent(r.get('name'));
 	          infowindow.open(app.map, marker);
+
+	          app.restaurantOnRoute = r;
 	          app.router.navigate("restaurants/" + r.get('id'), {trigger: true});
 	        }
 	      })(marker, r));
@@ -89,20 +91,24 @@ app.router.on('route:list-restaurants', function() {
 });
 
 app.router.on('route:show-restaurant', function(id) {
-	var restaurant = new app.Restaurant({id: id});
+	if (app.foundRestaurants == null) {
+		app.router.navigate("", { trigger: true });
+	} else {
+		var restaurant = new app.Restaurant({id: id});
 
-	restaurant.fetch({success: function() {
-		var detailView = new app.DetailView();
-		detailView.restaurant = restaurant;
+		restaurant.fetch({success: function() {
+			var detailView = new app.DetailView();
+			detailView.restaurant = restaurant;
 
-		if (app.restaurantOnRoute) {
-			detailView.restaurantOnRoute = app.restaurantOnRoute;
-		}
+			if (app.restaurantOnRoute) {
+				detailView.restaurantOnRoute = app.restaurantOnRoute;
+			}
 
-		document.title = restaurant.get('name');
+			document.title = restaurant.get('name');
 
-		app.router.showView("#main-wrapper", detailView);
-	}});
+			app.router.showView("#main-wrapper", detailView);
+		}});
+	}
 });
 
 app.router.on('route:error', function() {
