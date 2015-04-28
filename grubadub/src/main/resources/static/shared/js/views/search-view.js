@@ -72,9 +72,11 @@ app.SearchView = Backbone.View.extend({
 
 		find = function() {
 			app.foundRestaurants = new app.Restaurants();
+			app.userStart = $("#curr-location").val();
 			app.foundRestaurants.lat = app.currentLoc.lat;
 			app.foundRestaurants.lng = app.currentLoc.lng;
-			app.foundRestaurants.destination = $("#destination-field").val();
+			app.userDestination = $("#destination-field").val();
+			app.foundRestaurants.destination = app.userDestination;
 			app.foundRestaurants.time = parseInt($(e.currentTarget).attr('data-time'))
 			app.foundRestaurants.fetch({success: function() {
 				app.router.navigate("results", { trigger: true });
