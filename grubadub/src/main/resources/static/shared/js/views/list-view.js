@@ -62,6 +62,12 @@ app.ListView = Backbone.View.extend({
 		app.restaurantOnRoute = this.sortedRestaurants[index];
 	},
 
+	drawMarkers: function(map) {
+		for(var i = 0; i < this.markers.length; i++) {
+			this.markers[i].setMap(map);
+		}
+	},
+
 	render: function(callback) {
 		if (this.shouldFilter == undefined) {
 			this.shouldFilter = true;
@@ -75,6 +81,35 @@ app.ListView = Backbone.View.extend({
 			var template = _.template(file);
 
 			this.sortedRestaurants = this.filterSortRestaurants(this.shouldFilter, this.sortType).models;
+
+			// Show restaurant pins on map
+			if (desktop) {
+				if (typeof this.markers !== 'undefined') {
+					this.drawMarkers(null);
+				}
+				this.markers = [];
+				var infowindow = new google.maps.InfoWindow();
+			  var marker;
+			  this.sortedRestaurants.forEach(function (r) {
+			  	marker = new google.maps.Marker({
+			  		position: new google.maps.LatLng(r.get('latLng').lat,
+			  																		 r.get('latLng').lng),
+		        map: app.map
+		      });
+		      this.markers.push(marker);
+		      google.maps.event.addListener(marker, 'click', (function(marker, r) {
+		        return function() {
+		          infowindow.setContent(r.get('name'));
+		          infowindow.open(app.map, marker);
+
+		          app.restaurantOnRoute = r;
+		          app.router.navigate("restaurants/" + r.get('id'), {trigger: true});
+		        }
+		      })(marker, r));
+			  }.bind(this));
+			  this.drawMarkers(app.map);
+			}
+
 
 			var html = template({ restaurants: this.sortedRestaurants, currentLoc: app.currentLoc });
 

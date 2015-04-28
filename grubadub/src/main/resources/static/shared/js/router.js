@@ -65,28 +65,6 @@ app.router.on('route:list-restaurants', function() {
 		listView.restaurants = app.foundRestaurants;
 
 		app.router.showView("#main-wrapper", listView);
-
-		// Show restaurant pins on map
-		if (desktop) {
-			var infowindow = new google.maps.InfoWindow();
-		  var marker;
-		  app.foundRestaurants.forEach(function (r) {
-		  	marker = new google.maps.Marker({
-		  		position: new google.maps.LatLng(r.get('latLng').lat,
-		  																		 r.get('latLng').lng),
-	        map: app.map
-	      });
-	      google.maps.event.addListener(marker, 'click', (function(marker, r) {
-	        return function() {
-	          infowindow.setContent(r.get('name'));
-	          infowindow.open(app.map, marker);
-
-	          app.restaurantOnRoute = r;
-	          app.router.navigate("restaurants/" + r.get('id'), {trigger: true});
-	        }
-	      })(marker, r));
-		  });
-		}
 	}
 });
 
