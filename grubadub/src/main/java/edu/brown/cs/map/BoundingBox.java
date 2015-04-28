@@ -6,7 +6,7 @@ public class BoundingBox {
 
   public BoundingBox(LatLng sw, LatLng ne) {
     if (sw.getLat() > ne.getLat() || sw.getLng() > ne.getLng()) {
-      //throw new IllegalArgumentException("First argument isn't SW of second");
+      // throw new IllegalArgumentException("First argument isn't SW of second");
     }
 
     this.sw = sw;
@@ -26,5 +26,13 @@ public class BoundingBox {
         && point.getLat() < ne.getLat()
         && point.getLng() > sw.getLng()
         && point.getLng() < ne.getLng();
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "BoundingBox [sw=" + sw + ", ne=" + ne + "]";
   }
 }

@@ -1,8 +1,5 @@
 package edu.brown.cs.grubadub;
 
-import java.util.HashMap;
-
-import edu.brown.cs.map.BoundingBox;
 import edu.brown.cs.map.LatLng;
 import edu.brown.cs.map.Route;
 import edu.brown.cs.map.RouteFinder;
@@ -30,5 +27,10 @@ public class TestRouteFinder implements RouteFinder {
   @Override
   public int timeToLoc(LatLng start, LatLng end) {
     return (int) (start.distanceFrom(end) * 10);
+  }
+
+  @Override
+  public Route getRoute(String startAddress, String destinationAddress) {
+    return new TestRoute(points.length, points);
   }
 }

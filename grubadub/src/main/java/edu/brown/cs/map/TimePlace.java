@@ -4,8 +4,8 @@ import edu.brown.cs.kdtree.KDData;
 
 public class TimePlace implements KDData {
 
-  private LatLng loc;
-  private int timeInSeconds;
+  private final LatLng loc;
+  private final int timeInSeconds;
 
   public TimePlace(int timeInSeconds, LatLng loc) {
     this.loc = loc;

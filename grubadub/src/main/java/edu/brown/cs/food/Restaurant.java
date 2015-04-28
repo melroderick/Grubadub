@@ -148,4 +148,15 @@ public class Restaurant implements Comparable<Restaurant> {
     return phone;
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "Restaurant [id=" + id + ", name=" + name + ", categories="
+        + categories + ", latLng=" + latLng + ", rating=" + rating
+        + ", review_count=" + review_count + ", address=" + address
+        + ", image_url=" + image_url + ", phone=" + phone + "]";
+  }
+
 }

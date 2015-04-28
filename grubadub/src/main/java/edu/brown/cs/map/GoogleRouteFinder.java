@@ -13,15 +13,29 @@ public class GoogleRouteFinder implements RouteFinder {
       .setApiKey(apiKey);
 
   @Override
-  public Route getRoute(LatLng start, String address) {
+  public Route getRoute(String startAddress, String destinationAddress) {
+    DirectionsRoute[] routes = null;
+    try {
+      routes = DirectionsApi.newRequest(context)
+          .origin(startAddress)
+          .destination(destinationAddress)
+          .await();
+    } catch (Exception e) {
+      return null;
+    }
+
+    return new GoogleRoute(routes);
+  }
+
+  @Override
+  public Route getRoute(LatLng start, String destinationAddress) {
     com.google.maps.model.LatLng gLoc = new com.google.maps.model.LatLng(
         start.getLat(), start.getLng());
-
     DirectionsRoute[] routes = null;
     try {
       routes = DirectionsApi.newRequest(context)
           .origin(gLoc)
-          .destination(address)
+          .destination(destinationAddress)
           .await();
     } catch (Exception e) {
       return null;
@@ -51,7 +65,9 @@ public class GoogleRouteFinder implements RouteFinder {
     DirectionsRoute direct = null;
     try {
       DirectionsRoute[] directArray = DirectionsApi.newRequest(context)
-          .origin(gLoc).destination(destination).await();
+          .origin(gLoc)
+          .destination(destination)
+          .await();
       direct = directArray[0];
     } catch (Exception e) {
       System.out.println("direct error");
@@ -78,8 +94,27 @@ public class GoogleRouteFinder implements RouteFinder {
 
   @Override
   public int timeToLoc(LatLng start, LatLng end) {
-    // TODO Auto-generated method stub
-    return 0;
+    com.google.maps.model.LatLng gStart = new com.google.maps.model.LatLng(
+        start.getLat(), start.getLng());
+    com.google.maps.model.LatLng gEnd = new com.google.maps.model.LatLng(
+        end.getLat(), end.getLng());
+
+    DirectionsRoute direct = null;
+    try {
+      DirectionsRoute[] directArray = DirectionsApi.newRequest(context)
+          .origin(gStart)
+          .destination(gEnd)
+          .await();
+      direct = directArray[0];
+    } catch (Exception e) {
+      System.out.println("direct error");
+      return -1;
+    }
+
+    DirectionsLeg gLeg = direct.legs[0];
+    int legDuration = (int) gLeg.duration.inSeconds;
+
+    return legDuration / 60;
   }
 
 }

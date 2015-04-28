@@ -13,7 +13,7 @@ public class LatLng implements KDData {
   /**
    * Constructs a latitude and longitude object.
    * @param lat the latitude.
-   * @param lon the longitude.
+   * @param lng the longitude.
    */
   public LatLng(Double lat, Double lng) {
     this.lat = lat;
@@ -56,7 +56,7 @@ public class LatLng implements KDData {
     double currRadius = EARTH_RADIUS_IN_MILES * Math.cos(Math.toRadians(lat));
     double dLng = Math.toDegrees(miles / currRadius);
 
-    return new LatLng(lat, lng + dLng);
+    return new LatLng(lat, lng - dLng);
   }
 
   public LatLng moveEast(double miles) {

@@ -50,13 +50,21 @@ public class TestRoute implements Route {
     LatLng ne = new LatLng(point.getLat() + 1.5, point.getLng() + 1.5);
     return new BoundingBox(sw, ne);
   }
+
   @Override
   public TimePlace nearestTimePlace(LatLng loc) {
     // TODO Auto-generated method stub
     return null;
   }
+
   @Override
   public BoundingBox getBoundingBox(int start, int end, double radius) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public BoundingBox getBoundingBox(int minutes, double radius) {
     // TODO Auto-generated method stub
     return null;
   }

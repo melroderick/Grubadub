@@ -11,9 +11,10 @@ import org.junit.Test;
 
 import edu.brown.cs.food.Restaurant;
 import edu.brown.cs.food.RestaurantFinder;
+import edu.brown.cs.food.YelpRestaurantFinder;
 import edu.brown.cs.map.BoundingBox;
+import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
-import edu.brown.cs.map.Route;
 import edu.brown.cs.map.RouteFinder;
 
 public class MiddleManTest {
@@ -85,6 +86,27 @@ public class MiddleManTest {
     Arrays.sort(actual);
     assertTrue(actual.length == 0);
     assertTrue(Arrays.equals(expected, actual));
+  }
+
+  @Test
+  public void restaurantSearchExpands() {
+    LatLng seattle = new LatLng(47.6097, -122.3331);
+    LatLng portland = new LatLng(45.52, -122.6819);
+    LatLng wooley = new LatLng(41.829807041, -71.401411071);
+
+    MiddleMan googleMiddleMan = new MiddleMan(new YelpRestaurantFinder(), new GoogleRouteFinder());
+    googleMiddleMan.MIN_NUM_RESTAURANTS = 500;
+    googleMiddleMan.SEARCH_RADIUS = .001; // small so min num won't be reached
+
+    // Test that middleman stops when it reaches beginning and end of route.
+    assertTrue(googleMiddleMan.getRestaurants(seattle, "portland, OR", 30).size() < 500);
+
+    // Test that middleman expands properly.
+    googleMiddleMan.SEARCH_RADIUS = 1.0;
+    assertTrue(googleMiddleMan.getRestaurants(seattle, "portland, OR", 30).size() > 500);
+
+
+
   }
 
   // Map tests

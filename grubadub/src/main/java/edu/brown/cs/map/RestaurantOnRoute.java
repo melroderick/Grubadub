@@ -52,11 +52,48 @@ public class RestaurantOnRoute {
 
   /**
    * Gets the distance from the route in miles.
-   * 
+   *
    * @return
    */
   public double getDistFromRoute() {
     return distFromRoute;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    RestaurantOnRoute other = (RestaurantOnRoute) obj;
+    if (restaurant == null) {
+      if (other.restaurant != null) {
+        return false;
+      }
+    } else if (!restaurant.equals(other.restaurant)) {
+      return false;
+    }
+    return true;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result
+        + ((restaurant == null) ? 0 : restaurant.hashCode());
+    return result;
   }
 
   /**
