@@ -136,8 +136,8 @@ em.distance {
    --------------------------------------------------------------------------------------- */
 
 #sort-box {
-	padding-top: 20px;
-	/*position: absolute;*/
+	padding: 20px 0 15px 0;
+	margin-bottom: 0;
 }
 
 #sort-box.affix {
