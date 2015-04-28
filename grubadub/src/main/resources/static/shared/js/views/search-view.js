@@ -87,7 +87,6 @@ app.SearchView = Backbone.View.extend({
 			geocoder.geocode({'address': $("#curr-location").val()}, function(result, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					var res = result[0].geometry.location;
-					console.log($("#curr-location").val());
 					app.currentLoc = {
 						lat: res.lat(),
 						lng: res.lng()
@@ -110,6 +109,7 @@ app.SearchView = Backbone.View.extend({
 		  };
 		  app.directionsService.route(request, function(res, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
+		    	app.directionsDisplay.setMap(app.map);
 		      app.directionsDisplay.setDirections(res);
 		    }
   		});
