@@ -103,11 +103,4 @@ $(function() {
 		app.directionsDisplay = new google.maps.DirectionsRenderer();
 		app.directionsDisplay.setMap(app.map);
 	}
-
-	$("#back-btn").hide();
-	$("#back-btn").click(function(e) {
-		e.preventDefault();
-
-		app.router.back();
-	});
 });

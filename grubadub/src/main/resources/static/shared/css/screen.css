@@ -88,6 +88,7 @@ header h1 > a, header h1 > a:visited, header .user-control {
 	color: white;
 	background: rgba(255,255,255,0.4);
 	border: none;
+	display: none;
 }
 
 #main-wrapper {
