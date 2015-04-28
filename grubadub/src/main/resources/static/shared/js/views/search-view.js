@@ -3,7 +3,9 @@ var app = app || {};
 app.SearchView = Backbone.View.extend({
 	events: {
 		"click a#find-curr-location": "getCurrentLoc",
-		"click a.time-btn": "getResults"
+		"click #time-options a.btn": "getResults",
+		"keyup input": "toggleBtnsIfNeeded",
+		"change input": "toggleBtnsIfNeeded"
 	},
 
 	render: function(callback) {
@@ -22,10 +24,12 @@ app.SearchView = Backbone.View.extend({
 		$("#find-curr-location").addClass("unclickable");
 
 		this.refreshLoc();
-		this.refreshInterval = window.setInterval(this.refreshLoc, 5000);
+		this.refreshInterval = window.setInterval(this.refreshLoc.bind(this), 5000);
 	},
 
 	refreshLoc: function() {
+		var toggle = this.toggleBtnsIfNeeded;
+
 		navigator.geolocation.getCurrentPosition(function(p) {
 			var loc = {
 				lat: p.coords.latitude,
@@ -33,26 +37,40 @@ app.SearchView = Backbone.View.extend({
 			};
 			app.currentLoc = loc;
 
+			$("#find-curr-location").html('<i class="fa fa-location-arrow">');
+
 			var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 			app.geocoder.geocode({'latLng': latLng}, function(results, status) {
-				$("#find-curr-location").addClass("loc-found");
-				$("#time-options.disabled").removeClass("disabled");
-
 				var msg;
 				if (status == google.maps.GeocoderStatus.OK && results[1]) {
 					msg = "Near: " + results[1].formatted_address;
 				} else {
 					msg = p.coords.latitude + ", " + p.coords.longitude
 				}
-				$("#find-curr-location").html(msg);
+				$("#curr-location").val(msg);
+				$("#curr-location").prop("disabled", true);
+
+				toggle();
 			});
 		});
+	},
+
+	toggleBtnsIfNeeded: function() {
+		var currVal = $("#curr-location").val();
+		var destVal = $("#destination-field").val();
+
+		if ((currVal != undefined && currVal.length > 0) &&
+			(destVal != undefined && destVal.length > 0)) {
+			$("#time-options.disabled").removeClass("disabled");
+		} else {
+			$("#time-options").addClass("disabled");
+		}
 	},
 
 	getResults: function(e) {
 		e.preventDefault();
 
-		if (app.currentLoc) {
+		find = function() {
 			app.foundRestaurants = new app.Restaurants();
 			app.foundRestaurants.lat = app.currentLoc.lat;
 			app.foundRestaurants.lng = app.currentLoc.lng;
@@ -63,11 +81,27 @@ app.SearchView = Backbone.View.extend({
 			}});
 
 			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
+		}.bind(this)
+
+		if (!app.currentLoc) {
+			geocoder.geocode({'address': $("#curr-location").val()}, function(result, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					var res = result[0].geometry.location;
+					console.log($("#curr-location").val());
+					app.currentLoc = {
+						lat: res.lat(),
+						lng: res.lng()
+					}
+
+					find();
+				}
+			});
+		} else {
+			find();
 		}
 	},
 
 	beforeClose: function() {
-		console.log("stopping interval");
 		window.clearInterval(this.refreshInterval);
 	}
 });

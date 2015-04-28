@@ -7,7 +7,7 @@ Author: max@luzuriaga.com
    Reset
    --------------------------------------------------------------------------------------- */
 
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; font: inherit; vertical-align: baseline; text-decoration: none; }
+/*html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; font: inherit; vertical-align: baseline; text-decoration: none; }
 :focus { outline: 0; }
 body { line-height: 1; color: black; background: white; }
 nav ul { list-style: none; }
@@ -23,7 +23,7 @@ textarea { overflow: auto; }
 input[type="radio"] { vertical-align: text-bottom; }
 input[type="checkbox"] { vertical-align: bottom; }
 button, input, select, textarea { margin: 0; }
-time { display: block; }
+time { display: block; }*/
 
 /* ---------------------------------------------------------------------------------------
    Main
@@ -33,12 +33,10 @@ body {
 	background-color: white;
 	font-family: Helvetica, Arial, sans-serif;
 	/*padding: 50px 0 0 0;*/
-	/*height: 900px;*/
 }
 
 a, a:visited {
-	text-decoration: none;
-	color: inherit;
+	/*text-decoration: none !important;*/
 }
 
 header {
@@ -59,10 +57,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	border-bottom: 1px solid #999;
 	font-size: 1.2em;
 	color: white;
-	box-shadow: 0 0 2px rgba(0,0,0,0.1);
+	box-shadow: 0 0 2px rgba(0,0,0,0.4);
 }
 
 header h1 {
+	font-size: 18px;
+	margin: 0;
 	float: left;
 	font-weight: bold;
 	text-shadow: 0px 1px 1px rgba(0,0,0,0.3);
@@ -70,6 +70,7 @@ header h1 {
 
 header h1 > a {
 	padding: 15px 20px 15px 20px;
+	text-decoration: none !important;
 }
 
 header h1 a, header h1 a:visited, header .user-control {
@@ -80,8 +81,7 @@ header h1 a, header h1 a:visited, header .user-control {
 }
 
 #main-wrapper {
-	/*width: 300px;*/
-	padding: 20px;
+	/*padding-top: 20px;*/
 }
 
 h2 {
@@ -112,31 +112,6 @@ em.distance {
 	margin-bottom: 15px;
 }
 
-a.input-btn {
-	display: inline-block;
-	text-align: center;
-	background: #e67e22;
-	color: white;
-	line-height: 1.35em;
-	padding: 9px;
-	font-size: 16px;
-	border: 1px solid #d35400;
-	border-radius: 5px;
-	font-weight: bold;
-
-	width: -moz-calc(100% - 18px);
-    width: -webkit-calc(100% - 18px);
-    width: calc(100% - 18px);
-}
-
-a#find-curr-location.loc-found {
-	background: rgba(0,0,0,0.05);
-	border-radius: 0;
-	border-color: #bdc3c7;
-	color: #7f8c8d;
-	font-weight: normal;
-}
-
 input[type=text] {
 	border: 0;
 	outline: 0;
@@ -144,7 +119,6 @@ input[type=text] {
 	margin: 0;
 	border: 1px solid #bdc3c7;
 	-webkit-appearance:none;
-	border-radius: 0;
 	font-size: 16px;
 	padding: 10px;
 
@@ -158,42 +132,10 @@ input[type=text]:focus {
 	box-shadow: 0 0 5px rgba(52, 152, 219, 0.6);
 }
 
-.form-el label {
-	display: block;
-	color: #34495e;
-	font-size: 16px;
-	margin-bottom: 7px;
-}
-
-#time-options.disabled a.time-btn {
+#time-options.disabled a.btn {
 	pointer-events: none;
-	background: #ecf0f1;
-	border-color: #bdc3c7;
-	color: #bdc3c7;
-}
-
-a.time-btn {
-	display: block;
-	background: #3498db;
-	border: 1px solid #2980b9;
-	color: white;
-	border-radius: 5px;
-
-	margin-bottom: 4px;
-	float: right;
-	font-weight: bold;
-	font-size: 18px;
-	text-align: center;
-
-	padding: 15px 10px;
-
-	width: -moz-calc(50% - 24px);
-    width: -webkit-calc(50% - 24px);
-    width: calc(50% - 24px);
-}
-
-.time-btn.left {
-	float: left;
+	cursor: not-allowed;
+	opacity: 0.65;
 }
 
 .loading {
@@ -255,24 +197,30 @@ ol.restaurant-list .stars {
 	height: 83px;
 	margin-left: 5px;
 	border-radius: 3px;
-	/*border: 1px solid #2c3e50;*/
 	float: right;
 }
 
+.details img.media-object {
+	width: 80px;
+	height: 80px;
+}
+
 .details h2 {
-	line-height: 1.3em;
 	margin-bottom: 5px;
+	margin-top: 0;
+}
+
+.details .media {
+	margin-top: 20px;
 }
 
 .details .stars {
-	margin-top: 5px;
 	font-size: 22px;
-	text-align: center;
 }
 
 .details address {
+	margin-bottom: 0;
 	font-size: 16px;
-	line-height: 1.5em;
 }
 
 .details em.distance {
@@ -280,52 +228,8 @@ ol.restaurant-list .stars {
 	padding-left: 10px;
 	margin-left: 3px;
 }
-
-.details h3 {
-	color: #2c3e50;
-	font-weight: bold;
-	font-size: 20px;
-	margin-bottom: 10px;
-}
-
-.reviews {
-	padding: 13px 0;
-	margin: 10px 0;
-
-	border-top: 1px solid #bdc3c7;
-}
-
-.review .text {
-	line-height: 1.5em;
-}
-
-.review .text a {
-	color: #3498db;
-	text-decoration: underline;
-}
-
-.review .author {
-	font-style: italic;
-	text-align: right;
-}
-
 .btn-container {
 	text-align: center;
-}
-
-.link-btn, .link-btn:visited {
-	display: inline-block;
-	font-weight: bold;
-	font-size: 22px;
-	padding: 15px;
-	background: #3498db;
-	border-radius: 10px;
-	color: white;
-}
-
-.call-btn {
-	background: #2ecc71;
-	margin-top: 10px;
 }
 
 /* ---------------------------------------------------------------------------------------
