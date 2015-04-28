@@ -149,7 +149,7 @@ app.ListView = Backbone.View.extend({
 	},
 
 	beforeClose: function(nextView) {
-		if (nextView.shouldClearMap) {
+		if (nextView.shouldClearMap && desktop) {
 			app.directionsDisplay.setMap(null);
 			this.drawMarkers(null);
 		}
