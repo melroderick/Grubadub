@@ -42,8 +42,18 @@ public class MiddleMan {
     int startMinutes = Math.max(0, minutes - minuteRadius);
     int endMinutes = minutes + minuteRadius;
 
-    BoundingBox bb = route.getBoundingBox(
-        startMinutes, endMinutes, SEARCH_RADIUS);
+    BoundingBox bb;
+    if (startMinutes >= route.routeTime()) {
+      // If the user wants to eat after they arrive, get bounding box
+      // within SEARCH_RADIUS of end route location.
+      bb = route.getBoundingBox(startMinutes, SEARCH_RADIUS);
+    } else {
+      bb = route.getBoundingBox(startMinutes, endMinutes, SEARCH_RADIUS);
+    }
+
+    // System.out.println(bb);
+
+
     Set<RestaurantOnRoute> restaurants = getRestaurantsOnRoute(route, bb);
 
     // Will be entered if there aren't a sufficient number of restaurants
@@ -83,8 +93,8 @@ public class MiddleMan {
   }
 
   private int getMinuteRadius(int minutes) {
-    int minimumRadius = 10;
-    return Math.max(minimumRadius, (int) (Math.sqrt(minutes) * 2.5));
+    int minimumRadius = 5;
+    return Math.max(minimumRadius, (int) (Math.sqrt(minutes) * 1.5));
   }
 
   final static int NUMBER_OF_YELP_RESULTS = 1000;

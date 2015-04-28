@@ -15,6 +15,8 @@ import edu.brown.cs.food.YelpRestaurantFinder;
 import edu.brown.cs.map.BoundingBox;
 import edu.brown.cs.map.GoogleRouteFinder;
 import edu.brown.cs.map.LatLng;
+import edu.brown.cs.map.RestaurantOnRoute;
+import edu.brown.cs.map.Route;
 import edu.brown.cs.map.RouteFinder;
 
 public class MiddleManTest {
@@ -104,8 +106,24 @@ public class MiddleManTest {
     // Test that middleman expands properly.
     googleMiddleMan.SEARCH_RADIUS = 1.0;
     assertTrue(googleMiddleMan.getRestaurants(seattle, "portland, OR", 30).size() > 500);
+  }
 
+  @Test
+  public void eatTimeExceedsRouteTime() {
+    LatLng seattle = new LatLng(47.6097, -122.3331);
+    GoogleRouteFinder grf = new GoogleRouteFinder();
+    YelpRestaurantFinder yrf = new YelpRestaurantFinder();
+    MiddleMan googleMiddleMan = new MiddleMan(yrf, grf);
 
+    Route sea2Port = grf.getRoute(seattle, "Portland, OR");
+    int routeTime = sea2Port.routeTime();
+
+    int insaneTime = sea2Port.routeTime() * 3;
+    List<RestaurantOnRoute> test = googleMiddleMan.getRestaurants(
+        seattle, "Portland, OR", insaneTime);
+    List<RestaurantOnRoute> expected = googleMiddleMan.getRestaurants(
+        seattle, "Portland, OR", routeTime);
+    // TODO: Why is test not subset of expected?
 
   }
 

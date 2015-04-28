@@ -190,10 +190,8 @@ class GoogleRoute implements Route {
     int endSeconds = end * 60;
 
     List<LatLng> pointsAlong = detailedTimePlaces.stream()
-        .filter(tp -> {
-          int time = tp.timeInSeconds();
-          return time >= startSeconds && time <= endSeconds;})
-
+        .filter(tp -> tp.timeInSeconds() >= startSeconds)
+        .filter(tp -> tp.timeInSeconds() <= endSeconds)
         .map(tp -> tp.getLoc())
         .collect(Collectors.toList());
 
