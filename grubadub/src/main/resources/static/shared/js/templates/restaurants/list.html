@@ -1,5 +1,16 @@
+<div class="form-group" id="sort-box">
+	<label>Sort by:</label>
+	<select class="form-control">
+		<option value="special">Grubadub Ranking</option>
+		<option value="time">Time to Restaurant</option>
+		<option value="rating">Restaurant Rating</option>
+	</select>
+</div>
+
 <ol class="restaurant-list">
 <% _.each(restaurants, function(restaurant) { %>
+	<hr />
+
 	<li class="clearfix">
 		<a href="#restaurants/<%= restaurant.get('id') %>" class="list-link">
 			<div class="right">
