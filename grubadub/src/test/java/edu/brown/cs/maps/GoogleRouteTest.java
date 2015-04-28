@@ -56,31 +56,4 @@ public class GoogleRouteTest {
     loc = portland2Providence.locIn(400);
     assertEquals(400, grf.timeToLoc(portland, loc), 15);
   }
-
-  @Test
-  public void testGetBoundingBoxEdge() {
-    LatLng loc = portland2Seattle.locIn(20);
-//    System.out.println(loc);
-//    System.out.println(loc.moveSouth(5.0).moveEast(5.0));
-  }
-
-  @Test
-  public void testRestaurantTime() {
-    Route problem = new GoogleRouteFinder().getRoute(
-        wooley, "632 Lawson Avenue Havertown PA 19083");
-    System.out.println(problem.routeTime());
-    System.out.println(problem.getBoundingBox(100, 140, 5.0));
-    LatLng fairfeld = new LatLng(41.1758, -73.2719);
-    LatLng restaurant = new LatLng(41.1423035, -73.2559662);
-    System.out.println(problem.nearestTimePlace(restaurant));
-    System.out.println(problem.nearestTimePlace(fairfeld));
-  }
-
-  /*
-   * @Test public void testDistanceFromTime() { Long t1 = System.nanoTime();
-   * LatLng kelso = new LatLng(46.161537, -122.892357);
-   * System.out.println(port2Prov.distanceFrom(kelso));
-   * System.out.println((System.nanoTime() - t1) / 1000000000.0); }
-   */
-
 }

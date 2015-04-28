@@ -72,8 +72,6 @@ public class MiddleMan {
     // Find all restaurants within the bounding box
     List<Restaurant> restaurants = findRestaurants(bb);
 
-    System.out.println(restaurants.stream().filter(r -> r.getLatLng() == null).collect(Collectors.toList()));
-
     Set<RestaurantOnRoute> restaurantsOnRoute = restaurants.stream()
         .filter(r -> r.getLatLng() != null)
         .map(r -> new RestaurantOnRoute(r, route))
