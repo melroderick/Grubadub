@@ -1,30 +1,36 @@
 <ol class="restaurant-list">
 <% _.each(restaurants, function(restaurant) { %>
-	<a href="#restaurants/<%= restaurant.get('id') %>">
-		<li class="group">
+	<li class="clearfix">
+		<a href="#restaurants/<%= restaurant.get('id') %>" class="list-link">
 			<div class="right">
 				<em class="distance"><%= _formatTime(restaurant.get('timeToRestaurant')) %></em>
 			</div>
-			<div>
-				<p class="name"><%= restaurant.get('name') %></p>
-				<address><%= restaurant.get('address') %></address>
-				<p class="stars">
-				<% 	var halfStars = Math.round(restaurant.get('rating')*2)/2;
-					var totalStars = Math.ceil(restaurant.get('rating'));
-					for (var s = 1; s <= totalStars; s++) {
-						if (s <= halfStars) { %>
-							<i class="fa fa-star"></i>
-						<% } else { %>
-							<i class="fa fa-star-half-o"></i>
-						<% }
-					}
 
-					for (var s = totalStars + 1; s <= 5; s++) { %>
-						<i class="fa fa-star-o"></i>
-					<% } %>
-				</p>
+			<div class="media restaurant-details">
+				<div class="media-left">
+				  <img class="media-object img-rounded" src="<%= restaurant.get('image_url') %>">
+				</div>
+				<div class="media-body">
+					<h3><%= restaurant.get('name') %></h2>
+					<address><%= restaurant.get('address') %></address>
+					<p class="stars">
+					<% 	var halfStars = Math.round(restaurant.get('rating')*2)/2;
+						var totalStars = Math.ceil(restaurant.get('rating'));
+						for (var s = 1; s <= totalStars; s++) {
+							if (s <= halfStars) { %>
+								<i class="fa fa-star"></i>
+							<% } else { %>
+								<i class="fa fa-star-half-o"></i>
+							<% }
+						}
+
+						for (var s = totalStars + 1; s <= 5; s++) { %>
+							<i class="fa fa-star-o"></i>
+						<% } %>
+					</p>
+				</div>
 			</div>
-		</li>
-	</a>
+		</a>
+	</li>
 <% }); %>
 </ol>
