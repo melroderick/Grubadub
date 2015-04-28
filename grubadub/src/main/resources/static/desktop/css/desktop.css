@@ -20,6 +20,7 @@ html, body {
 }
 
 div#sort-box.affix {
+	box-shadow: none;
 	top: 50px;
 
 	width: -moz-calc(33% - 30px);
