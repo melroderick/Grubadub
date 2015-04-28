@@ -81,13 +81,27 @@ app.SearchView = Backbone.View.extend({
 			}});
 
 			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
+
+			if (desktop) {
+				var start = new google.maps.LatLng(app.currentLoc.lat,  app.currentLoc.lng);
+				var request = {
+					origin: start,
+					destination: app.foundRestaurants.destination,
+					travelMode: google.maps.TravelMode.DRIVING
+				};
+				app.directionsService.route(request, function(res, status) {
+					if (status == google.maps.DirectionsStatus.OK) {
+						app.directionsDisplay.setDirections(res);
+					}
+				});
+			}
 		}.bind(this)
 
 		if (!app.currentLoc) {
-			geocoder.geocode({'address': $("#curr-location").val()}, function(result, status) {
+			app.geocoder.geocode({'address': $("#curr-location").val()}, function(result, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					var res = result[0].geometry.location;
-					console.log($("#curr-location").val());
+
 					app.currentLoc = {
 						lat: res.lat(),
 						lng: res.lng()
@@ -98,21 +112,6 @@ app.SearchView = Backbone.View.extend({
 			});
 		} else {
 			find();
-		}
-
-		if (desktop) {
-			var start = new google.maps.LatLng(app.currentLoc.lat,
-																				 app.currentLoc.lng);
-			var request = {
-		    origin: start,
-		    destination: app.foundRestaurants.destination,
-		    travelMode: google.maps.TravelMode.DRIVING
-		  };
-		  app.directionsService.route(request, function(res, status) {
-		    if (status == google.maps.DirectionsStatus.OK) {
-		      app.directionsDisplay.setDirections(res);
-		    }
-  		});
 		}
 	},
 
