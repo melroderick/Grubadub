@@ -116,11 +116,20 @@ app.ListView = Backbone.View.extend({
 			$(this.el).html(html);
 			callback(this);
 
-			$('#sort-box').affix({
-				offset: {
-					top: 50
-				}
-			});
+			if (desktop) {
+				$('#sort-box').affix({
+					offset: {
+						top: 0
+					},
+					target: "#main-wrapper"
+				});
+			} else {
+				$('#sort-box').affix({
+					offset: {
+						top: 50
+					}
+				});
+			}
 
 			$('#sort-box').on('affix.bs.affix', function() {
 				$('ol.restaurant-list').css('padding-top', $("#sort-box").outerHeight());

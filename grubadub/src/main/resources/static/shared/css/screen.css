@@ -57,6 +57,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	color: white;
 	box-shadow: 0 0 2px rgba(0,0,0,0.4);
 	padding: 0 20px;
+
+	z-index: 300;
 }
 
 header h1 {
@@ -88,6 +90,7 @@ header h1 > a, header h1 > a:visited, header .user-control {
 	color: white;
 	background: rgba(255,255,255,0.4);
 	border: none;
+	display: none;
 }
 
 #main-wrapper {
@@ -141,15 +144,14 @@ em.distance {
 }
 
 #sort-box.affix {
-	z-index: 5000;
+	z-index: 42;
 	position: fixed;
 	background: rgba(255,255,255,0.9);
 	box-shadow: 0 0 10px white;
-	margin-bottom: 200px;
 	top: 0;
 
 	width: -moz-calc(100% - 30px);
-    width: -webkit-calc(100% - 30px);
+	width: -webkit-calc(100% - 30px);
 	width: calc(100% - 30px);
 }
 
