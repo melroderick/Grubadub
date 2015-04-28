@@ -94,14 +94,14 @@ $(function() {
 	if (desktop) {
 		app.map = new google.maps.Map(document.getElementById("map-canvas"),
 			{
-	    	zoom: 14,
-	    	// Center on Philadelphia
-	    	center: new google.maps.LatLng(39.9500, -75.1667)
-	  	}
-	  );
-	  app.directionsService = new google.maps.DirectionsService();
-	  app.directionsDisplay = new google.maps.DirectionsRenderer();
-	  app.directionsDisplay.setMap(app.map);
+				zoom: 14,
+				// Center on Philadelphia
+				center: new google.maps.LatLng(39.9500, -75.1667)
+			}
+		);
+		app.directionsService = new google.maps.DirectionsService();
+		app.directionsDisplay = new google.maps.DirectionsRenderer();
+		app.directionsDisplay.setMap(app.map);
 	}
 
 	$("#back-btn").hide();
