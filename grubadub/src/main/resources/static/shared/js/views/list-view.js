@@ -139,5 +139,11 @@ app.ListView = Backbone.View.extend({
 				$('ol.restaurant-list').css('padding-top', 0);
 			});
 		}.bind(this));
+	},
+
+	beforeClose: function(nextView) {
+		if (nextView.shouldClearMap) {
+			console.log("lmao");
+		}
 	}
 });

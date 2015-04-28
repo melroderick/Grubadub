@@ -9,7 +9,7 @@ var Router = Backbone.Router.extend({
 
 	showView: function(selector, view) {
 		if (this.currentView) {
-			this.currentView.close();
+			this.currentView.close(view);
 		}
 
 		this.currentView = view;
@@ -32,6 +32,7 @@ app.router.on('route:search', function() {
 	app.foundRestaurants = null;
 
 	var searchView = new app.SearchView();
+	searchView.shouldClearMap = true;
 	app.router.showView("#main-wrapper", searchView);
 });
 

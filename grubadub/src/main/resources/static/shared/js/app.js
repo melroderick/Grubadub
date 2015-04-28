@@ -35,9 +35,9 @@ app.asyncForEach = function(array, each, callback) {
 	}
 }
 
-Backbone.View.prototype.close = function() {
+Backbone.View.prototype.close = function(nextView) {
 	if (this.beforeClose) {
-		this.beforeClose();
+		this.beforeClose(nextView);
 	}
 
 	this.remove();
