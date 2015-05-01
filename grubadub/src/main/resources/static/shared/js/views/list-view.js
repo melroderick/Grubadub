@@ -3,7 +3,8 @@ var app = app || {};
 app.ListView = Backbone.View.extend({
 	events: {
 		"click ol.restaurant-list > li": "selectRestaurantRoute",
-		"change #sort-box > select": "sortResults"
+		"mouseover ol.restaurant-list > li": "hoverRestaurant",
+		"change #sort-box > select": "sortResults",
 	},
 
 	filterSortRestaurants: function(filter, type) {
@@ -60,6 +61,16 @@ app.ListView = Backbone.View.extend({
 	selectRestaurantRoute: function(e) {
 		var index = $(e.currentTarget).index();
 		app.restaurantOnRoute = this.sortedRestaurants[index];
+	},
+
+	hoverRestaurant: function(e) {
+		var index = $(e.currentTarget).index();
+		var restaurant = this.sortedRestaurants[index];
+
+		if (desktop) {
+			console.log("eyy");
+			// note: this gets called every time the mouse moves over the restaurant, so event will fire many times
+		}
 	},
 
 	drawMarkers: function(map) {
