@@ -7,7 +7,7 @@ html, body {
 	height: 100%;
 }
 
-#main-wrapper {
+.desktop #main-wrapper {
 	overflow-y: scroll;
 
 	min-height: -moz-calc(100% - 50px);
@@ -19,7 +19,7 @@ html, body {
 	height: calc(100% - 50px);
 }
 
-div#sort-box.affix {
+.desktop div#sort-box.affix {
 	box-shadow: none;
 	top: 50px;
 
