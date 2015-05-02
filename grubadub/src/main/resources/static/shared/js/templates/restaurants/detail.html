@@ -24,6 +24,7 @@
 			<% if (ror) { %>
 				<p>
 					<strong><%= _formatTime(ror.get('timeToRestaurant')) %></strong> away.<br />
+					<strong class="text-danger">+<%= ror.get('timeAdded') %></strong> mins to route.<br />
 					<strong><%= _roundNumber(ror.get('distFromRoute')) %></strong> miles off route.
 				</p>
 			<% } %>
