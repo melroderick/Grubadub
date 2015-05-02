@@ -1,9 +1,9 @@
 <#assign content>
 
-<div class="container-fluid full-height">
+<div class="container-fluid full-height desktop">
 	<div class="row full-height">
-		<div class="col-sm-4 full-height">
-			<div class="row">
+		<div class="col-xs-4 full-height gui">
+			<div class="row header-row">
 				<header>
 					<div class="group">
 						<a href="#" id="back-btn" class="btn btn-default"><i class="fa fa-chevron-left fa-lg"></i></a>
@@ -16,7 +16,7 @@
 
 			<div class="group" id="main-wrapper"></div>
 		</div>
-		<div id="map-canvas" class="col-sm-8 full-height"></div>
+		<div id="map-canvas" class="col-xs-8 full-height"></div>
 	</div>
 </div>
 
