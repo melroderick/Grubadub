@@ -163,6 +163,10 @@ ol.restaurant-list li {
 	margin-bottom: 10px;
 }
 
+ol.restaurant-list li em.distance {
+	font-style: normal;
+}
+
 ol.restaurant-list a.list-link {
 	display: inline-block;
 	text-decoration: none !important;
@@ -230,6 +234,7 @@ ol.restaurant-list .stars {
 	padding-left: 10px;
 	margin-left: 3px;
 }
+
 .btn-container {
 	text-align: center;
 }
