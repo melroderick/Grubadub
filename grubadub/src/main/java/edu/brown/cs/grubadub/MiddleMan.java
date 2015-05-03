@@ -36,6 +36,9 @@ public class MiddleMan {
 
     // Get the route from the current location to the destination
     Route route = getRoute(curLoc, destination);
+    if (route == null) {
+      return null;
+    }
 
     // Get the Bounding box from the route where the user will be in 'minutes'
     int minuteRadius = getMinuteRadius(minutes);
