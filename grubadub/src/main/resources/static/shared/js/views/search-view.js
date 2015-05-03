@@ -15,6 +15,12 @@ app.SearchView = Backbone.View.extend({
 			
 			callback(this);
 		}.bind(this));
+		if (typeof app.directionsDisplay !== 'undefined') {
+			app.directionsDisplay.setMap(null);
+			for(var i = 0; i < app.markers.length; i++) {
+				app.markers[i].setMap(null);
+			}
+		}
 	},
 
 	getCurrentLoc: function(e) {

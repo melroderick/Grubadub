@@ -67,8 +67,10 @@ app.ListView = Backbone.View.extend({
 		var restaurant = this.sortedRestaurants[index];
 
 		if (desktop) {
-			console.log("eyy");
-			// note: this gets called every time the mouse moves over the restaurant, so event will fire many times
+			this.infowindow.close();
+			this.infowindow = new google.maps.InfoWindow();
+			this.infowindow.setContent(this.sortedRestaurants[index].get('name'));
+		  this.infowindow.open(app.map, app.markers[index]);
 		}
 	},
 
@@ -95,7 +97,7 @@ app.ListView = Backbone.View.extend({
 					this.drawMarkers(null);
 				}
 				app.markers = [];
-				var infowindow = new google.maps.InfoWindow();
+				this.infowindow = new google.maps.InfoWindow();
 			  var marker;
 			  /*var icon = {
 			  	url: "/shared/img/marker.png",
@@ -105,21 +107,21 @@ app.ListView = Backbone.View.extend({
 			  }*/
 			  this.sortedRestaurants.forEach(function (r) {
 			  	marker = new google.maps.Marker({
-			  		position: new google.maps.LatLng(r.get('latLng').lat,
-			  																		 r.get('latLng').lng),
+			  	position: new google.maps.LatLng(r.get('latLng').lat,
+			  																	 r.get('latLng').lng),
 		        map: app.map,
 		        //icon: icon
 		      });
 		      app.markers.push(marker);
 		      google.maps.event.addListener(marker, 'click', (function(marker, r) {
 		        return function() {
-		          infowindow.setContent(r.get('name'));
-		          infowindow.open(app.map, marker);
+		          this.infowindow.setContent(r.get('name'));
+		          this.infowindow.open(app.map, marker);
 
 		          app.restaurantOnRoute = r;
 		          app.router.navigate("restaurants/" + r.get('id'), {trigger: true});
-		        }
-		      })(marker, r));
+		        }.bind(this);
+		      }.bind(this))(marker, r));
 			  }.bind(this));
 			  this.drawMarkers(app.map);
 			}
@@ -153,12 +155,5 @@ app.ListView = Backbone.View.extend({
 				$('ol.restaurant-list').css('padding-top', 0);
 			});
 		}.bind(this));
-	},
-
-	beforeClose: function(nextView) {
-		if (nextView.shouldClearMap && desktop) {
-			app.directionsDisplay.setMap(null);
-			this.drawMarkers(null);
-		}
 	}
 });
