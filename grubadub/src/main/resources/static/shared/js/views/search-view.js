@@ -14,8 +14,13 @@ app.SearchView = Backbone.View.extend({
 		app.getTemplate("pages/search", function(file) {
 			var template = _.template(file);
 			$(this.el).html(template());
-			
 			callback(this);
+
+			var start = document.getElementById('curr-location');
+			var end = document.getElementById('destination-field');
+			var options = { types: ['geocode'] };
+			app.autocompleteStart = new google.maps.places.Autocomplete(start, options);
+			app.autocompleteEnd = new google.maps.places.Autocomplete(end, options);
 		}.bind(this));
 		if (typeof app.directionsDisplay !== 'undefined') {
 			app.directionsDisplay.setMap(null);
