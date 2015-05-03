@@ -58,7 +58,6 @@ public class GoogleRouteFinder implements RouteFinder {
           .await();
       detour = detourArray[0];
     } catch (Exception e) {
-      System.out.println("detour error");
       return -1;
     }
 
@@ -70,7 +69,6 @@ public class GoogleRouteFinder implements RouteFinder {
           .await();
       direct = directArray[0];
     } catch (Exception e) {
-      System.out.println("direct error");
       return -1;
     }
 
@@ -81,10 +79,6 @@ public class GoogleRouteFinder implements RouteFinder {
 
     int t1 = (int) l1.duration.inSeconds / 60;
     int t2 = (int) l2.duration.inSeconds / 60;
-
-    System.out.println(t1);
-    System.out.println(t2);
-    System.out.println((int) direct.legs[0].duration.inSeconds / 60);
 
     long detourTime = l1.duration.inSeconds + l2.duration.inSeconds;
     long directTime = direct.legs[0].duration.inSeconds;

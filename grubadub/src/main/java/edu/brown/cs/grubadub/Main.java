@@ -88,6 +88,12 @@ public final class Main {
     Spark.get("/details", new DetailHandler());
   }
 
+  private Object errorJSON(String message) {
+    Map<String, Object> variables =
+        new ImmutableMap.Builder().put("error", message).build();
+    return GSON.toJson(variables);
+  }
+
   /**
    * Handles the main '/' route, including serving desktop or mobile depending
    * on user agent.
@@ -145,6 +151,10 @@ public final class Main {
       List<RestaurantOnRoute> restaurants = middleman.getRestaurants(loc,
           destination, time);
 
+      if (restaurants == null) {
+        return errorJSON("Could not find path to " + destination);
+      }
+
       res.type("text/json");
       return GSON.toJson(restaurants);
     }
@@ -162,6 +172,11 @@ public final class Main {
       String destination = qm.value("destination");
 
       int extraTime = middleman.getExtraTime(loc, waypoint, destination);
+
+      if (extraTime == -1) {
+        return errorJSON("Error getting route time");
+      }
+
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("time", extraTime).build();
