@@ -83,7 +83,7 @@ public class KDTree<Q extends KDData> {
 	}
 
 	private KDNode find(Q o) {
-		return root.find(o);
+	  return root.find(o);
 	}
 
 	/**
@@ -91,17 +91,12 @@ public class KDTree<Q extends KDData> {
 	 * @return The datum nearest to origin in the KDTree.
 	 */
 	public Q nearestNeighbor(Q origin) {
-		KDNode n = find(origin);
-		if (n == null) {
-			n = buildDummyNode(origin); // See buildDummyNode for why
-		}
-		if (this.size() == 1) {
-			throw new IllegalArgumentException(
-					"ERROR: Only 1 datum in data given, "
-							+ "so object has no neighbors");
-		} else {
-			return nnHelper(n, root, root).data;
-		}
+	  KDNode n = find(origin);
+	  if (n == null) {
+	    n = buildDummyNode(origin); // See buildDummyNode for why
+	  }
+
+	  return nnHelper(n, root, root).data;
 	}
 
 	// This is very hackish. My nnHelper, kNNHelper, and fwrHelper methods
