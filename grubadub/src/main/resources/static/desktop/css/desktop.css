@@ -44,7 +44,7 @@ html, body {
 }
 
 .desktop div#sort-box.affix {
-	/*box-shadow: none;*/
+	position: fixed;
 	top: 50px;
 
 	width: -moz-calc(33.33% - 30px);

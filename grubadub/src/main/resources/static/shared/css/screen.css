@@ -140,7 +140,7 @@ em.distance {
 
 #sort-box.affix {
 	z-index: 42;
-	position: fixed;
+	position: static;
 	background: rgba(255,255,255,0.9);
 	box-shadow: 0 0 10px white;
 	top: 0;
