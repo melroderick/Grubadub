@@ -3,7 +3,9 @@ var app = app || {};
 app.SearchView = Backbone.View.extend({
 	events: {
 		"click a#find-curr-location": "getCurrentLoc",
-		"click #time-options a.btn": "getResults",
+		"click a#manual-time": "showManualTimeOption",
+		"click div.manual-time-input a.btn": "getWithCustomTime",
+		"click #time-options .btn-row a.btn": "getWithBtnTime",
 		"keyup input": "toggleBtnsIfNeeded",
 		"change input": "toggleBtnsIfNeeded"
 	},
@@ -61,6 +63,13 @@ app.SearchView = Backbone.View.extend({
 		});
 	},
 
+	showManualTimeOption: function(e) {
+		e.preventDefault();
+
+		$("#time-options > p").remove();
+		$("#time-options > div.manual-time-input").show();
+	},
+
 	toggleBtnsIfNeeded: function() {
 		var currVal = $("#curr-location").val();
 		var destVal = $("#destination-field").val();
@@ -73,9 +82,25 @@ app.SearchView = Backbone.View.extend({
 		}
 	},
 
-	getResults: function(e) {
+	getWithCustomTime: function(e) {
 		e.preventDefault();
 
+		var hours = parseInt($("input#manual-hours").val());
+		var mins = parseInt($("input#manual-mins").val());
+		var time = (hours * 60) + mins;
+
+		this.getResults(time);
+	},
+
+	getWithBtnTime: function(e) {
+		e.preventDefault();
+
+		var time = parseInt($(e.currentTarget).attr('data-time'));
+
+		this.getResults(time);
+	},
+
+	getResults: function(time) {
 		find = function() {
 			app.foundRestaurants = new app.Restaurants();
 			app.userStart = $("#curr-location").val();
@@ -83,7 +108,7 @@ app.SearchView = Backbone.View.extend({
 			app.foundRestaurants.lng = app.currentLoc.lng;
 			app.userDestination = $("#destination-field").val();
 			app.foundRestaurants.destination = app.userDestination;
-			app.foundRestaurants.time = parseInt($(e.currentTarget).attr('data-time'))
+			app.foundRestaurants.time = time;
 			app.foundRestaurants.fetch({success: function() {
 				app.router.navigate("results", { trigger: true });
 			}});

@@ -156,13 +156,15 @@ app.ListView = Backbone.View.extend({
 				});
 			}
 
-			$('#sort-box').on('affix.bs.affix', function() {
-				$('ol.restaurant-list').css('padding-top', $("#sort-box").outerHeight());
-			});
+			if (desktop) {
+				$('#sort-box').on('affix.bs.affix', function() {
+					$('ol.restaurant-list').css('padding-top', $("#sort-box").outerHeight());
+				});
 
-			$('#sort-box').on('affix-top.bs.affix', function() {
-				$('ol.restaurant-list').css('padding-top', 0);
-			});
+				$('#sort-box').on('affix-top.bs.affix', function() {
+					$('ol.restaurant-list').css('padding-top', 0);
+				});
+			}
 		}.bind(this));
 	}
 });

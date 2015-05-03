@@ -101,6 +101,19 @@ em.distance {
 	opacity: 0.65;
 }
 
+#time-options > p {
+	text-align: center;
+}
+
+#time-options > div.manual-time-input {
+	margin-top: 15px;
+	display: none;
+}
+
+.btn-row {
+	margin-bottom: 5px;
+}
+
 .left-btns {
 	padding-right: 3px;
 }
@@ -127,7 +140,7 @@ em.distance {
 
 #sort-box.affix {
 	z-index: 42;
-	position: fixed;
+	position: static;
 	background: rgba(255,255,255,0.9);
 	box-shadow: 0 0 10px white;
 	top: 0;
@@ -148,6 +161,10 @@ ol.restaurant-list hr {
 
 ol.restaurant-list li {
 	margin-bottom: 10px;
+}
+
+ol.restaurant-list li em.distance {
+	font-style: normal;
 }
 
 ol.restaurant-list a.list-link {
@@ -217,6 +234,7 @@ ol.restaurant-list .stars {
 	padding-left: 10px;
 	margin-left: 3px;
 }
+
 .btn-container {
 	text-align: center;
 }
