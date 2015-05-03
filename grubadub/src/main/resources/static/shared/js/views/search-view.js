@@ -7,7 +7,8 @@ app.SearchView = Backbone.View.extend({
 		"click div.manual-time-input a.btn": "getWithCustomTime",
 		"click #time-options .btn-row a.btn": "getWithBtnTime",
 		"keyup input": "toggleBtnsIfNeeded",
-		"change input": "toggleBtnsIfNeeded"
+		"change input": "toggleBtnsIfNeeded",
+		"blur input": "adjustTimeOptions"
 	},
 
 	render: function(callback) {
@@ -36,8 +37,6 @@ app.SearchView = Backbone.View.extend({
 	},
 
 	refreshLoc: function() {
-		var toggle = this.toggleBtnsIfNeeded;
-
 		navigator.geolocation.getCurrentPosition(function(p) {
 			var loc = {
 				lat: p.coords.latitude,
@@ -58,9 +57,10 @@ app.SearchView = Backbone.View.extend({
 				$("#curr-location").val(msg);
 				$("#curr-location").prop("disabled", true);
 
-				toggle();
-			});
-		});
+				this.toggleBtnsIfNeeded();
+				this.adjustTimeOptions();
+			}.bind(this));
+		}.bind(this));
 	},
 
 	showManualTimeOption: function(e) {
@@ -79,6 +79,68 @@ app.SearchView = Backbone.View.extend({
 			$("#time-options.disabled").removeClass("disabled");
 		} else {
 			$("#time-options").addClass("disabled");
+		}
+	},
+
+	adjustTimeOptions: function() {
+		var origin = $("#curr-location").val();
+		var destination = $("#destination-field").val();
+
+		if ((origin != undefined && origin.length > 0) &&
+			(destination != undefined && destination.length > 0)) {
+			var query = {
+				origin: origin,
+				destination: destination,
+				travelMode: google.maps.TravelMode.DRIVING
+			};
+
+			app.directionsService.route(query, function(result, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					var legs = result.routes[0].legs;
+
+					var time = 0;
+					for (var i=0; i<legs.length; i++) {
+						time += legs[i].duration.value;
+					}
+					time /= 60; // now in minutes
+
+					var mins = Math.round(time);
+					var hours = Math.ceil(time / 60);
+
+					if (time <= 30) {
+						$("#btn-2").html("10 mins");
+						$("#btn-2").attr("data-time", "10");
+
+						$("#btn-3").html("20 mins");
+						$("#btn-3").attr("data-time", "20");
+
+						$("#btn-4").html("At destination");
+						$("#btn-4").attr("data-time", mins);
+					} else if (hours <= 2) {
+						$("#btn-2").html("15 mins");
+						$("#btn-2").attr("data-time", "15");
+
+						$("#btn-3").html("30 mins");
+						$("#btn-3").attr("data-time", "30");
+
+						$("#btn-4").html("At destination");
+						$("#btn-4").attr("data-time", mins);
+					} else {
+						$("#btn-2").html("30 mins");
+						$("#btn-2").attr("data-time", "30");
+
+						$("#btn-3").html("1 hour");
+						$("#btn-3").attr("data-time", "60");
+
+						$("#btn-4").html("2 hours");
+						$("#btn-4").attr("data-time", "120");
+
+						// Now, 30 mins, 1 hour, 2 hours
+					}
+
+					console.log(time);
+				}
+			});
 		}
 	},
 

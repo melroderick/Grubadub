@@ -20,22 +20,22 @@
 
 	<div class="row btn-row">
 		<div class="col-xs-6 left-btns">
-			<a class="btn btn-primary btn-block btn-lg" href="#/results" data-time="0">Now</a>
+			<a class="btn btn-primary btn-block btn-lg" id="btn-1" href="#/results" data-time="0"><%= desktop ? 'At start' : 'Now' %></a>
 		</div>
 		<div class="col-xs-6 right-btns">
-			<a class="btn btn-primary btn-block btn-lg" href="#/results" data-time="30">30 mins</a>
+			<a class="btn btn-primary btn-block btn-lg" id="btn-2" href="#/results" data-time="30">30 mins</a>
 		</div>
 	</div>
 	<div class="row btn-row">
 		<div class="col-xs-6 left-btns">
-			<a class="btn btn-primary btn-block btn-lg" href="#/results" data-time="60">1 hour</a>
+			<a class="btn btn-primary btn-block btn-lg" id="btn-3" href="#/results" data-time="60">1 hour</a>
 		</div>
 		<div class="col-xs-6 right-btns">
-			<a class="btn btn-primary btn-block btn-lg" href="#/results" data-time="120">2 hours</a>
+			<a class="btn btn-primary btn-block btn-lg" id="btn-4" href="#/results" data-time="120">2 hours</a>
 		</div>
 	</div>
 
-	<p><a href="#" class="text-muted" id="manual-time">Enter time manually.</a></p>
+	<p class="text-muted">Or <a href="#" id="manual-time">enter time manually.</a></p>
 
 	<div class="row manual-time-input">
 		<div class="col-xs-5">
