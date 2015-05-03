@@ -31,7 +31,7 @@ html, body {
 }
 
 .desktop div#sort-box.affix {
-	box-shadow: none;
+	/*box-shadow: none;*/
 	top: 50px;
 
 	width: -moz-calc(33.33% - 30px);

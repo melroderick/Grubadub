@@ -50,8 +50,8 @@ header h1 > a {
 	text-decoration: none !important;
 }
 
-header h1 > a, header h1 > a:visited, header .user-control {
-	display: block;
+header h1 > a, header h1 > a:visited {
+	display: inline-block;
 	vertical-align: middle;
 	color: white;
 	height: 100%;
@@ -140,6 +140,10 @@ em.distance {
 ol.restaurant-list {
 	list-style-type: none;
 	padding: 0;
+}
+
+ol.restaurant-list hr {
+	margin: 0;
 }
 
 ol.restaurant-list li {
