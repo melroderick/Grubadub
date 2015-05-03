@@ -89,6 +89,7 @@ function _formatTime(time) {
 
 $(function() {
 	app.geocoder = new google.maps.Geocoder();
+	app.directionsService = new google.maps.DirectionsService();
 
 	// Initialize the map
 	if (desktop) {
@@ -99,7 +100,6 @@ $(function() {
 				center: new google.maps.LatLng(41.8262, -71.4032)
 			}
 		);
-		app.directionsService = new google.maps.DirectionsService();
 		app.directionsDisplay = new google.maps.DirectionsRenderer();
 		app.directionsDisplay.setMap(app.map);
 	}

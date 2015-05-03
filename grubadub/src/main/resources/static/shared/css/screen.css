@@ -144,10 +144,6 @@ em.distance {
 	background: rgba(255,255,255,0.9);
 	box-shadow: 0 0 10px white;
 	top: 0;
-
-	width: -moz-calc(100% - 30px);
-	width: -webkit-calc(100% - 30px);
-	width: calc(100% - 30px);
 }
 
 ol.restaurant-list {
@@ -161,6 +157,10 @@ ol.restaurant-list hr {
 
 ol.restaurant-list li {
 	margin-bottom: 10px;
+}
+
+ol.restaurant-list li:hover {
+	background: #ecf0f1;
 }
 
 ol.restaurant-list li em.distance {
