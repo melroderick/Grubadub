@@ -7,12 +7,11 @@ app.ListView = Backbone.View.extend({
 		"change #sort-box > select": "sortResults",
 	},
 
-	filterSortRestaurants: function(filter, type) {
-		if (filter) { // filtering all restaurants lower than 3 stars
-			var filterPredicate = function (r) {
-				return r.get('rating') >= 3;
-			}
+	filterSortRestaurants: function() {
+		var filterPredicate = function (r) {
+			return r.get('rating') >= 3;
 		}
+		// this.searchQuery;
 
 		var rating_gain = -1;
 		var off_route_gain = 5;
@@ -20,7 +19,7 @@ app.ListView = Backbone.View.extend({
 		var review_count_gain = -0.01;
 
 		var sortScorer;
-		switch(type) {
+		switch(this.sortType) {
 			case "special":
 				sortScorer = function (r) {
 					return rating_gain * r.get('rating') +
@@ -46,7 +45,7 @@ app.ListView = Backbone.View.extend({
 		// filter, sort, and return first 50
 		var filteredList = this.restaurants.filter(filterPredicate);
 		var sortedList = _.sortBy(filteredList, sortScorer);
-		var newRestaurants = new app.Restaurants(_.first(sortedList, 50));
+		var newRestaurants = new app.Restaurants(_.first(sortedList, 15));
 		return newRestaurants;
 	},
 
@@ -79,19 +78,16 @@ app.ListView = Backbone.View.extend({
 		}
 	},
 
+	initialize: function() {
+		this.searchQuery = "";
+		this.sortType = "special";
+	},
+
 	render: function(callback) {
-		if (this.shouldFilter == undefined) {
-			this.shouldFilter = true;
-		}
-
-		if (this.sortType == undefined) {
-			this.sortType = "special";
-		}
-
 		app.getTemplate("restaurants/list", function(file) {
 			var template = _.template(file);
 
-			this.sortedRestaurants = this.filterSortRestaurants(this.shouldFilter, this.sortType).models;
+			this.sortedRestaurants = this.filterSortRestaurants().models;
 
 			// Show restaurant pins on map
 			if (desktop) {
