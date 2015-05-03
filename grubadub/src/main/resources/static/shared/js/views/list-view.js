@@ -8,10 +8,19 @@ app.ListView = Backbone.View.extend({
 	},
 
 	filterSortRestaurants: function() {
+		var searchQueryLower = this.searchQuery.toLowerCase();
 		var filterPredicate = function (r) {
-			return r.get('rating') >= 3;
+			if (r.get('name').toLowerCase().indexOf(searchQueryLower) !== -1) {
+				return true;
+			}
+			for (var i in r.get('categories')) {
+				var category = r.get('categories')[i];
+				if (category.toLowerCase().indexOf(searchQueryLower) !== -1) {
+					return true;
+				}
+			}
+			return false;
 		}
-		// this.searchQuery;
 
 		var rating_gain = -1;
 		var off_route_gain = 5;
