@@ -101,6 +101,19 @@ em.distance {
 	opacity: 0.65;
 }
 
+#time-options > p {
+	text-align: center;
+}
+
+#time-options > div.manual-time-input {
+	margin-top: 15px;
+	display: none;
+}
+
+.btn-row {
+	margin-bottom: 5px;
+}
+
 .left-btns {
 	padding-right: 3px;
 }
