@@ -6,6 +6,11 @@
 		<div class="media-body">
 			<h2><%= restaurant.get('name') %></h2>
 			<address><%= restaurant.get('address') %></address>
+			<p class="categories-list">
+				<% for (var i=0; i<Math.min(3, restaurant.get('categories').length); i++) { %>
+					<span class="label label-info"><%= restaurant.get('categories')[i] %></span>
+				<% } %>
+			</p>
 			<p class="stars">
 			<% 	var halfStars = Math.round(restaurant.get('rating')*2)/2;
 				var totalStars = Math.ceil(restaurant.get('rating'));

@@ -192,8 +192,8 @@ ol.restaurant-list em.distance {
 	padding-top: 13px;
 }
 
-ol.restaurant-list .stars {
-	margin-top: 5px;
+.categories-list {
+	margin-bottom: 0;
 }
 
 .stars {
