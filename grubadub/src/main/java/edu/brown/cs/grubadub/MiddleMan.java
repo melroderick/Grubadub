@@ -96,8 +96,8 @@ public class MiddleMan {
   }
 
   private int getMinuteRadius(int minutes) {
-    int minimumRadius = 5;
-    return Math.max(minimumRadius, (int) (Math.sqrt(minutes) * 1.5));
+    int minimumRadius = 12;
+    return Math.max(minimumRadius, (int) (Math.sqrt(minutes) * 2.0));
   }
 
   final static int NUMBER_OF_YELP_RESULTS = 1000;

@@ -2,13 +2,19 @@ var app = app || {};
 
 app.ListView = Backbone.View.extend({
 	events: {
-		"click li": "selectRestaurantRoute",
+		"mousedown li a": "selectRestaurantRoute",
 		"mouseover li": "hoverRestaurant"
 	},
 
 	selectRestaurantRoute: function(e) {
-		var index = $(e.currentTarget).index();
+		e.preventDefault();
+
+		var index = $(e.currentTarget).parent().index();
 		app.restaurantOnRoute = this.sortedRestaurants[index];
+
+		app.router.navigate("restaurants/" + app.restaurantOnRoute.get('id'), { trigger: true });
+
+		return false;
 	},
 
 	hoverRestaurant: function(e) {

@@ -82,14 +82,14 @@ app.ResultsView = Backbone.View.extend({
 
 	sortResults: function() {
 		this.sortType = $("#sort-box select").val();
-
 		this.renderList();
 	},
 
 	search: function() {
 		this.searchQuery = $("#search-box").val();
-
 		this.renderList();
+
+		return true;
 	},
 
 	selectRestaurantRoute: function(e) {
@@ -155,6 +155,13 @@ app.ResultsView = Backbone.View.extend({
 
 	renderList: function() {
 		this.sortedRestaurants = this.filterSortRestaurants().models;
+
+		// if (this.listView) {
+			// this.listView.close();
+		// }
+
+		// this.listView = new app.ListView();
+		// this.listView.resultsView = this;
 
 		this.listView.sortedRestaurants = this.sortedRestaurants;
 		this.listView.searchQuery = this.searchQuery;
