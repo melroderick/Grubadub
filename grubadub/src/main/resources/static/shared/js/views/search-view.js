@@ -22,6 +22,12 @@ app.SearchView = Backbone.View.extend({
 			var options = { types: ['geocode'] };
 			app.autocompleteStart = new google.maps.places.Autocomplete(start, options);
 			app.autocompleteEnd = new google.maps.places.Autocomplete(end, options);
+			google.maps.event.addListener(app.autocompleteStart, 'place_changed', function() {
+				console.log("Start location click");
+			});
+			google.maps.event.addListener(app.autocompleteEnd, 'place_changed', function() {
+				console.log("End location click");
+			});
 
 			if (app.userStart) {
 				$("#curr-location").val(app.userStart);
