@@ -1,0 +1,2 @@
+web: java -cp target/grubadub-1.0.jar:$(cat .mvn-classpath) edu.brown.cs.grubadub.Main
+
