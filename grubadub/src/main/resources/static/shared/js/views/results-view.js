@@ -13,6 +13,11 @@ app.ResultsView = Backbone.View.extend({
 			if (r.get('name').toLowerCase().indexOf(searchQueryLower) !== -1) {
 				return true;
 			}
+
+			if (r.get('city').toLowerCase().indexOf(searchQueryLower) !== -1) {
+				return true;
+			}
+
 			for (var i in r.get('categories')) {
 				var category = r.get('categories')[i];
 				if (category.toLowerCase().indexOf(searchQueryLower) !== -1) {
