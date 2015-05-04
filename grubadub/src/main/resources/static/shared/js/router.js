@@ -41,20 +41,29 @@ app.router.on('route:list-restaurants', function() {
 
 	if (app.foundRestaurants == null) {
 		app.router.navigate("", { trigger: true });
-	} else {
-		$("#back-btn").show();
-		$("#back-btn").unbind("click");
-		$("#back-btn").click(function(e) {
-			e.preventDefault();
-
-			app.router.navigate("", {trigger: true});
-		});
-
-		var listView = new app.ListView();
-		listView.restaurants = app.foundRestaurants;
-
-		app.router.showView("#main-wrapper", listView);
+		return;
 	}
+
+	$("#back-btn").show();
+	$("#back-btn").unbind("click");
+	$("#back-btn").click(function(e) {
+		e.preventDefault();
+
+		app.router.navigate("", {trigger: true});
+	});
+
+	var listView = new app.ListView();
+
+	if (app.resultsView == undefined) {
+		listView.restaurants = app.foundRestaurants;
+	} else {
+		listView.restaurants = app.resultsView.restaurants;
+		listView.searchQuery = app.resultsView.searchQuery;
+		listView.sortType = app.resultsView.sortType;
+	}
+
+	app.resultsView = listView;
+	app.router.showView("#main-wrapper", listView);
 });
 
 app.router.on('route:show-restaurant', function(id) {
