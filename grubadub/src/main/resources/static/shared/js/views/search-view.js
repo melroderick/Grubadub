@@ -22,6 +22,17 @@ app.SearchView = Backbone.View.extend({
 			var options = { types: ['geocode'] };
 			app.autocompleteStart = new google.maps.places.Autocomplete(start, options);
 			app.autocompleteEnd = new google.maps.places.Autocomplete(end, options);
+
+			console.log(app.userStart);
+			console.log(app.userDestination);
+
+			if (app.userStart) {
+				$("#curr-location").val(app.userStart);
+			}
+
+			if (app.userDestination) {
+				$("#destination-field").val(app.userDestination);
+			}
 		}.bind(this));
 		if (typeof app.directionsDisplay !== 'undefined') {
 			app.directionsDisplay.setMap(null);
@@ -55,12 +66,12 @@ app.SearchView = Backbone.View.extend({
 			app.geocoder.geocode({'latLng': latLng}, function(results, status) {
 				var msg;
 				if (status == google.maps.GeocoderStatus.OK && results[1]) {
-					msg = "Near: " + results[1].formatted_address;
+					msg = results[1].formatted_address;
 				} else {
 					msg = p.coords.latitude + ", " + p.coords.longitude
 				}
 				$("#curr-location").val(msg);
-				$("#curr-location").prop("disabled", true);
+				// $("#curr-location").prop("disabled", true);
 
 				this.toggleBtnsIfNeeded();
 				this.adjustTimeOptions();
