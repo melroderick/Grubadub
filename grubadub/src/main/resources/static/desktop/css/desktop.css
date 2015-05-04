@@ -47,7 +47,5 @@ html, body {
 	position: fixed;
 	top: 50px;
 
-	width: -moz-calc(33.33% - 30px);
-	width: -webkit-calc(33.33% - 30px);
-	width: calc(33.33% - 30px);
+	width: 33.3333%;
 }

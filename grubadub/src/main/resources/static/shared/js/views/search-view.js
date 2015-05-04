@@ -23,9 +23,6 @@ app.SearchView = Backbone.View.extend({
 			app.autocompleteStart = new google.maps.places.Autocomplete(start, options);
 			app.autocompleteEnd = new google.maps.places.Autocomplete(end, options);
 
-			console.log(app.userStart);
-			console.log(app.userDestination);
-
 			if (app.userStart) {
 				$("#curr-location").val(app.userStart);
 			}

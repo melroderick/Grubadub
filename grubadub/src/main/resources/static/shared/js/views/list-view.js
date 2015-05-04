@@ -4,7 +4,9 @@ app.ListView = Backbone.View.extend({
 	events: {
 		"click ol.restaurant-list > li": "selectRestaurantRoute",
 		"mouseover ol.restaurant-list > li": "hoverRestaurant",
-		"change #sort-box > select": "sortResults",
+		"change #sort-box select": "sortResults",
+		"keyup #search-box": "search",
+		"change #search-box": "search",
 	},
 
 	filterSortRestaurants: function() {
@@ -59,10 +61,16 @@ app.ListView = Backbone.View.extend({
 	},
 
 	sortResults: function() {
-		this.sortType = $("#sort-box > select").val();
+		this.sortType = $("#sort-box select").val();
 
-		this.render(function() {
-			
+		this.render(function(){});
+	},
+
+	search: function() {
+		this.searchQuery = $("#search-box").val();
+
+		this.render(function(){
+			$("#search-box").focus();
 		});
 	},
 
@@ -140,7 +148,8 @@ app.ListView = Backbone.View.extend({
 			$(this.el).html(html);
 			callback(this);
 
-			$("#sort-box > select").val(this.sortType);
+			$("#sort-box select").val(this.sortType);
+			$("#search-box").val(this.searchQuery);
 
 			if (desktop) {
 				$('#sort-box').affix({

@@ -134,8 +134,12 @@ em.distance {
    --------------------------------------------------------------------------------------- */
 
 #sort-box {
-	padding: 20px 0 15px 0;
+	/*padding: 20px 0 15px 0;*/
 	margin-bottom: 0;
+}
+
+#sort-box > div {
+	padding-top: 20px;
 }
 
 #sort-box.affix {
