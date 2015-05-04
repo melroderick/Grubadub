@@ -60,7 +60,7 @@ public class Restaurant implements Comparable<Restaurant> {
     if (jsonCoordinate != null) {
       this.latLng = new LatLng(Double.parseDouble(jsonCoordinate
           .get("latitude").toString()), Double.parseDouble(jsonCoordinate.get(
-              "longitude").toString()));
+          "longitude").toString()));
     } else {
       this.latLng = null;
     }
@@ -82,7 +82,7 @@ public class Restaurant implements Comparable<Restaurant> {
         : "";
 
     this.address = streetAddress + city + " " + state_code + " " + postal_code;
-    this.city = city;
+    this.city = city + ", " + state_code;
 
     this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
     this.review_count = Integer.parseInt(jsonRestaurant.get("review_count")
@@ -155,7 +155,9 @@ public class Restaurant implements Comparable<Restaurant> {
     return city;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   *
    * @see java.lang.Object#toString()
    */
   @Override

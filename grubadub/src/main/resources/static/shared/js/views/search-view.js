@@ -33,6 +33,8 @@ app.SearchView = Backbone.View.extend({
 			if (app.userDestination) {
 				$("#destination-field").val(app.userDestination);
 			}
+
+			this.toggleBtnsIfNeeded();
 		}.bind(this));
 		if (typeof app.directionsDisplay !== 'undefined') {
 			app.directionsDisplay.setMap(null);
