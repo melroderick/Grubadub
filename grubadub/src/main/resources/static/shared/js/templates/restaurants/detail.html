@@ -8,7 +8,7 @@
 			<address><%= restaurant.get('address') %></address>
 			<p class="categories-list">
 				<% for (var i=0; i<Math.min(3, restaurant.get('categories').length); i++) { %>
-					<span class="label label-info"><%= restaurant.get('categories')[i] %></span>
+					<span class="label label-default"><%= restaurant.get('categories')[i] %></span>
 				<% } %>
 			</p>
 			<p class="stars">
@@ -25,7 +25,7 @@
 				for (var s = totalStars + 1; s <= 5; s++) { %>
 					<i class="fa fa-star-o"></i>
 				<% } %>
-				<span class="review-count">(<%= restaurant.get('review_count') %> reviews)</span>
+				<span class="review-count">(<%= restaurant.get('review_count') %><%= desktop ? ' reviews' : '' %>)</span>
 			</p>
 			<% if (ror) { %>
 				<p>
