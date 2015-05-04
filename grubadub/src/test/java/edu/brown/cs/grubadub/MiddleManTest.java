@@ -32,10 +32,10 @@ public class MiddleManTest {
     List<String> c = new ArrayList<>();
     c.add("Fast Casual");
 
-    chipotle = new Restaurant("0", "Chipotle", c, new LatLng(0.1, 0.1), 5, 1, "A", "", "+1-415-908-3801");
-    fiveGuys = new Restaurant("1", "Five Guys", c, new LatLng(5.0, 5.0), 4, 7, "B", "", "+1-415-908-3801");
-    subway = new Restaurant("2", "Subway", c, new LatLng(3.2, 2.7), 3, 9, "C", "", "+1-415-908-3801");
-    soban = new Restaurant("3", "Soban", c, new LatLng(1.2, 4.3), 4.3f, 40, "D", "", "+1-415-908-3801");
+    chipotle = new Restaurant("0", "Chipotle", c, new LatLng(0.1, 0.1), 5, 1, "A", "", "", "+1-415-908-3801");
+    fiveGuys = new Restaurant("1", "Five Guys", c, new LatLng(5.0, 5.0), 4, 7, "B", "", "", "+1-415-908-3801");
+    subway = new Restaurant("2", "Subway", c, new LatLng(3.2, 2.7), 3, 9, "C", "", "", "+1-415-908-3801");
+    soban = new Restaurant("3", "Soban", c, new LatLng(1.2, 4.3), 4.3f, 40, "D", "", "", "+1-415-908-3801");
     Restaurant[] restaurants = new Restaurant[] {chipotle, fiveGuys, subway, soban};
 
 
