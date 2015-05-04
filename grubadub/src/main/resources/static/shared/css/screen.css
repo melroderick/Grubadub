@@ -181,6 +181,19 @@ ol.restaurant-list p.name {
 	margin-bottom: 10px;
 }
 
+ol.restaurant-list img.media-object {
+	width: 60px;
+	height: 60px;
+}
+
+ol.restaurant-list h3 {
+	font-size: 20px;
+}
+
+ol.restaurant-list .stars {
+	font-size: 14px;
+}
+
 address {
 	font-size: 14px;
 	color: #7f8c8d;
