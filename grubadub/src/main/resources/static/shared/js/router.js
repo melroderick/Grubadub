@@ -52,18 +52,18 @@ app.router.on('route:list-restaurants', function() {
 		app.router.navigate("", {trigger: true});
 	});
 
-	var listView = new app.ListView();
+	var resultsView = new app.ResultsView();
 
 	if (app.resultsView == undefined) {
-		listView.restaurants = app.foundRestaurants;
+		resultsView.restaurants = app.foundRestaurants;
 	} else {
-		listView.restaurants = app.resultsView.restaurants;
-		listView.searchQuery = app.resultsView.searchQuery;
-		listView.sortType = app.resultsView.sortType;
+		resultsView.restaurants = app.resultsView.restaurants;
+		resultsView.searchQuery = app.resultsView.searchQuery;
+		resultsView.sortType = app.resultsView.sortType;
 	}
 
-	app.resultsView = listView;
-	app.router.showView("#main-wrapper", listView);
+	app.resultsView = resultsView;
+	app.router.showView("#main-wrapper", resultsView);
 });
 
 app.router.on('route:show-restaurant', function(id) {

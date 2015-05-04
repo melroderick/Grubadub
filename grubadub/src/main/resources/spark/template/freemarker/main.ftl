@@ -32,6 +32,7 @@ ${content}
 <script src="/shared/js/models/restaurant.js"></script>
 <script src="/shared/js/collections/restaurants.js"></script>
 
+<script src="/shared/js/views/results-view.js"></script>
 <script src="/shared/js/views/list-view.js"></script>
 <script src="/shared/js/views/search-view.js"></script>
 <script src="/shared/js/views/detail-view.js"></script>
