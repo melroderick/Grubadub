@@ -201,6 +201,10 @@ ol.restaurant-list .stars {
 	color: #f1c40f;
 }
 
+.review-count {
+	color: #34495e;
+}
+
 /* ---------------------------------------------------------------------------------------
    Details View
    --------------------------------------------------------------------------------------- */
@@ -233,6 +237,11 @@ ol.restaurant-list .stars {
 	border-left: 2px solid #7f8c8d;
 	padding-left: 10px;
 	margin-left: 3px;
+}
+
+.details .review-count {
+	font-size: 0.6em;
+	padding-bottom: 3px;
 }
 
 .btn-container {

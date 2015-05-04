@@ -22,7 +22,7 @@
 				</div>
 				<div class="media-body">
 					<h3><%= restaurant.get('name') %></h2>
-					<address><%= restaurant.get('address') %></address>
+					<address><%= restaurant.get('city') %></address>
 					<p class="stars">
 					<% 	var halfStars = Math.round(restaurant.get('rating')*2)/2;
 						var totalStars = Math.ceil(restaurant.get('rating'));
@@ -37,6 +37,7 @@
 						for (var s = totalStars + 1; s <= 5; s++) { %>
 							<i class="fa fa-star-o"></i>
 						<% } %>
+						<span class="review-count">(<%= restaurant.get('review_count') %> reviews)</span>
 					</p>
 				</div>
 			</div>
