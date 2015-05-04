@@ -142,8 +142,6 @@ app.SearchView = Backbone.View.extend({
 
 						// Now, 30 mins, 1 hour, 2 hours
 					}
-
-					console.log(time);
 				}
 			});
 		}
