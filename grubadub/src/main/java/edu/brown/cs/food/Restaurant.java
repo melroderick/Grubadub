@@ -18,12 +18,13 @@ public class Restaurant implements Comparable<Restaurant> {
   private final float rating;
   private final int review_count;
   private final String address;
+  private final String city;
   private final String image_url;
   private final String phone;
 
   public Restaurant(String id, String name, List<String> categories,
       LatLng latLng, float rating, int review_count, String address,
-      String image_url, String phone) {
+      String city, String image_url, String phone) {
     this.id = id;
     this.name = name;
     this.categories = ImmutableList.copyOf(categories);
@@ -31,6 +32,7 @@ public class Restaurant implements Comparable<Restaurant> {
     this.rating = rating;
     this.review_count = review_count;
     this.address = address;
+    this.city = city;
     this.image_url = image_url;
     this.phone = phone;
   }
@@ -58,7 +60,7 @@ public class Restaurant implements Comparable<Restaurant> {
     if (jsonCoordinate != null) {
       this.latLng = new LatLng(Double.parseDouble(jsonCoordinate
           .get("latitude").toString()), Double.parseDouble(jsonCoordinate.get(
-          "longitude").toString()));
+              "longitude").toString()));
     } else {
       this.latLng = null;
     }
@@ -80,6 +82,7 @@ public class Restaurant implements Comparable<Restaurant> {
         : "";
 
     this.address = streetAddress + city + " " + state_code + " " + postal_code;
+    this.city = city;
 
     this.rating = Float.parseFloat(jsonRestaurant.get("rating").toString());
     this.review_count = Integer.parseInt(jsonRestaurant.get("review_count")
@@ -146,6 +149,10 @@ public class Restaurant implements Comparable<Restaurant> {
 
   public String getPhone() {
     return phone;
+  }
+
+  public String getCity() {
+    return city;
   }
 
   /* (non-Javadoc)

@@ -119,6 +119,7 @@ public class YelpRestaurantFinderTest {
     assertTrue(r.getRating() >= 0 && r.getRating() <= 5);
     assertTrue(r.getReview_count() >= 0);
     assertTrue(r.getAddress() != null && r.getAddress().length() > 0);
+    assertTrue(r.getCity() != null);
   }
 
   static void wellFormedDetailedRestaurant(DetailedRestaurant dr) {

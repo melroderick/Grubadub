@@ -100,6 +100,7 @@ $(function() {
 				center: new google.maps.LatLng(41.8262, -71.4032)
 			}
 		);
+		
 		app.directionsDisplay = new google.maps.DirectionsRenderer();
 		app.directionsDisplay.setMap(app.map);
 	}
