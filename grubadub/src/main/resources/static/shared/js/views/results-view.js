@@ -157,6 +157,8 @@ app.ResultsView = Backbone.View.extend({
 			this.listView.resultsView = this;
 			this.renderList();
 
+			$("#search-box").val(this.searchQuery);
+
 			if (desktop) {
 				$('#sort-box').affix({
 					offset: {

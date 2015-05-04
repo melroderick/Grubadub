@@ -7,6 +7,8 @@ app.ListView = Backbone.View.extend({
 	},
 
 	selectRestaurantRoute: function(e) {
+		console.log("lo");
+
 		var index = $(e.currentTarget).index();
 		app.restaurantOnRoute = this.sortedRestaurants[index];
 	},
@@ -25,6 +27,8 @@ app.ListView = Backbone.View.extend({
 
 			$(this.el).html(html);
 			callback(this);
+
+			this.delegateEvents();
 		}.bind(this));
 	}
 });
