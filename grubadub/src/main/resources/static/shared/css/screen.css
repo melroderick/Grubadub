@@ -196,10 +196,6 @@ ol.restaurant-list em.distance {
 	padding-top: 13px;
 }
 
-.categories-list {
-	margin-bottom: 0;
-}
-
 .stars {
 	padding-top: 3px;
 	color: #f1c40f;
@@ -207,6 +203,19 @@ ol.restaurant-list em.distance {
 
 .review-count {
 	color: #34495e;
+}
+
+.categories-list {
+	margin-bottom: 0;
+}
+
+span.label-default {
+	background: #ecf0f1;
+	color: #34495e;
+}
+
+span.query-highlighted {
+	background: yellow;
 }
 
 /* ---------------------------------------------------------------------------------------

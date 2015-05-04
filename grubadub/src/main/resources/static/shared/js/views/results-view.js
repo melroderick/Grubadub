@@ -8,24 +8,23 @@ app.ResultsView = Backbone.View.extend({
 	},
 
 	filterSortRestaurants: function() {
-		var searchQueryLower = this.searchQuery.toLowerCase();
 		var filterPredicate = function (r) {
-			if (r.get('name').toLowerCase().indexOf(searchQueryLower) !== -1) {
+			if (_containsQuery(r.get('name'), this.searchQuery)) {
 				return true;
 			}
 
-			if (r.get('city').toLowerCase().indexOf(searchQueryLower) !== -1) {
+			if (_containsQuery(r.get('city'), this.searchQuery)) {
 				return true;
 			}
 
 			for (var i in r.get('categories')) {
 				var category = r.get('categories')[i];
-				if (category.toLowerCase().indexOf(searchQueryLower) !== -1) {
+				if (_containsQuery(category, this.searchQuery)) {
 					return true;
 				}
 			}
 			return false;
-		}
+		}.bind(this);
 
 		var rating_gain = -1;
 		var off_route_gain = 5;
@@ -57,7 +56,13 @@ app.ResultsView = Backbone.View.extend({
 		}
 
 		// filter, sort, and return first 50
-		var filteredList = this.restaurants.filter(filterPredicate);
+		var filteredList;
+		if (this.searchQuery != "") {
+			filteredList = this.restaurants.filter(filterPredicate);
+		} else {
+			filteredList = this.restaurants.models;
+		}
+
 		var sortedList = _.sortBy(filteredList, sortScorer);
 		var newRestaurants = new app.Restaurants(_.first(sortedList, 15));
 		return newRestaurants;
@@ -140,6 +145,8 @@ app.ResultsView = Backbone.View.extend({
 		this.sortedRestaurants = this.filterSortRestaurants().models;
 
 		this.listView.sortedRestaurants = this.sortedRestaurants;
+		this.listView.searchQuery = this.searchQuery;
+
 		this.listView.render(function(v) {
 			$(this.el).find("ol.restaurant-list").html(v.el);
 		}.bind(this));
