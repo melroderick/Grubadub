@@ -62,8 +62,8 @@ app.ListView = Backbone.View.extend({
 		this.sortType = $("#sort-box > select").val();
 
 		this.render(function() {
-			$("#sort-box > select").val(this.sortType);
-		}.bind(this));
+			
+		});
 	},
 
 	selectRestaurantRoute: function(e) {
@@ -135,11 +135,12 @@ app.ListView = Backbone.View.extend({
 			  this.drawMarkers(app.map);
 			}
 
-
 			var html = template({ restaurants: this.sortedRestaurants, currentLoc: app.currentLoc });
 
 			$(this.el).html(html);
 			callback(this);
+
+			$("#sort-box > select").val(this.sortType);
 
 			if (desktop) {
 				$('#sort-box').affix({
@@ -147,12 +148,6 @@ app.ListView = Backbone.View.extend({
 						top: 0
 					},
 					target: "#main-wrapper"
-				});
-			} else {
-				$('#sort-box').affix({
-					offset: {
-						top: 50
-					}
 				});
 			}
 

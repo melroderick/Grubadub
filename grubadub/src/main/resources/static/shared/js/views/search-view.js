@@ -139,8 +139,6 @@ app.SearchView = Backbone.View.extend({
 
 						$("#btn-4").html("2 hours");
 						$("#btn-4").attr("data-time", "120");
-
-						// Now, 30 mins, 1 hour, 2 hours
 					}
 				}
 			});
@@ -175,6 +173,7 @@ app.SearchView = Backbone.View.extend({
 			app.foundRestaurants.destination = app.userDestination;
 			app.foundRestaurants.time = time;
 			app.foundRestaurants.fetch({success: function() {
+				app.resultsView = undefined;
 				app.router.navigate("results", { trigger: true });
 			}});
 
