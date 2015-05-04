@@ -45,8 +45,8 @@ class GoogleRoute implements Route {
 
       int currTime = 0;
       for (DirectionsStep step : gSteps) {
-        List<com.google.maps.model.LatLng> gStepPoints = step.polyline
-            .decodePath();
+        List<com.google.maps.model.LatLng> gStepPoints =
+            step.polyline.decodePath();
 
         List<LatLng> stepPoints = gStepPoints.stream()
             .map(p -> new LatLng(p))
@@ -59,7 +59,10 @@ class GoogleRoute implements Route {
         currTime += stepTime;
       }
 
-      List<Integer> times = detailedTimePlaces.stream().map(tp -> tp.timeInSeconds()).collect(Collectors.toList());
+      List<Integer> times =
+          detailedTimePlaces.stream()
+          .map(tp -> tp.timeInSeconds())
+          .collect(Collectors.toList());
       // System.out.println("Detailed time places good: " + Ordering.natural().isOrdered(times));
 
       filledInDetailedTimePlaces = fillIn(detailedTimePlaces, .1);
