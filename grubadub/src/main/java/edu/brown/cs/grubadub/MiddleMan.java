@@ -96,7 +96,7 @@ public class MiddleMan {
   }
 
   private int getMinuteRadius(int minutes) {
-    int minimumRadius = 5;
+    int minimumRadius = 10;
     return Math.max(minimumRadius, (int) (Math.sqrt(minutes) * 1.5));
   }
 
