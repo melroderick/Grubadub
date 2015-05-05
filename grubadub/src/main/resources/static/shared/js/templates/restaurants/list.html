@@ -15,12 +15,12 @@
 				  <img class="media-object img-rounded" src="<%= restaurant.get('image_url') %>">
 				</div>
 				<div class="media-body">
-					<h3><%= _highlightQuery(restaurant.get('name'), searchQuery) %></h2>
-					<address><%= _highlightQuery(restaurant.get('city'), searchQuery) %></address>
+					<h3><%= _highlightQueries(restaurant.get('name'), tags) %></h2>
+					<address><%= _highlightQueries(restaurant.get('city'), tags) %></address>
 					<p class="categories-list">
 						<% var categories = restaurant.get('categories');
 							for (var i=0; i<Math.min(3, categories.length); i++) { %>
-							<span class="label label-default"><%= _highlightQuery(categories[i], searchQuery) %></span>
+							<span class="label label-default"><%= _highlightQueries(categories[i], tags) %></span>
 						<% } %>
 					</p>
 					<p class="stars">

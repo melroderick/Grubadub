@@ -8,8 +8,9 @@ app.ResultsView = Backbone.View.extend({
 	},
 
 	filterSortRestaurants: function() {
-		var tags = this.searchQuery.toLowerCase().replace(/[^a-z\d\s]/g, "").split(" ");
+		this.tags = this.searchQuery.toLowerCase().replace(/[^a-z\d\s]/g, "").split(" ");
 
+		var tags = this.tags;
 		var filterPredicate = function (r) {
 			tags: for (var i in tags) {
 				var tag = tags[i];
@@ -156,15 +157,8 @@ app.ResultsView = Backbone.View.extend({
 	renderList: function() {
 		this.sortedRestaurants = this.filterSortRestaurants().models;
 
-		// if (this.listView) {
-			// this.listView.close();
-		// }
-
-		// this.listView = new app.ListView();
-		// this.listView.resultsView = this;
-
 		this.listView.sortedRestaurants = this.sortedRestaurants;
-		this.listView.searchQuery = this.searchQuery;
+		this.listView.tags = this.tags;
 
 		this.listView.render(function(v) {
 			$(this.el).find("ol.restaurant-list").html(v.el);
