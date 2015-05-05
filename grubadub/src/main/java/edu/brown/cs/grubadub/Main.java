@@ -89,8 +89,8 @@ public final class Main {
   }
 
   private Object errorJSON(String message) {
-    Map<String, Object> variables =
-        new ImmutableMap.Builder().put("error", message).build();
+    Map<String, Object> variables = new ImmutableMap.Builder().put("error",
+        message).build();
     return GSON.toJson(variables);
   }
 
@@ -152,11 +152,12 @@ public final class Main {
           destination, time);
 
       if (restaurants == null) {
+        res.status(400);
         return errorJSON("Could not find path to " + destination);
+      } else {
+        res.type("text/json");
+        return GSON.toJson(restaurants);
       }
-
-      res.type("text/json");
-      return GSON.toJson(restaurants);
     }
   }
 
@@ -176,7 +177,6 @@ public final class Main {
       if (extraTime == -1) {
         return errorJSON("Error getting route time");
       }
-
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("time", extraTime).build();
