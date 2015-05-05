@@ -62,24 +62,47 @@ app.ResultsView = Backbone.View.extend({
 		this.sortType = $("#sort-box select").val();
 
 		this.renderList();
+
+		if (desktop) {
+			this.updateMapBounds();
+		}
 	},
 
 	search: function() {
 		this.searchQuery = $("#search-box").val();
 
 		this.renderList();
+
+		if (desktop) {
+			this.updateMapBounds();
+		}
 	},
 
 	selectRestaurantRoute: function(e) {
 		var index = $(e.currentTarget).index();
 		app.restaurantOnRoute = this.sortedRestaurants[index];
 	},
-
+	updateMapBounds: function(e) {
+		if (typeof this.sortedRestaurants !== 'undefined'
+				&& this.sortedRestaurants.length > 0) {
+			app.bounds = new google.maps.LatLngBounds();
+			this.sortedRestaurants.forEach(function (r) {	
+				var latLng = new google.maps.LatLng(r.get('latLng').lat,
+																						r.get('latLng').lng);
+				app.bounds.extend(latLng);
+			});
+			app.map.fitBounds(app.bounds);
+			var zoom = app.map.getZoom();
+			zoom = (zoom > 15) ? 15 : zoom;
+			app.map.setZoom(zoom);
+		}
+	},
 	restaurantHovered: function(index) {
 		if (desktop) {
 			this.infowindow.close();
 			this.infowindow = new google.maps.InfoWindow();
-			this.infowindow.setContent(this.sortedRestaurants[index].get('name'));
+			var r = this.sortedRestaurants[index];
+			this.infowindow.setContent('<b>' + r.get('name') + '</b><br>' + r.get('address'));
 			this.infowindow.open(app.map, app.markers[index]);
 		}
 	},
@@ -90,25 +113,21 @@ app.ResultsView = Backbone.View.extend({
 				this.drawMarkers(null);
 			}
 			app.markers = [];
+			app.bounds = new google.maps.LatLngBounds();
 			this.infowindow = new google.maps.InfoWindow();
 			var marker;
-			/*var icon = {
-				url: "/shared/img/marker.png",
-				size: new google.maps.Size(162, 249),
-				scaledSize: new google.maps.Size(20, 32),
-				anchor: new google.maps.Point(10, 32)
-			}*/
 			this.sortedRestaurants.forEach(function (r) {
+				var latLng = new google.maps.LatLng(r.get('latLng').lat,
+																						r.get('latLng').lng);
+				app.bounds.extend(latLng);
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(r.get('latLng').lat,
-																				 r.get('latLng').lng),
-					map: app.map,
-					//icon: icon
+					position: latLng,
+					map: app.map
 				});
 				app.markers.push(marker);
 				google.maps.event.addListener(marker, 'click', (function(marker, r) {
 					return function() {
-						this.infowindow.setContent(r.get('name'));
+						this.infowindow.setContent('<b>' + r.get('name') + '</b><br>' + r.get('address'));
 						this.infowindow.open(app.map, marker);
 
 						app.restaurantOnRoute = r;
@@ -146,6 +165,7 @@ app.ResultsView = Backbone.View.extend({
 		app.getTemplate("pages/results", function(file) {
 			var template = _.template(file);
 
+			app.bounds = new google.maps.LatLngBounds();
 			this.sortedRestaurants = this.filterSortRestaurants().models;
 
 			var html = template({ restaurants: this.sortedRestaurants, currentLoc: app.currentLoc });
@@ -181,6 +201,7 @@ app.ResultsView = Backbone.View.extend({
 	},
 
 	beforeClose: function() {
+		this.updateMapBounds();
 		this.listView.close();
 	},
 });
