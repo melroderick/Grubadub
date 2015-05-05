@@ -50,7 +50,6 @@ app.SearchView = Backbone.View.extend({
 		e.preventDefault();
 
 		$("#find-curr-location").html('<i class="fa fa-spinner fa-spin"></i>');
-		$("#find-curr-location").addClass("unclickable");
 
 		this.refreshLoc();
 	},
