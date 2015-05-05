@@ -105,6 +105,7 @@ app.ResultsView = Backbone.View.extend({
 		var index = $(e.currentTarget).index();
 		app.restaurantOnRoute = this.sortedRestaurants[index];
 	},
+
 	updateMapBounds: function(e) {
 		if (typeof this.sortedRestaurants !== 'undefined'
 				&& this.sortedRestaurants.length > 0) {
@@ -120,6 +121,7 @@ app.ResultsView = Backbone.View.extend({
 			app.map.setZoom(zoom);
 		}
 	},
+
 	restaurantHovered: function(index) {
 		if (desktop) {
 			this.infowindow.close();
@@ -226,7 +228,10 @@ app.ResultsView = Backbone.View.extend({
 	},
 
 	beforeClose: function() {
-		this.updateMapBounds();
+		if (desktop) {
+			this.updateMapBounds();
+		}
+		
 		this.listView.close();
 	},
 });

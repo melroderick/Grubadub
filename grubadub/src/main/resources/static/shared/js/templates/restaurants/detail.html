@@ -30,7 +30,7 @@
 			<% if (ror) { %>
 				<p>
 					<strong><%= _formatTime(ror.get('timeToRestaurant')) %></strong> away.<br />
-					<strong class="text-danger">+<%= ror.get('timeAdded') %></strong> mins to route.
+					<strong class="text-danger">+<%= ror.get('timeAdded') %></strong> mins to trip.
 				</p>
 			<% } %>
 		</div>
@@ -55,5 +55,5 @@
 
 	<p class="btn-container"><a class="btn btn-primary btn-lg" target="_blank" href="<%= restaurant.googleMapsUrl() %>"><i class="fa fa-map-marker"></i> Get Directions</a></p>
 
-	<p class="btn-container"><a class="btn btn-success btn-lg" href="tel:<%= restaurant.get('phone') %>"><i class="fa fa-phone"></i> Call Now</a></p>
+	<p class="btn-container"><a class="btn btn-success btn-lg" href="tel:<%= restaurant.get('phone') %>"><i class="fa fa-phone"></i> <%= restaurant.get('phone') %></a></p>
 </article>

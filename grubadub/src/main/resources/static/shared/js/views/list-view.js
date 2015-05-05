@@ -3,6 +3,7 @@ var app = app || {};
 app.ListView = Backbone.View.extend({
 	events: {
 		"mousedown li a": "selectRestaurantRoute",
+		"click li a": "selectRestaurantRoute",
 		"mouseover li": "hoverRestaurant"
 	},
 
