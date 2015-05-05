@@ -9,22 +9,6 @@ app.DetailView = Backbone.View.extend({
 
 				$(this.el).html(html);
 				callback(this);
-				// the smooth zoom function
-				function smoothZoom (map, max, cnt) {
-			    if (cnt >= max) {
-	          return;
-	        } else {
-		        z = google.maps.event.addListener(map, 'zoom_changed', function(event){
-		            google.maps.event.removeListener(z);
-		            smoothZoom(map, max, cnt + 1);
-		        });
-		        setTimeout(function(){map.setZoom(cnt)}, 80);
-			    }
-				} 
-				var rLatLng = this.restaurantOnRoute.get("latLng");
-				var latLng = new google.maps.LatLng(rLatLng.lat, rLatLng.lng);
-				app.map.panTo(latLng);
-				smoothZoom(app.map, 15, app.map.getZoom());
 			}.bind(this));
 		}.bind(this);
 

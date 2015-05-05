@@ -93,11 +93,13 @@ app.ResultsView = Backbone.View.extend({
 		this.searchQuery = $("#search-box").val();
 		this.renderList();
 
-		this.renderList();
-
+<<<<<<< .merge_file_4m9yit
 		if (desktop) {
 			this.updateMapBounds();
 		}
+=======
+		return true;
+>>>>>>> .merge_file_vQfgAO
 	},
 
 	selectRestaurantRoute: function(e) {
