@@ -29,6 +29,15 @@ public class GoogleRouteTest {
   }
 
   @Test
+  public void onePointRoute() {
+    GoogleRouteFinder grf = new GoogleRouteFinder();
+    String city = "Seattle, WA";
+    Route r = grf.getRoute(city, city);
+    assertEquals(r.routeTime(), 0);
+    assertEquals(r.locIn(0), r.locIn(40));
+  }
+
+  @Test
   public void testDistanceFrom() {
     LatLng kelso = new LatLng(46.161537, -122.892357);
     LatLng guessGMapsPoint = new LatLng(46.161296, -122.902708);
