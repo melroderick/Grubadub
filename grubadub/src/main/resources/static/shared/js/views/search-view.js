@@ -53,7 +53,6 @@ app.SearchView = Backbone.View.extend({
 		$("#find-curr-location").addClass("unclickable");
 
 		this.refreshLoc();
-		this.refreshInterval = window.setInterval(this.refreshLoc.bind(this), 5000);
 	},
 
 	refreshLoc: function() {
@@ -75,7 +74,6 @@ app.SearchView = Backbone.View.extend({
 					msg = p.coords.latitude + ", " + p.coords.longitude
 				}
 				$("#curr-location").val(msg);
-				// $("#curr-location").prop("disabled", true);
 
 				this.toggleBtnsIfNeeded();
 				this.adjustTimeOptions();
@@ -234,9 +232,5 @@ app.SearchView = Backbone.View.extend({
 		} else {
 			find();
 		}
-	},
-
-	beforeClose: function() {
-		window.clearInterval(this.refreshInterval);
 	}
 });
