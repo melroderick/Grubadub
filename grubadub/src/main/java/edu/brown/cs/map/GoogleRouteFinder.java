@@ -20,7 +20,17 @@ public class GoogleRouteFinder implements RouteFinder {
           .origin(startAddress)
           .destination(destinationAddress)
           .await();
+
+
     } catch (Exception e) {
+      // If start or end destination are not real.
+      return null;
+    }
+
+    System.out.println(routes.length);
+    if (routes.length == 0) {
+      // If start and end destination are real, but no path between them
+      // exists, e.g. start and end are across ocean from each other
       return null;
     }
 
@@ -38,6 +48,12 @@ public class GoogleRouteFinder implements RouteFinder {
           .destination(destinationAddress)
           .await();
     } catch (Exception e) {
+      return null;
+    }
+
+    if (routes.length == 0) {
+      // If start and end destination are real, but no path between them
+      // exists, e.g. start and end are across ocean from each other
       return null;
     }
 

@@ -28,50 +28,51 @@ class GoogleRoute implements Route {
   private KDTree<TimePlace> kdt;
 
   public GoogleRoute(DirectionsRoute[] routes) {
-    if (routes.length >= 1) {
-      gRoute = routes[0];
-      assert gRoute.legs.length == 1;
-      gLeg = gRoute.legs[0];
+    assert routes.length >= 1;
 
-      routeTime = (int) gLeg.duration.inSeconds / 60;
+    gRoute = routes[0];
+    assert gRoute.legs.length == 1;
+    gLeg = gRoute.legs[0];
 
-      polylinePoints = gRoute.overviewPolyline.decodePath().stream()
+    routeTime = (int) gLeg.duration.inSeconds / 60;
+
+    polylinePoints = gRoute.overviewPolyline.decodePath().stream()
+        .map(p -> new LatLng(p))
+        .collect(Collectors.toList());
+
+    gSteps = Lists.newArrayList(gLeg.steps);
+
+    detailedTimePlaces = new ArrayList<>();
+
+    int currTime = 0;
+    for (DirectionsStep step : gSteps) {
+      List<com.google.maps.model.LatLng> gStepPoints =
+          step.polyline.decodePath();
+
+      List<LatLng> stepPoints = gStepPoints.stream()
           .map(p -> new LatLng(p))
           .collect(Collectors.toList());
 
-      gSteps = Lists.newArrayList(gLeg.steps);
+      int stepTime = (int) step.duration.inSeconds;
+      detailedTimePlaces.addAll(
+          buildTimePlaces(currTime, stepTime, stepPoints));
 
-      detailedTimePlaces = new ArrayList<>();
-
-      int currTime = 0;
-      for (DirectionsStep step : gSteps) {
-        List<com.google.maps.model.LatLng> gStepPoints =
-            step.polyline.decodePath();
-
-        List<LatLng> stepPoints = gStepPoints.stream()
-            .map(p -> new LatLng(p))
-            .collect(Collectors.toList());
-
-        int stepTime = (int) step.duration.inSeconds;
-        detailedTimePlaces.addAll(
-            buildTimePlaces(currTime, stepTime, stepPoints));
-
-        currTime += stepTime;
-      }
-
-      List<Integer> times =
-          detailedTimePlaces.stream()
-          .map(tp -> tp.timeInSeconds())
-          .collect(Collectors.toList());
-      // System.out.println("Detailed time places good: " + Ordering.natural().isOrdered(times));
-
-      filledInDetailedTimePlaces = fillIn(detailedTimePlaces, .1);
-
-      times = filledInDetailedTimePlaces.stream().map(tp -> tp.timeInSeconds()).collect(Collectors.toList());
-      // System.out.println("Filled in detailed time places good: " + Ordering.natural().isOrdered(times));
-      // kdt = new KDTree<>(filledInDetailedTimePlaces);
-      kdt = new KDTree<>(detailedTimePlaces);
+      currTime += stepTime;
     }
+
+    List<Integer> times =
+        detailedTimePlaces.stream()
+        .map(tp -> tp.timeInSeconds())
+        .collect(Collectors.toList());
+    // System.out.println("Detailed time places good: " + Ordering.natural().isOrdered(times));
+
+    filledInDetailedTimePlaces = fillIn(detailedTimePlaces, .1);
+
+    times = filledInDetailedTimePlaces.stream().map(tp -> tp.timeInSeconds()).collect(Collectors.toList());
+    // System.out.println("Filled in detailed time places good: " + Ordering.natural().isOrdered(times));
+    // kdt = new KDTree<>(filledInDetailedTimePlaces);
+    kdt = new KDTree<>(detailedTimePlaces);
+
   }
 
   private List<TimePlace> buildTimePlaces(int startTime, int pathTime,
