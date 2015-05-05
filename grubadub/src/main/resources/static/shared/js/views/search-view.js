@@ -36,6 +36,7 @@ app.SearchView = Backbone.View.extend({
 
 			this.toggleBtnsIfNeeded();
 		}.bind(this));
+		
 		if (typeof app.directionsDisplay !== 'undefined') {
 			app.directionsDisplay.setMap(null);
 			for(var i = 0; i < app.markers.length; i++) {
@@ -185,10 +186,19 @@ app.SearchView = Backbone.View.extend({
 			app.userDestination = $("#destination-field").val();
 			app.foundRestaurants.destination = app.userDestination;
 			app.foundRestaurants.time = time;
-			app.foundRestaurants.fetch({success: function() {
-				app.resultsView = undefined;
-				app.router.navigate("results", { trigger: true });
-			}});
+			app.foundRestaurants.fetch({
+				success: function() {
+					app.resultsView = undefined;
+					app.router.navigate("results", { trigger: true });
+				},
+				error: function(collection, response, opts) {
+					alert(response.responseJSON.error);
+
+					this.render(function() {});
+
+					app.router.navigate("", { trigger: true });
+				}.bind(this)
+			});
 
 			$(this.el).html('<p class="loading"><i class="fa fa-spinner fa-spin"></i></p>');
 
