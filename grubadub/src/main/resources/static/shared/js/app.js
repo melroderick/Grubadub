@@ -78,7 +78,7 @@ function _formatTime(time) {
 	if (time > 0) {
 		var hours = time / 60;
 		toReturn += hours;
-		toReturn += "h";
+		toReturn += "h ";
 	}
 
 	toReturn += mins;

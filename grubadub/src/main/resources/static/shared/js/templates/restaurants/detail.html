@@ -29,7 +29,7 @@
 			</p>
 			<% if (ror) { %>
 				<p>
-					<strong><%= _formatTime(ror.get('timeToRestaurant')) %></strong> away.<br />
+					<strong><%= ror.get('timeToRestaurant') %></strong> mins away.<br />
 					<strong class="text-danger">+<%= ror.get('timeAdded') %></strong> mins to trip.
 				</p>
 			<% } %>
