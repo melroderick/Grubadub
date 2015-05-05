@@ -26,7 +26,11 @@ public class GoogleRouteFinderTest {
     assertTrue(r != null);
     assertTrue(r.distanceFrom(providence) > 0);
 
-    LatLng bad = new LatLng(0.0, 0.0);
+    assertEquals(
+        grf.getRoute(providence, "ftiajdsifjas"),
+        null);
+
+    assertEquals(grf.getRoute(providence, "Hong Kong"), null);
 
     /*
      * assertTrue(r.locIn(10) != null); assertTrue(r.pointsAlong(1, 10) !=
