@@ -8,23 +8,35 @@ app.ResultsView = Backbone.View.extend({
 	},
 
 	filterSortRestaurants: function() {
+		var tags = this.searchQuery.toLowerCase().replace(/[^a-z\d\s]/g, "").split(" ");
+
 		var filterPredicate = function (r) {
-			if (_containsQuery(r.get('name'), this.searchQuery)) {
-				return true;
-			}
-
-			if (_containsQuery(r.get('city'), this.searchQuery)) {
-				return true;
-			}
-
-			for (var i in r.get('categories')) {
-				var category = r.get('categories')[i];
-				if (_containsQuery(category, this.searchQuery)) {
-					return true;
+			tags: for (var i in tags) {
+				var tag = tags[i];
+				if (tag === "") {
+					continue;
 				}
+
+				if (_containsQuery(r.get('name'), tag)) {
+					continue;
+				}
+
+				if (_containsQuery(r.get('city'), tag)) {
+					continue;
+				}
+
+				for (var c in r.get('categories')) {
+					var category = r.get('categories')[c];
+					if (_containsQuery(category, tag)) {
+						continue tags;
+					}
+				}
+
+				return false;
 			}
-			return false;
-		}.bind(this);
+			
+			return true;
+		};
 
 		var rating_gain = -1;
 		var off_route_gain = 5;
@@ -70,14 +82,14 @@ app.ResultsView = Backbone.View.extend({
 
 	sortResults: function() {
 		this.sortType = $("#sort-box select").val();
-
 		this.renderList();
 	},
 
 	search: function() {
 		this.searchQuery = $("#search-box").val();
-
 		this.renderList();
+
+		return true;
 	},
 
 	selectRestaurantRoute: function(e) {
@@ -143,6 +155,13 @@ app.ResultsView = Backbone.View.extend({
 
 	renderList: function() {
 		this.sortedRestaurants = this.filterSortRestaurants().models;
+
+		// if (this.listView) {
+			// this.listView.close();
+		// }
+
+		// this.listView = new app.ListView();
+		// this.listView.resultsView = this;
 
 		this.listView.sortedRestaurants = this.sortedRestaurants;
 		this.listView.searchQuery = this.searchQuery;
