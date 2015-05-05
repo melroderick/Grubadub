@@ -3,6 +3,7 @@ var app = app || {};
 app.ListView = Backbone.View.extend({
 	events: {
 		"mousedown li a": "selectRestaurantRoute",
+		"click li a": "selectRestaurantRoute",
 		"mouseover li": "hoverRestaurant"
 	},
 
@@ -27,7 +28,7 @@ app.ListView = Backbone.View.extend({
 		app.getTemplate("restaurants/list", function(file) {
 			var template = _.template(file);
 
-			var html = template({ restaurants: this.sortedRestaurants, searchQuery: this.searchQuery });
+			var html = template({ restaurants: this.sortedRestaurants, tags: this.tags });
 
 			$(this.el).html(html);
 			callback(this);
