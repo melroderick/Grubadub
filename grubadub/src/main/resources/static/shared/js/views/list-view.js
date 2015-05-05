@@ -33,6 +33,8 @@ app.ListView = Backbone.View.extend({
 			$(this.el).html(html);
 			callback(this);
 
+			$(".restaurant-details h3, .restaurant-details address, .restaurant-details .categories-list").highlight(this.tags);
+
 			this.delegateEvents();
 		}.bind(this));
 	}

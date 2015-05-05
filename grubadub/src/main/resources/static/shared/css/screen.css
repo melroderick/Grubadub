@@ -227,7 +227,7 @@ span.label-default {
 	color: #34495e;
 }
 
-span.query-highlighted {
+.highlight {
 	background: yellow;
 }
 

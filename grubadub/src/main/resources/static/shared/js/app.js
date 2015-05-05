@@ -91,27 +91,6 @@ function _containsQuery(string, query) {
 	return query != "" && string.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 }
 
-function _highlightQueries(string, queries) {
-	var query = queries[0];
-
-	var lowerString = string.toLowerCase();
-	var lowerQuery = query.toLowerCase();
-
-	var index = lowerString.indexOf(lowerQuery)
-
-	if (lowerQuery == "" || index == -1) {
-		return string;
-	} else {
-		var len = lowerQuery.length;
-
-		var firstPart = string.substring(0, index);
-		var highlighted = string.substring(index, index + len);
-		var rest = string.substring(index + len, string.length);
-
-		return firstPart + '<span class="query-highlighted">' + highlighted + '</span>' + _highlightQueries(rest, queries);
-	}
-}
-
 $(function() {
 	app.geocoder = new google.maps.Geocoder();
 	app.directionsService = new google.maps.DirectionsService();
