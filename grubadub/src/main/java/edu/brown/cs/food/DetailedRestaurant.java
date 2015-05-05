@@ -31,9 +31,11 @@ public class DetailedRestaurant extends Restaurant {
 
     reviews = new ArrayList<Review>();
     JSONArray jsonReviews = (JSONArray) jsonRestaurant.get("reviews");
-    for (int i = 0; i < jsonReviews.size(); i++) {
-      Review r = new Review((JSONObject) jsonReviews.get(i));
-      reviews.add(r);
+    if (jsonReviews != null) {
+      for (int i = 0; i < jsonReviews.size(); i++) {
+        Review r = new Review((JSONObject) jsonReviews.get(i));
+        reviews.add(r);
+      }
     }
   }
 
