@@ -4,7 +4,7 @@
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="description" content="The best place for Penn students to buy, sell, trade, and share." />
+<meta name="description" content="The best way to find a place to eat on a road trip." />
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <link rel="shortcut icon" href="favicon.ico"/>
 
