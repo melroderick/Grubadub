@@ -20,13 +20,13 @@
 
 ${content}
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 <script src="/shared/js/lib/bootstrap.min.js"></script>
 <script src="/shared/js/lib/jquery.highlight.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js" type="text/javascript"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js" type="text/javascript"></script>
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;key=AIzaSyDJdTdVVSJVQ8R-lWAJDqXam-nk2fotx24" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js" type="text/javascript"></script>
+<script src="//maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;key=AIzaSyDJdTdVVSJVQ8R-lWAJDqXam-nk2fotx24" type="text/javascript"></script>
 
 <script src="/shared/js/app.js"></script>
 

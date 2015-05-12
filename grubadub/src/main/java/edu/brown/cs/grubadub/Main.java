@@ -1,7 +1,5 @@
 package edu.brown.cs.grubadub;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -60,24 +58,24 @@ public final class Main {
     runSparkServer();
   }
 
-  private static FreeMarkerEngine createEngine() {
+  private FreeMarkerEngine createEngine() {
     Configuration config = new Configuration();
-    File templates = new File("src/main/resources/spark/template/freemarker");
-    try {
-      config.setDirectoryForTemplateLoading(templates);
-    } catch (IOException ioe) {
-      System.out.printf("ERROR: Unable use %s for template loading.%n",
-          templates);
-      System.exit(1);
-    }
+    config.setClassForTemplateLoading(this.getClass(),
+        "/spark/template/freemarker");
+
     return new FreeMarkerEngine(config);
   }
 
   private void runSparkServer() {
-    Spark.externalStaticFileLocation("src/main/resources/static");
+    Spark.staticFileLocation("/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
+
+    String p = new ProcessBuilder().environment().get("PORT");
+    if (p != null) {
+      Spark.setPort(Integer.parseInt(p));
+    }
 
     // Setup Spark Routes
     Spark.get("/", new MainHandler(), freeMarker);

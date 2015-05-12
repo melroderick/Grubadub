@@ -110,6 +110,18 @@
           <compilerArgument>-Xlint:all</compilerArgument>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>0.3.7</version>
+        <configuration>
+          <appName>thawing-fjord-5268</appName>
+          <processTypes>
+             <web>java $JAVA_OPTS -cp target/classes:target/dependency/* edu.brown.cs.grubadub.Main</web>
+          </processTypes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
